@@ -2,26 +2,28 @@
 <html ng-app="AngularTest" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <link href="CssLibs/bootstrap.css" rel="stylesheet" />
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+<!--        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/readable/bootstrap.min.css">-->
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+        <link rel="stylesheet" href="style.css">
         <title>Login</title>
     </head>
     <body>
         <!-- HEADER AND NAVBAR -->
-		<header>
-			<nav class="navbar navbar-default">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">Angular Routing Example</a>
-				</div>
-
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                    <a href="#ProductMaintenance">Add product</a>
-				</ul>
-			</div>
-			</nav>
-		</header>
-        <div ng-view></div>
+<!--		<header>-->
+<!--			<nav class="navbar navbar-default">-->
+<!--			<div class="container">-->
+<!--				<div class="navbar-header">-->
+<!--					<a class="navbar-brand" href="/">Angular Routing Example</a>-->
+<!--				</div>-->
+<!---->
+<!--				<ul class="nav navbar-nav navbar-right">-->
+<!--					<li><a href="#"><i class="fa fa-home"></i> Home</a></li>-->
+<!--                    <a href="#ProductMaintenance">Add product</a>-->
+<!--				</ul>-->
+<!--			</div>-->
+<!--			</nav>-->
+<!--		</header>-->
+        <div class="page {{pageClass}}" ng-view></div>
               
         <script type = "text/javascript" src="ScriptsLibs/angular.js"></script>
         <script type = "text/javascript" src="ScriptsLibs/angular-route.js"></script>
@@ -29,6 +31,7 @@
         <script type=  "text/javascript" src="ScriptsLibs/ui-bootstrap-tpls-0.11.0.js"></script>
         <script type = "text/javascript" src="Scripts/app.js"></script>
         <script type = "text/javascript" src="Controllers/ProductMaintenanceController.js"></script>
+        <script type = "text/javascript" src="Controllers/MainPageController.js"></script>
 
     </body>
 </html>

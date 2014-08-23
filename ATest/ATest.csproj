@@ -51,6 +51,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Controllers\MainPageController.js" />
     <Content Include="Controllers\ProductMaintenanceController.js" />
     <Content Include="CssLibs\bootstrap-theme.css" />
     <Content Include="CssLibs\bootstrap-theme.min.css" />
@@ -72,6 +73,7 @@
     <Content Include="ScriptsLibs\ui-bootstrap-0.11.0.js" />
     <Content Include="ScriptsLibs\ui-bootstrap-tpls-0.11.0.js" />
     <Content Include="Scripts\app.js" />
+    <Content Include="style.css" />
     <Content Include="Test.htm" />
     <Content Include="Views\MainPage.html" />
     <Content Include="Views\ProductMaintenance.html" />

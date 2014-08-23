@@ -1,5 +1,6 @@
 ﻿((function() {
     var app = angular.module("AngularTest");
-    app.controller('ProductMaintenanceController', function () {
-    });
+    app.controller('ProductMaintenanceController', ['$scope',function ($scope) {
+        $scope.pageClass = 'page-ProductMaintenance';
+    }]);
 })())
