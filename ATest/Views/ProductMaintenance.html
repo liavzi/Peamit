@@ -1,8 +1,8 @@
 ﻿<div>
     <form name="ProductMaintenanceForm" novalidate="true">
-        Id : <input type="text" name="Id" ng-model="liav"required /> {{liav}}<br/>
-        Price : <input type="number" name="Id" required /><br/>
-        <input type="submit" value="Submit">
+        Id : <input type="text" name="Id" ng-model="product.id" required /> 
+        Price : <input type="number" name="Id" ng-model="product.price" required /><br/>
+        <input type="submit" value="Submit" ng-click = "AddProduct()">
     </form>
 </div>
 
