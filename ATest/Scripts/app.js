@@ -1,5 +1,5 @@
 ﻿(function () {
-    var app = angular.module('AngularTest', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'ngResource']);
+    var app = angular.module('AngularTest', ['ui.bootstrap', 'ngRoute', 'ngAnimate','ngResource']);
     app.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
         $routeProvider.
             when('/', {
