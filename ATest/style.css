@@ -1,11 +1,4 @@
-﻿
-
-
-
-
-
-
-/* rotate and fall */
+﻿/* rotate and fall */
 @-webkit-keyframes rotateFall {
 	0% { -webkit-transform: rotateZ(0deg); }
 	20% { -webkit-transform: rotateZ(10deg); -webkit-animation-timing-function: ease-out; }
