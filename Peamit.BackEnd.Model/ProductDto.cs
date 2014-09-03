@@ -1,4 +1,4 @@
-﻿namespace Peamit.BackEnd.Server.Models
+﻿namespace Peamit.BackEnd.Model
 {
     public class ProductDto
     {

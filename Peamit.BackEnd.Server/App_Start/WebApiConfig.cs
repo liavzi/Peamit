@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Microsoft.Practices.Unity;
+using Peamit.BackEnd.DataAccess;
+using Peamit.BackEnd.Model;
+using Peamit.BackEnd.Server.Ioc;
 
 namespace Peamit.BackEnd.Server
 {
@@ -14,6 +15,10 @@ namespace Peamit.BackEnd.Server
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var container = new UnityContainer();
+            container.RegisterType<IProductDao, ProductDao>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
         }
     }
 }

@@ -1,45 +1,48 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
-using Peamit.BackEnd.Server.Models;
+using Peamit.BackEnd.Model;
 
 namespace Peamit.BackEnd.Server.Controllers
 {
     public class ProductsController : ApiController
     {
-        ProductDto[] _products = new ProductDto[]
-        { 
-            new ProductDto { Id = 1, Price = 1 }, 
-            new ProductDto { Id = 2, Price = 3.75m}, 
-            new ProductDto { Id = 3, Price = 16.99m } 
-        };
+        private readonly IProductDao _productDao;
 
+        public ProductsController(IProductDao productDao)
+        {
+            _productDao = productDao;
+        }
 
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        public IEnumerable<ProductDto> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _productDao.GetAll();
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public ProductDto Get(ulong id)
         {
-            return "value";
+            return Get().Single(x => x.Id == id);
         }
 
         // POST api/<controller>
         public void Post([FromBody]ProductDto product)
         {
-
+            _productDao.Save(product);
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]ProductDto product)
         {
+            _productDao.GetAll().RemoveAll(x => x.Id == product.Id);
+            _productDao.Save(product);
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public void Delete(ulong id)
         {
+            _productDao.GetAll().RemoveAll(x => x.Id == id);
         }
     }
 }
