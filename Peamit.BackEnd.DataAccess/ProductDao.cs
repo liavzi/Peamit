@@ -1,20 +1,35 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Win32;
 using Peamit.BackEnd.Model;
+using Raven.Client;
+using Raven.Client.Document;
+
 
 namespace Peamit.BackEnd.DataAccess
 {
     public class ProductDao : IProductDao
     {
-        private static List<ProductDto>_products = new List<ProductDto>();
+        private static IDocumentStore DocumentStore;
+
+        static ProductDao()
+        {
+            DocumentStore = new DocumentStore {Url = "http://localhost:8080/",DefaultDatabase = "Peamit"};
+            DocumentStore.Initialize();
+        }
 
         public void Save(ProductDto productDto)
         {
-            _products.Add(productDto);
+            using (var session = DocumentStore.OpenSession())
+            {
+                session.Store(productDto);
+                session.SaveChanges();
+            }       
         }
 
         public List<ProductDto> GetAll()
         {
-            return _products;
+            return DocumentStore.OpenSession().Query<ProductDto>().ToList();
         }
     }
 }

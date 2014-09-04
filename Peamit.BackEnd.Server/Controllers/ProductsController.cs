@@ -21,7 +21,7 @@ namespace Peamit.BackEnd.Server.Controllers
         }
 
         // GET api/<controller>/5
-        public ProductDto Get(ulong id)
+        public ProductDto Get(int id)
         {
             return Get().Single(x => x.Id == id);
         }
@@ -40,7 +40,7 @@ namespace Peamit.BackEnd.Server.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(ulong id)
+        public void Delete(int id)
         {
             _productDao.GetAll().RemoveAll(x => x.Id == id);
         }
