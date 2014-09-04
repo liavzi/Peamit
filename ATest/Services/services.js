@@ -3,7 +3,8 @@
     app.factory('ProductMaintenance', ['$resource', function ($resource) {
         return $resource('http://localhost/Peamit/api/products/:id', {id : '@id'},
        {
-           'update': { method: 'PUT' }
+           'update': { method: 'PUT' },
+           'getAll': { method: 'GET',isArray:true}
        });
     } ]);
 })();
