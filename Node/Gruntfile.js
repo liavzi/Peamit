@@ -13,27 +13,46 @@ module.exports = function(grunt) {
     // this way we can use things like name and version (pkg.name)
     pkg: grunt.file.readJSON('package.json'),
 
-	// all of our configuration will go here
-
-    // configure jshint to validate js files -----------------------------------
+    // check all js files for errors
     jshint: {
-        options: {
-          reporter: require('jshint-stylish') // use jshint-stylish to make our errors look and read good
-        },
+      all: ['src/**/*.js'] 
+    },
 
-        // when this task is run, lint the Gruntfile and all js files in src
-        build: ['Gruntfile.js', 'src/**/*.js']
-        
-    }
+	// all of our configuration will go herev
 
+    // configure nodemon
+    nodemon: {
+      dev: {
+        script: 'server.js'
+      }
+    },
+
+    // COOL TASKS ==============================================================
+    // watch css and js files and process the above tasks
+    watch: {
+      js: {
+        files: ['src/**/*.js'],
+        tasks: ['jshint']
+      }
+    },
+
+    // run watch and nodemon at the same time
+    concurrent: {
+      options: {
+        logConcurrentOutput: true
+      },
+      tasks: ['nodemon', 'watch']
+    }   
   });
 
   // ===========================================================================
   // LOAD GRUNT PLUGINS ========================================================
   // ===========================================================================
-  // we can only load these if they are in our package.json
-  // make sure you have run npm install so our app can find these
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-concurrent');
+
+  grunt.registerTask('default', ['jshint', 'concurrent']);
 
 };
