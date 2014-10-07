@@ -4,8 +4,8 @@
 		"selected_items":
 		[
 			[
-				"http",
-				"http.createServer"
+				"Produc",
+				"Product"
 			],
 			[
 				"node",
@@ -16,18 +16,18 @@
 	"buffers":
 	[
 		{
-			"file": "Node/Gruntfile.js",
+			"file": "Node/src/schemas/productSchema.js",
 			"settings":
 			{
-				"buffer_size": 1738,
+				"buffer_size": 129,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Node/Server.js",
+			"file": "Node/src/models/ProductModel.js",
 			"settings":
 			{
-				"buffer_size": 1215,
+				"buffer_size": 174,
 				"line_ending": "Windows"
 			}
 		}
@@ -35,27 +35,31 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 58.0,
+		"height": 334.0,
 		"selected_items":
 		[
 			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
 				"remove",
 				"Package Control: Remove Package"
+			],
+			[
+				"node",
+				"SublimeREPL: Node"
 			],
 			[
 				"install",
 				"Package Control: Install Package"
 			],
 			[
-				"inst",
+				"insta",
 				"Package Control: Install Package"
 			],
 			[
-				"remov",
-				"Package Control: Remove Package"
-			],
-			[
-				"node",
+				"rep",
 				"SublimeREPL: Node"
 			],
 			[
@@ -100,21 +104,29 @@
 	},
 	"expanded_folders":
 	[
-		"/D/ws/ATest",
-		"/D/ws/ATest/Node"
+		"/D/ws/Peamit",
+		"/D/ws/Peamit/Node",
+		"/D/ws/Peamit/Node/src",
+		"/D/ws/Peamit/Node/src/models",
+		"/D/ws/Peamit/Node/src/schemas"
 	],
 	"file_history":
 	[
+		"/D/ws/Peamit/Node/src/schemes/ProductSchema.js",
+		"/D/ws/Peamit/Node/Server.js",
+		"/D/ws/Peamit/Node/package.json",
+		"/D/ws/Peamit/Node/Gruntfile.js",
+		"/D/ws/Peamit/Node/node_modules/grunt-contrib-watch/package.json",
+		"/D/ws/Peamit/Node/src/SomeFile.js",
+		"/D/ws/Peamit/Node/src/Server.js",
 		"/D/ws/Node/Project1/server.js",
-		"/D/ws/ATest/Node/Server.js",
-		"/D/ws/ATest/Node/package.json",
 		"/C/ws/Trunk/Servers/Store/App/Src/ServiceHost/GPOSWebService/Logs/GPOSWebService_DTRAALIAVZ.log",
 		"/C/Users/LZ250085/AppData/Roaming/Sublime Text 3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
 		"/C/Users/LZ250085/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 0.0
 	},
 	"find_in_files":
 	{
@@ -128,8 +140,6 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"    }",
-			" "
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -152,26 +162,24 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Node/Gruntfile.js",
+					"file": "Node/src/schemas/productSchema.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1738,
+						"buffer_size": 129,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1505,
-								1505
+								0,
+								39
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -182,19 +190,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "Node/Server.js",
-					"semi_transient": true,
+					"file": "Node/src/models/ProductModel.js",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1215,
+						"buffer_size": 174,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								173,
+								173
 							]
 						],
 						"settings":
@@ -213,7 +221,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 0.0
 	},
 	"input":
 	{
@@ -249,7 +257,7 @@
 	"project": "PeamitSubLime.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 0.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -284,7 +292,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 283.0,
+	"side_bar_width": 241.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
