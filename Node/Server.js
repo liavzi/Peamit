@@ -5,6 +5,11 @@
 var express    = require('express'); 		// call express
 var app        = express(); 				// define our app using express
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+
+var registerRoutes = require("./src/routers/registerRouters");
+mongoose.connect('mongodb://localhost/peamit');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -26,7 +31,7 @@ router.get('/', function(req, res) {
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api', router);
+registerRoutes(app);
 
 // START THE SERVER
 // =============================================================================
