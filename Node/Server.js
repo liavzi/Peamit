@@ -6,10 +6,10 @@ var express    = require('express'); 		// call express
 var app        = express(); 				// define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
-
 var registerRoutes = require("./src/routers/registerRouters");
-mongoose.connect('mongodb://localhost/peamit');
+var path = require('path');
+var databaseConfig = require("./config/databaseConfig.json");
+mongoose.connect(databaseConfig.url);
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
