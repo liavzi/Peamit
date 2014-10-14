@@ -2,9 +2,9 @@ var express = require("express");
 var productService = require("../services/productService");
 var productRouter = express.Router();
 productRouter.route("/products")
-	.post(function (req,res){
+	.post(function (req,res,next){
 		productService.createProduct(req.body,function(err,product){
-			if (err) res.end(err.toString());
+			if (err) next(err);
 			res.json(product);
 			res.end();
 		});		

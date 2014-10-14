@@ -1,10 +1,12 @@
-var expect = require('chai').expect;
+var chai = require("chai");
+var chaiHttp = require("chai-http");
+var expect = chai.expect;
+chai.use(chaiHttp);
+var serverActor = require("./framework/serverActor");
 
 
-describe('Array', function(){
-  describe('#indexOf()', function(){
-    it('should return -1 when the value is not present', function(){
-    	expect(1).to.equal(1);
-    })
-  })
-})
+describe('ProductService', function(){
+    it('should save and retrun product', function(done){
+    	serverActor.productService.post({"_id":5010,"name":"SomeProduct"},function(res){done();}); 	
+    });
+});
