@@ -3,7 +3,7 @@ var request = require("superagent");
 
 
 function Service(serviceName){
-	this.serviceName =	this.serviceName;
+	this.serviceName =	serviceName;
 }
 
 Service.prototype.getById = function(id,callback){
