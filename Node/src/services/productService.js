@@ -21,11 +21,16 @@ var productService = {
 		});
 	},
 	updateProduct : function(product,callback){
-		Product.update({_id:product._id},product,function(err){
-			if (err) callback(err);
-			callback();
-		});
-	},
+        var createProduct = this.createProduct;
+        Product.findById(product._id,function(err,dbProduct){
+            if (err) callback(err);
+            console.log("moved on!");
+            if (!dbProduct)
+                createProduct(product,callback);
+            else
+                dbProduct.update(product,callback);
+        });
+	}
 };
 
 module.exports = productService;

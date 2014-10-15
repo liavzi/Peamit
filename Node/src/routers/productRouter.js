@@ -25,9 +25,12 @@ productRouter.route("/products/:productId")
 		});		
 	})
 	.put(function(req,res){
-		productService.updateProduct(req.body,function(err){
+		productService.updateProduct(req.body,function(err,product){
 			if (err) res.end(err.toString());
-			res.end('{"success" : "Updated Successfully", "status" : 200}');
+            else{
+                res.json(product);
+                res.end()
+            }
 		});
 	});
 

@@ -7,8 +7,8 @@ function Service(serviceName){
 }
 
 Service.prototype.getById = function(id,callback){
-	request(config.serverUrl)
-		.get("//"+this.serviceName+"//"+id)
+	request
+		.get(config.serverUrl+"/"+this.serviceName+"/"+id)
 		.end(function(res){
 			callback(res.body);
 		});
@@ -21,6 +21,15 @@ Service.prototype.post = function(data,callback){
 		.end(function(res){
 			callback(res.body);
 		});
+};
+
+Service.prototype.put = function(data,callback){
+    request
+        .put(config.serverUrl+"/"+this.serviceName+"/"+data._id)
+        .send(data)
+        .end(function(res){
+            callback(res.body);
+        });
 };
 
 module.exports = Service;
