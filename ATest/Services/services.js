@@ -1,9 +1,9 @@
 ﻿(function() {
     var app = angular.module('AngularTest');
-    app.factory('ProductMaintenance', ['$resource', function ($resource) {
-        return $resource('http://localhost/Peamit/api/products/:id', {id : '@id'},
+    app.factory('ProductResource', ['$resource', function ($resource) {
+        return $resource('http://localhost:8080/api/products/:id', {id : '@_id'},
        {
-           'update': { method: 'PUT' },
+           'put': { method: 'PUT' },
            'getAll': { method: 'GET',isArray:true}
        });
     } ]);

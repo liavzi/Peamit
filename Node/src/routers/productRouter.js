@@ -29,7 +29,7 @@ productRouter.route("/products/:productId")
 			if (err) res.end(err.toString());
             else{
                 res.json(product);
-                res.end()
+                res.end();
             }
 		});
 	});

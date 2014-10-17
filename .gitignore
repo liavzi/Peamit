@@ -28,3 +28,4 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 Node/node_modules/
+Node/_idea/

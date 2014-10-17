@@ -1,9 +1,9 @@
 ﻿((function() {
     var app = angular.module("AngularTest");
-    app.controller('ProductMaintenanceController', ['$scope', 'ProductMaintenance', function ($scope, productMaintenance) {
+    app.controller('ProductMaintenanceController', ['$scope', 'ProductResource', function ($scope, productResource) {
         $scope.product = {};
         $scope.AddProduct = function() {
-            productMaintenance.save({id:null},$scope.product);
+            productResource.put({},$scope.product);
         };
     }]);
 })())
