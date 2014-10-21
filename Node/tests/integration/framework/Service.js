@@ -6,7 +6,7 @@ function Service(serviceName){
 	this.serviceName =	serviceName;
 }
 
-Service.prototype.getAll = function(id,callback){
+Service.prototype.getAll = function(callback){
     request
         .get(config.serverUrl+"/"+this.serviceName)
         .end(function(res){
