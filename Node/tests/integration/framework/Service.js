@@ -6,6 +6,14 @@ function Service(serviceName){
 	this.serviceName =	serviceName;
 }
 
+Service.prototype.getAll = function(id,callback){
+    request
+        .get(config.serverUrl+"/"+this.serviceName)
+        .end(function(res){
+            callback(res.error,res.body);
+        });
+};
+
 Service.prototype.getById = function(id,callback){
 	request
 		.get(config.serverUrl+"/"+this.serviceName+"/"+id)
@@ -28,7 +36,7 @@ Service.prototype.put = function(data,callback){
         .put(config.serverUrl+"/"+this.serviceName+"/"+data._id)
         .send(data)
         .end(function(res){
-            callback(res.body);
+            callback(res.error,res.body);
         });
 };
 
