@@ -28,7 +28,7 @@ describe('ProductService', function(){
         });
     });
 
-    it('Return all products', function(done){
+    it('should return all products', function(done){
         async.parallel([
             function(callback){createProduct("GetAllProduct1",callback)},
             function(callback){createProduct("GetAllProduct2",callback)},
