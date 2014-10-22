@@ -4,7 +4,8 @@ var GenericService = require("../services/GenericService");
 
 var productService = new GenericService(require("../models/ProductModel"));
 entityToService = {
-    "products" : productService
+    "products" : productService,
+    "prices" : new GenericService(require("../models/PriceModel"))
 };
 
 function getService(req) {
