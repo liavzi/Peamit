@@ -7,4 +7,10 @@
            'getAll': { method: 'GET',isArray:true}
        });
     } ]);
+    app.factory('ProductForSellingResource', ['$resource', function ($resource) {
+        return $resource('http://localhost:8080/api/productForSelling/:id', {id : '@_id'},
+            {
+                'getAll': { method: 'GET',isArray:true}
+            });
+    } ]);
 })();
