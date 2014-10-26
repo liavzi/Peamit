@@ -1,8 +1,8 @@
-var productRouter = require("./productRouter");
+var productForSellingRouter = require("../routers/productForSellingRouter");
 var genericRouter = require("./genericRouter");
 
 function registerRouters (app){
-	//app.use("/api",productRouter);
+	app.use("/api",productForSellingRouter);
 	app.use("/api",genericRouter);
 }
 

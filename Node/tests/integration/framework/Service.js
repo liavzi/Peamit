@@ -18,7 +18,7 @@ Service.prototype.getById = function(id,callback){
 	request
 		.get(config.serverUrl+"/"+this.serviceName+"/"+id)
 		.end(function(res){
-			callback(res.body);
+			callback(res.error,res.body);
 		});
 };
 
@@ -27,7 +27,7 @@ Service.prototype.post = function(data,callback){
 		.post(config.serverUrl+"//"+this.serviceName)
 		.send(data)
 		.end(function(res){
-			callback(res.body);
+			callback(res.error,res.body);
 		});
 };
 

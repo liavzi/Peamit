@@ -2,36 +2,16 @@ var chai = require("chai");
 var expect = chai.expect;
 var serverActor = require("./framework/serverActor");
 var async = require("async");
+var testUtils = require("./framework/testUtils");
 
 describe('productForSellingServiceShould', function(){
-    it('should update existing product using put', function(done){
-        var product = createProductObject("PutTestProduct");
-        serverActor.productService.put(product,function(err,savedProduct){
-            expect(savedProduct.name).to.equal("PutTestProduct");
-            savedProduct.name = "NameAfterUpdate";
-            serverActor.productService.put(savedProduct,function(){
-                serverActor.productService.getById(savedProduct._id,function(secondProduct){
-                    expect(secondProduct.name).to.equal("NameAfterUpdate");
-                    done();
-                })
+    it('return a product with its price', function(done){
+        testUtils.createProductWithPrice("someProduct",10,function(err,productWithPrice) {
+            serverActor.productForSellingService.getById(productWithPrice._id,function(err,returnedProduct) {
+                expect(returnedProduct._id).to.equal(productWithPrice._id);
+                expect(returnedProduct.price).to.equal(10);
+                done();
             });
         });
     });
 });
-
-var randomInt = function (low, high) {
-    return Math.floor(Math.random() * (high - low) + low);
-}
-
-var createProductObject = function(name){
-    return {
-        _id : randomInt(1,500000),
-        name : name
-
-    };
-}
-
-var createProduct = function(name,callback){
-    var product = createProductObject(name);
-    serverActor.productService.put(product,callback);
-}
