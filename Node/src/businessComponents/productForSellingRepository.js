@@ -8,6 +8,25 @@ var productForSellingRepository = {
             function(callback){getProduct(productId,callback)},
             function(callback){getPrice(productId,callback)}],
             createAndReturnProductForSelling(callback));
+    },
+
+    getAll : function(callback){
+        var productWithPrices = [];
+        var getById = this.getById;
+        Product.find().select("_id").exec(function(err,productsIds){
+            async.each(productsIds,function(productId,done){
+                getById(productId,function(err,productWithPrice){
+                    if (err) done(err);
+                    else
+                    {
+                        productWithPrices.push(productWithPrice);
+                        done();
+                    }
+                })
+            },function(err){
+                callback(err,productWithPrices);
+            });
+        });
     }
 };
 

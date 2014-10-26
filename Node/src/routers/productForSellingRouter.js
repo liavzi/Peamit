@@ -2,9 +2,9 @@ var express = require("express");
 var productForSellingService = require("../services/productForSellingService")
 var productForSellingRouter = express.Router();
 productForSellingRouter.route("/productForSelling")
-    .get(function(req,res){
-        productService.getAllProducts(function(err,products){
-            if (err) res.end(err.toString());
+    .get(function(req,res,next){
+        productForSellingService.getAll(function(err,products){
+            if (err) next(err);
             res.json(products);
             res.end();
         });
