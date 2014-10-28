@@ -8,7 +8,7 @@ describe('ProductService', function(){
     it('should create a new product when using put', function(done){
         var product = testUtils.createProductObject("PutTestProduct");
         serverActor.productService.put(product,function(err,res){
-            serverActor.productService.getById(product._id,function(savedProduct){
+            serverActor.productService.getById(product._id,function(err,savedProduct){
                 expect(savedProduct.name).to.equal("PutTestProduct");
                 done();
             })
@@ -21,7 +21,7 @@ describe('ProductService', function(){
             expect(savedProduct.name).to.equal("PutTestProduct");
             savedProduct.name = "NameAfterUpdate";
             serverActor.productService.put(savedProduct,function(){
-                serverActor.productService.getById(savedProduct._id,function(secondProduct){
+                serverActor.productService.getById(savedProduct._id,function(err,secondProduct){
                     expect(secondProduct.name).to.equal("NameAfterUpdate");
                     done();
                 })
