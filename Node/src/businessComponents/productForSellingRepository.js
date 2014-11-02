@@ -1,5 +1,6 @@
 var Product = require("../models/ProductModel");
 var Price = require("../models/PriceModel");
+var priceList = require("./priceList");
 var async = require("async");
 
 var productForSellingRepository = {
@@ -16,7 +17,11 @@ var productForSellingRepository = {
         Product.find().select("_id").exec(function(err,productsIds){
             async.each(productsIds,function(productId,done){
                 getById(productId,function(err,productWithPrice){
-                    if (err) done(err);
+                    if (err)
+                        if (err.name!="NoPriceForProduct")
+                            done(err);
+                        else
+                            done();
                     else
                     {
                         productWithPrices.push(productWithPrice);
@@ -35,20 +40,22 @@ var getProduct =  function (productId, callback) {
 };
 
 var getPrice =  function (productId, callback) {
-    Price.find().where("productId").equals(productId).exec(callback)
+    priceList.getPrice(productId,callback);
 };
 
 function createProductForSelling(results) {
     var product = results[0].toObject();
-    var price = results[1][0];
+    var price = results[1];
     product.price = price.value;
     return product;
 }
 var createAndReturnProductForSelling = function (callback){
     return function(err,results) {
         if (err) callback(err);
-        var product = createProductForSelling(results);
-        callback(null, product);
+        else{
+            var product = createProductForSelling(results);
+            callback(null, product);
+        }
     };
 };
 
