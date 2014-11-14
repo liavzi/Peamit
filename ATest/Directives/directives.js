@@ -6,7 +6,10 @@
             scope : {
                 product : "="
             },
-            templateUrl : "Views/productForSelling.html"
+            templateUrl : "Views/productForSelling.html",
+            controller : function($scope){
+                $scope.product.quantity = 0;
+            }
         };
     });
 
