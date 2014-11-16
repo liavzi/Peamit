@@ -1,16 +1,17 @@
 (function() {
     var app = angular.module('AngularTest');
-    app.directive("productForSelling",function(){
+    app.directive("productForSelling",["$modal",function($modal){
         return {
             restrict : "EA",
             scope : {
-                product : "="
+                product : "=",
+                addToCart : function(){}
             },
             templateUrl : "Views/productForSelling.html",
             controller : function($scope){
                 $scope.product.quantity = 0;
             }
         };
-    });
+    }]);
 
 })();
