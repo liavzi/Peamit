@@ -1,7 +1,7 @@
 var express = require("express");
 var addItemToOrderService = require("../services/addItemToOrderService");
 var addItemToOrderRouter = express.Router();
-addItemToOrderRouter.route("/order/:orderId/items")
+addItemToOrderRouter.route("/orders/:orderId/items")
     .post(function(req,res,next){
         var request = {};
         request.orderId = req.params.orderId;

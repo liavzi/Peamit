@@ -8,7 +8,21 @@ addItemToOrderService.addItemToOrder = function(request,callback){
         else if (!order)
             callback(new Error("order with id"+request.orderId+"does not exists"));
         else
-            itemSeller.sell(order,request.saleInfo,callback);
+        {
+            itemSeller.sell(order,request.saleInfo,function(err,order){
+                if (err) callback(err);
+                else
+                {
+                    order.save(function(err){
+                        if (err) callback(err);
+                        else
+                        {
+                            callback(null,order);
+                        }
+                    });
+                }
+            });
+        }
     });
 };
 
