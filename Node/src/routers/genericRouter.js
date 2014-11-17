@@ -1,12 +1,13 @@
 var express = require("express");
 var genericRouter = express.Router();
 var GenericService = require("../services/GenericService");
+var orderService = require("../services/orderService");
 
 var productService = new GenericService(require("../models/ProductModel"));
 entityToService = {
     "products" : productService,
     "prices" : new GenericService(require("../models/PriceModel")),
-    "orders" : new GenericService(require("../models/OrderModel"))
+    "orders" : orderService
 };
 
 function getService(req) {
