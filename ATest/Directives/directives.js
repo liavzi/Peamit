@@ -4,13 +4,21 @@
         return {
             restrict : "EA",
             scope : {
-                product : "=",
-                addToCart : function(){}
+                product : "="
             },
             templateUrl : "Views/productForSelling.html",
             controller : function($scope){
                 $scope.product.quantity = 0;
-            }
+            },
+            link : function(scope){
+                scope.addToCart = function(){
+                    $modal.open({
+                        templateUrl:"Views/ProductSoldModal.html",
+                        size:"lg"
+                    });
+                };
+            },
+            windowClass  : "center-modal"
         };
     }]);
 

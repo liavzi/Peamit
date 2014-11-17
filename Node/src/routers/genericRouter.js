@@ -5,7 +5,8 @@ var GenericService = require("../services/GenericService");
 var productService = new GenericService(require("../models/ProductModel"));
 entityToService = {
     "products" : productService,
-    "prices" : new GenericService(require("../models/PriceModel"))
+    "prices" : new GenericService(require("../models/PriceModel")),
+    "orders" : new GenericService(require("../models/OrderModel"))
 };
 
 function getService(req) {
@@ -14,12 +15,14 @@ function getService(req) {
 
 function handleErrorOrWriteToResponse(err, next, res, entity) {
     if (err) next(err);
-    res.json(entity);
-    res.end();
+    else{
+        res.json(entity);
+        res.end();
+    }
 }
 genericRouter.route("/:entityName")
     .post(function (req,res,next){
-        getService(req).createOrUpdate(req.body,function(err,entity){
+        getService(req).create(req.body,function(err,entity){
             handleErrorOrWriteToResponse(err,next,res,entity)
         });
     })
