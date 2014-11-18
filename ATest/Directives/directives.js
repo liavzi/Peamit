@@ -1,6 +1,6 @@
 (function() {
     var app = angular.module('AngularTest');
-    app.directive("productForSelling",["$modal",function($modal){
+    app.directive("productForSelling",["$modal","AddItemToCartService",function($modal,addItemToCartService){
         return {
             restrict : "EA",
             scope : {
@@ -12,6 +12,7 @@
             },
             link : function(scope){
                 scope.addToCart = function(){
+                    addItemToCartService.addItemToCart({productId:scope.product._id,quantity:scope.product.quantity});
                     $modal.open({
                         templateUrl:"Views/ProductSoldModal.html",
                         size:"lg"
