@@ -10,9 +10,13 @@
                 templateUrl: 'Views/ProductMaintenance.html',
                 controller: 'ProductMaintenanceController'
             }).           
-             when('/Catalog', {
+            when('/Catalog', {
                 templateUrl: 'Views/Catalog.html',
                 controller: 'CatalogController'
+            }).
+            when('/MyOrder', {
+                templateUrl: 'Views/MyOrder.html',
+                controller: 'MyOrderController'
             }).
             otherwise({
                 redirectTo: '/'

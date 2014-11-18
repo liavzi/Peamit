@@ -1,0 +1,15 @@
+<div class="container">
+    <div ng-repeat="orderLine in order.orderLines">
+        <div class="row">
+            <div class="col-xs-4">
+                {{orderLine.productId}}
+            </div>
+            <div class="col-xs-4">
+                {{orderLine.quantity}}
+            </div>
+            <div class="col-xs-4">
+                {{orderLine.totalPrice}}
+            </div>
+        </div>
+    </div>
+</div>
