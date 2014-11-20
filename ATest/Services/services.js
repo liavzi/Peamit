@@ -4,7 +4,8 @@
         return $resource('http://localhost:8080/api/products/:id', {id : '@_id'},
        {
            'put': { method: 'PUT' },
-           'getAll': { method: 'GET',isArray:true}
+           'getAll': { method: 'GET',isArray:true},
+           "getById" : {method : "GET"}
        });
     } ]);
     app.factory('ProductForSellingResource', ['$resource', function ($resource) {

@@ -1,15 +1,14 @@
-<div class="container">
-    <div ng-repeat="orderLine in order.orderLines">
-        <div class="row">
-            <div class="col-xs-4">
-                {{orderLine.productId}}
-            </div>
-            <div class="col-xs-4">
-                {{orderLine.quantity}}
-            </div>
-            <div class="col-xs-4">
-                {{orderLine.totalPrice}}
-            </div>
-        </div>
-    </div>
-</div>
+<table class="table">
+   <tr>
+       <td class="h4">שם מוצר</th>
+       <td class="h4">כמות</th>
+       <td class="h4">מחיר</td>
+   </tr>
+   <tr ng-repeat="orderLine in order.orderLines" ng-controller="OrderLineController">
+       <div >
+           <td>{{product.name}}</td>
+           <td>{{orderLine.quantity}}</td>
+           <td>{{orderLine.totalPrice}}</td>
+       </div>
+   </tr>
+</table>
