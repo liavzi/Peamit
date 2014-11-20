@@ -23,4 +23,8 @@ orderSchema.methods.addOrderLine = function(orderLineToAdd){
         this.orderLines.push(orderLineToAdd);
 };
 
+orderSchema.methods.removeLineById= function(orderLineId){
+    this.orderLines.id(orderLineId).remove();
+};
+
 module.exports = orderSchema;
