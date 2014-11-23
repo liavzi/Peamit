@@ -33,4 +33,7 @@ orderSchema.methods.removeLineById= function(orderLineId){
     this.orderLines.id(orderLineId).remove();
 };
 
+orderSchema.set("toJSON",{getters:true});
+orderSchema.set("toObject",{getters:true});
+
 module.exports = orderSchema;

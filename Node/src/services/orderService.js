@@ -13,13 +13,4 @@ OrderService.prototype.create = function(orderCreationArgs,callback){
 
 var orderService = new OrderService();
 
-orderService.getById = function(id,callback){
-    genericService.getById(id,function(err,order){
-        if (err) return callback(err);
-        var orderResponse = order.toObject();
-        orderResponse.total = order.total;
-        callback(null,orderResponse);
-    });
-};
-
 module.exports = orderService;
