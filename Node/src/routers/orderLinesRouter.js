@@ -5,7 +5,7 @@ orderLinesRouter.route("/orders/:orderId/lines/:orderLineId")
     .delete(function(req,res,next){
         var request = {};
         request.orderId = req.params.orderId;
-        request.orderLineId = req.orderLineId;
+        request.orderLineId = req.params.orderLineId;
         addItemToOrderService.removeLineFromOrder(request,function(err,order){
             if (err) return next(err);
             res.json(order);

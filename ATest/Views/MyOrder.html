@@ -4,11 +4,12 @@
        <td class="h4">כמות</td>
        <td class="h4">מחיר</th>
    </td>
-   <tr ng-repeat="orderLine in order.orderLines" ng-controller="OrderLineController">
+   <tr ng-repeat="orderLine in orderModel.order.orderLines" ng-controller="OrderLineController">
        <div >
            <td>{{product.name}}</td>
            <td>{{orderLine.quantity}}</td>
            <td>{{orderLine.totalPrice}}</td>
+           <td><i class="fa fa-times" ng-click="removeOrderLine()"></i></td>
        </div>
    </tr>
 </table>

@@ -51,4 +51,10 @@
             });
     } ]);
     app.service('AddItemToCartService', ['AddItemToCartResource',"OrderResource",AddItemToCartService]);
+
+    app.factory('OrderLinesResource', ['$resource', function ($resource) {
+        return $resource('http://localhost:8080/api/orders/:orderId/lines/:orderLineId', {id : '@_id'},
+            {
+            });
+    } ]);
 })();
