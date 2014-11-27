@@ -2,6 +2,10 @@ function GenericService(model){
     this._model = model;
 }
 
+GenericService.prototype.create = function(entity,callback){
+    this._model.create(entity,callback);
+};
+
 GenericService.prototype.createOrUpdate = function(entity,callback){
     var model = this._model;
     this._model.findById(entity._id,function(err,dbEntity){
@@ -13,7 +17,7 @@ GenericService.prototype.createOrUpdate = function(entity,callback){
     });
 };
 
-GenericService.prototype.getAll = function(callback){
+GenericService.prototype.getAll = function(query,callback){
     this._model.find({},callback);
  };
 

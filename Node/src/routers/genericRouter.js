@@ -2,12 +2,13 @@ var express = require("express");
 var genericRouter = express.Router();
 var GenericService = require("../services/GenericService");
 var orderService = require("../services/orderService");
+var tagService = require("../services/tagService");
 
-var productService = new GenericService(require("../models/ProductModel"));
 entityToService = {
-    "products" : productService,
+    "products" :  new GenericService(require("../models/ProductModel")),
     "prices" : new GenericService(require("../models/PriceModel")),
-    "orders" : orderService
+    "orders" : orderService,
+    "tags" : tagService
 };
 
 function getService(req) {
@@ -28,7 +29,7 @@ genericRouter.route("/:entityName")
         });
     })
     .get(function(req,res,next){
-        getService(req).getAll(function(err,entities){
+        getService(req).getAll(req.query,function(err,entities){
             handleErrorOrWriteToResponse(err,next,res,entities)
         });
     });

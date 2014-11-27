@@ -1,3 +1,10 @@
-/**
- * Created by lz250085 on 24/11/2014.
- */
+var mongoose     = require('mongoose');
+var Schema       = mongoose.Schema;
+
+var tagSchema   = new Schema({
+    name: String,
+    productIds : [Number],
+    type : String
+});
+
+module.exports = tagSchema;
