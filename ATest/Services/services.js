@@ -57,4 +57,11 @@
             {
             });
     } ]);
+
+    app.factory('TagResource', ['$resource', function ($resource) {
+        return $resource('http://localhost:8080/api/tags/:tagId', {tagId : '@_id'},
+            {
+                "getAll": {mehod:"GET",isArray:true}
+            });
+    } ]);
 })();

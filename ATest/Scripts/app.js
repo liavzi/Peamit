@@ -14,6 +14,10 @@
                 templateUrl: 'Views/Catalog.html',
                 controller: 'CatalogController'
             }).
+            when('/ProductsByTag', {
+                templateUrl: 'Views/ProductByTag.html',
+                controller: 'ProductByTagController'
+            }).
             when('/MyOrder', {
                 templateUrl: 'Views/MyOrder.html',
                 controller: 'MyOrderController'
