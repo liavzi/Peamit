@@ -3,7 +3,7 @@ var productForSellingService = require("../services/productForSellingService")
 var productForSellingRouter = express.Router();
 productForSellingRouter.route("/productForSelling")
     .get(function(req,res,next){
-        productForSellingService.getAll(function(err,products){
+        productForSellingService.getAll(req.query,function(err,products){
             if (err) next(err);
             res.json(products);
             res.end();

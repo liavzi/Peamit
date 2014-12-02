@@ -2,37 +2,38 @@ var Product = require("../models/ProductModel");
 var Price = require("../models/PriceModel");
 var priceList = require("./priceList");
 var async = require("async");
+var Tag = require("../models/TagModel");
 
-var productForSellingRepository = {
-    getById : function(productId,callback){
-        async.parallel([
-            function(callback){getProduct(productId,callback)},
-            function(callback){getPrice(productId,callback)}],
-            createAndReturnProductForSelling(callback));
-    },
+var productForSellingRepository = {};
+productForSellingRepository.getById =function(productId,callback){
+    async.parallel([
+        function(callback){getProduct(productId,callback)},
+        function(callback){getPrice(productId,callback)}],
+        createAndReturnProductForSelling(callback));
+};
 
-    getAll : function(callback){
-        var productWithPrices = [];
-        var getById = this.getById;
-        Product.find().select("_id").exec(function(err,productsIds){
-            async.each(productsIds,function(productId,done){
-                getById(productId,function(err,productWithPrice){
-                    if (err)
-                        if (err.name!="NoPriceForProduct")
-                            done(err);
-                        else
-                            done();
+productForSellingRepository.getAll = function(searchCriteria,callback){
+    var productWithPrices = [];
+    var getById = this.getById;
+    Tag.findById(searchCriteria.tagId,function(err,tag){
+        if (err) return callback(err);
+        async.each(tag.productIds,function(productId,done){
+            getById(productId,function(err,productWithPrice){
+                if (err)
+                    if (err.name!="NoPriceForProduct")
+                        done(err);
                     else
-                    {
-                        productWithPrices.push(productWithPrice);
                         done();
-                    }
-                })
-            },function(err){
-                callback(err,productWithPrices);
-            });
+                else
+                {
+                    productWithPrices.push(productWithPrice);
+                    done();
+                }
+            })
+        },function(err){
+            callback(err,productWithPrices);
         });
-    }
+    });
 };
 
 var getProduct =  function (productId, callback) {

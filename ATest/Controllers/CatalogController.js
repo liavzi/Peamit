@@ -18,12 +18,6 @@
     app.service("ProductByTagDataModel",ProductByTagDataModel);
 
     app.controller('ProductByTagController', ['$scope',"ProductByTagDataModel","ProductForSellingResource", function ($scope,productByTagDataModel,productForSellingResource){
-        productForSellingResource.getAll(function(allProducts){
-            $scope.products = _.filter(allProducts,function(product){
-                return _.some(productByTagDataModel.chosenTag.productIds,function(productId){
-                    return product._id === productId;
-                });
-            });
-        });
+        $scope.products = productForSellingResource.getAll({tagId : productByTagDataModel.chosenTag._id});
     } ]);
 })());
