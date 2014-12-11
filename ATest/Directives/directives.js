@@ -23,4 +23,20 @@
         };
     }]);
 
+    app.directive("productTag",["$location","ProductByTagDataModel",function($location,productByTagDataModel){
+        return {
+          restrict : "EA",
+          scope : {
+              tag : "="
+          },
+          templateUrl : "Views/ProductTag.html",
+          link : function ($scope){
+              $scope.chooseTag = function(){
+                  productByTagDataModel.chosenTag = $scope.tag;
+                  $location.path("/ProductsByTag");
+              };
+          }
+        };
+    }]);
+
 })();
