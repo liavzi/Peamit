@@ -21,27 +21,32 @@
             });
     } ]);
 
-    function AddItemToCartService(addItemToCartResource,orderResource){
+    function AddItemToCartService($q,addItemToCartResource,orderResource){
         this._addItemToCartResource = addItemToCartResource;
         this._orderResource = orderResource;
+        this.$q = $q;
     }
 
     AddItemToCartService.prototype._addItemToOrder = function(orderId,saleInfo){
-        this._addItemToCartResource.add({orderId : orderId},saleInfo)
+        return this._addItemToCartResource.add({orderId : orderId},saleInfo).$promise;
     };
 
     AddItemToCartService.prototype.addItemToCart = function(saleInfo){
+        var deferred = this.$q.defer();
         var orderId = localStorage.getItem("orderId");
         var self = this;
         if (!orderId){
             this._orderResource.create({},function(order){
                 localStorage.setItem("orderId",order._id);
-                self._addItemToOrder(order._id,saleInfo);
+                self._addItemToOrder(order._id,saleInfo).then(function(value){
+                    deferred.resolve(value)});
             });
         }
         else{
-            self._addItemToOrder(orderId,saleInfo);
+            self._addItemToOrder(orderId,saleInfo).then(function(value){
+                deferred.resolve(value)});
         }
+        return deferred.promise;
     };
 
     app.factory('AddItemToCartResource', ['$resource', function ($resource) {
@@ -50,7 +55,7 @@
                 'add': { method: 'POST'}
             });
     } ]);
-    app.service('AddItemToCartService', ['AddItemToCartResource',"OrderResource",AddItemToCartService]);
+    app.service('AddItemToCartService', ["$q",'AddItemToCartResource',"OrderResource",AddItemToCartService]);
 
     app.factory('OrderLinesResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/orders/:orderId/lines/:orderLineId', {id : '@_id'},

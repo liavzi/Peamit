@@ -1,5 +1,14 @@
 (function() {
     var app = angular.module('AngularTest');
+
+    app.controller("ProductSoldModalController",["$scope","$modalInstance","$location","soldProduct",function ($scope, $modalInstance,$location,soldProduct){
+        $scope.soldProduct = soldProduct;
+        $scope.pay = function(){
+            $modalInstance.close();
+            $location.path("/MyOrder");
+        };
+    }]);
+
     app.directive("productForSelling",["$modal","AddItemToCartService",function($modal,addItemToCartService){
         return {
             restrict : "EA",
@@ -12,11 +21,18 @@
             },
             link : function(scope){
                 scope.addToCart = function(){
-                    addItemToCartService.addItemToCart({productId:scope.product._id,quantity:scope.product.quantity});
-                    $modal.open({
+                    var itemSoldPromise = addItemToCartService.addItemToCart({productId:scope.product._id,quantity:scope.product.quantity});
+                    var modalInstance = $modal.open({
                         templateUrl:"Views/ProductSoldModal.html",
-                        size:"lg"
+                        size:"lg",
+                        controller : "ProductSoldModalController",
+                        resolve : {
+                            itemSold : function(){return itemSoldPromise;},
+                            soldProduct : function(){return angular.copy(scope.product);}
+                        }
                     });
+                    scope.product.quantity = 0;
+
                 };
             },
             windowClass  : "center-modal"
