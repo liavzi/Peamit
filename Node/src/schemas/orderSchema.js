@@ -9,7 +9,14 @@ var orderLineSchema = new Schema({
     totalPrice : Number
 });
 var orderSchema   = new Schema({
-    orderLines : [orderLineSchema]
+    orderLines : [orderLineSchema],
+    customerDetails : {
+        fullName : String,
+        address : String,
+        phoneNumber : Number,
+        email : String
+    },
+    state : String
 });
 
 orderSchema.virtual("total").get(function(){
@@ -31,6 +38,20 @@ orderSchema.methods.addOrderLine = function(orderLineToAdd){
 
 orderSchema.methods.removeLineById= function(orderLineId){
     this.orderLines.id(orderLineId).remove();
+};
+
+orderSchema.methods.closeByPhone = function(customerDetails){
+    if (!customerDetails.phoneNumber) throw new Error("Customer must supply phone number");
+    this.customerDetails = customerDetails;
+    this.state = "ClosedByPhone";
+};
+
+orderSchema.statics.strictFindById = function(orderId,callback){
+    this.findById(orderId,function(err,order) {
+        if (err) return callback(err);
+        if (!order) return callback(new Error("order with id" + orderId + "does not exists"));
+        callback(null,order);
+    });
 };
 
 orderSchema.set("toJSON",{getters:true});

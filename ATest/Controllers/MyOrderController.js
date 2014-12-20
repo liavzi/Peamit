@@ -1,8 +1,18 @@
 ((function () {
     var app = angular.module("AngularTest");
-    app.controller('MyOrderController', ['$scope', 'OrderResource', function ($scope, orderResource) {
+
+    app.service("OrderDataModel",function(){
+        this.getOrCreateOrderId = function(){
+            return localStorage.getItem("orderId");
+        };
+    });
+
+    app.controller('MyOrderController', ['$scope', 'OrderResource',"CloseOrderByPhoneResource","OrderDataModel", function ($scope, orderResource,closeOrderByPhoneResource,orderDataModel) {
         $scope.orderModel = {};
         $scope.orderModel.order  =  orderResource.get({orderId:localStorage.getItem("orderId")});
+        $scope.closeOrderByPhone = function (){
+            closeOrderByPhoneResource.closeOrderByPhone({orderId:orderDataModel.getOrCreateOrderId()},$scope.orderModel.order.customerDetails);
+        };
     } ]);
 
     app.controller('OrderLineController', ['$scope', 'ProductResource',"OrderLinesResource", function ($scope, productResource,orderLinesResource) {
