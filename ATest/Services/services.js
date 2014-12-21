@@ -21,9 +21,9 @@
             });
     } ]);
 
-    function AddItemToCartService($q,addItemToCartResource,orderResource){
+    function AddItemToCartService($q,addItemToCartResource,orderDataModel){
         this._addItemToCartResource = addItemToCartResource;
-        this._orderResource = orderResource;
+        this._orderDataModel = orderDataModel;
         this.$q = $q;
     }
 
@@ -33,21 +33,14 @@
 
     AddItemToCartService.prototype.addItemToCart = function(saleInfo){
         var deferred = this.$q.defer();
-        var orderId = localStorage.getItem("orderId");
         var self = this;
-        if (!orderId){
-            this._orderResource.create({},function(order){
-                localStorage.setItem("orderId",order._id);
-                self._addItemToOrder(order._id,saleInfo).then(function(value){
-                    deferred.resolve(value)});
-            });
-        }
-        else{
-            self._addItemToOrder(orderId,saleInfo).then(function(value){
-                deferred.resolve(value)});
-        }
+        this._orderDataModel.getOrCreateOrderId()
+            .then(function(orderId){self._addItemToOrder(orderId,saleInfo)})
+            .then(function(value){deferred.resolve(value)});
         return deferred.promise;
     };
+
+    app.service('AddItemToCartService', ["$q",'AddItemToCartResource',"OrderDataModel",AddItemToCartService]);
 
     app.factory('AddItemToCartResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/orders/:orderId/items',{},
@@ -55,7 +48,6 @@
                 'add': { method: 'POST'}
             });
     } ]);
-    app.service('AddItemToCartService', ["$q",'AddItemToCartResource',"OrderResource",AddItemToCartService]);
 
     app.factory('OrderLinesResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/orders/:orderId/lines/:orderLineId', {},
