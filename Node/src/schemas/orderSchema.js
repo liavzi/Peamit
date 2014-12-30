@@ -1,6 +1,7 @@
 var _ = require("underscore");
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
+var mailSender =  require("../businessComponents/mailSender");
 
 
 var orderLineSchema = new Schema({
@@ -44,6 +45,10 @@ orderSchema.methods.closeByPhone = function(customerDetails){
     if (!customerDetails.phoneNumber) throw new Error("Customer must supply phone number");
     this.customerDetails = customerDetails;
     this.state = "ClosedByPhone";
+
+    //uncomment when we will want to send mails
+    //var orderAsString = JSON.stringify(this);
+    //mailSender.send(orderAsString);
 };
 
 orderSchema.statics.strictFindById = function(orderId,callback){
