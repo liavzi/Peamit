@@ -13,6 +13,8 @@
 
     app.controller('ProductMaintenanceController', ['$scope', 'ProductResource', function ($scope, productResource) {
         $scope.product = {};
+        $scope.product.prices = [];
+        $scope.product.prices.push({});
         $scope.AddProduct = function() {
             productResource.put({},$scope.product);
         };
