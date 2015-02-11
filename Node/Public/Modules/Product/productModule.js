@@ -11,7 +11,7 @@
         $scope.products = productForSellingResource.getAll({tagId : productByTagDataModel.chosenTag._id});
     } ]);
 
-    app.controller('ProductMaintenanceController', ['$scope', 'ProductResource', function ($scope, productResource) {
+    app.controller('AddProductController', ['$scope', 'ProductResource', function ($scope, productResource) {
         $scope.product = {};
         $scope.product.prices = [];
         $scope.product.prices.push({});

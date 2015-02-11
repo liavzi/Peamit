@@ -3,8 +3,8 @@
     app.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
         $routeProvider.
             when('/ProductMaintenance', {
-                templateUrl: '/ManagementViews/AddProduct.html',
+                templateUrl: '/ManagementViews/ProductMaintenance.html',
                 controller : "ProductMaintenanceController"
-            })
+            });
     }]);
 } ());
