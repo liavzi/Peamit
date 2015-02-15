@@ -11,12 +11,22 @@
         $scope.products = productForSellingResource.getAll({tagId : productByTagDataModel.chosenTag._id});
     } ]);
 
-    app.controller('AddProductController', ['$scope', 'ProductResource', function ($scope, productResource) {
-        $scope.product = {};
+    app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource',function ($scope,$routeParams,productResource) {
+        if ($routeParams.productId)
+            $scope.product = productResource.getById({id:$routeParams.productId});
+        else
+            $scope.product = {};
         $scope.product.prices = [];
         $scope.product.prices.push({});
         $scope.AddProduct = function() {
             productResource.put({},$scope.product);
+        };
+    }]);
+
+    app.controller("ProductsViewController",["$scope",'ProductResource',"$location",function($scope,productResource,$location){
+        $scope.products = productResource.getAll();
+        $scope.editProduct = function (product) {
+            $location.path("/ProductMaintenance/"+product._id);
         };
     }]);
 

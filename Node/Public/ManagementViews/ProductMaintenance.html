@@ -1,13 +1,23 @@
-<table>
-    <th>
-        <tr>
-            <th>
-                <td>מזהה</td>
-                <td>מזהה</td>
-                <td>מזהה</td>
-                <td>מזהה</td>
-            </th>
-        </tr>
+﻿<div>
+    <form name="ProductMaintenanceForm" novalidate="true" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-1" for="productId"> מזהה</label>
+            <input id="productId" type="text" name="productId" ng-model="product._id" required />
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1" for="productName"> שם</label>
+            <input id="productName" type="text" name="productName" ng-model="product.name" required />
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1" for="פproductPrice"> מחיר</label>
+            <input id="פproductPrice"  type="text" name="פproductPrice"  ng-model="product.prices[0].value" required />
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1" for="productImgUrl">כתובת תמונה(url)</label>
+            <input id="productImgUrl" type="text" name="productImgUrl" ng-model="product.imageUrl"/>
+        </div>
 
-    </th>
-</table>
+        <input type="submit" class="btn btn-default" value="Submit" ng-click = "AddProduct()">
+    </form>
+</div>
+

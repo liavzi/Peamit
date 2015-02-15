@@ -4,12 +4,12 @@
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
         <link href="/CssLibs/bootstrap.css" rel="stylesheet" />
         <link rel="stylesheet" href="//cdn.rawgit.com/morteza/bootstrap-rtl/master/dist/cdnjs/3.3.1/css/bootstrap-rtl.min.css">
-        <link href="/CssLibs/metro-bootstrap.css" rel="stylesheet" />
+        <!--<link rel="stylesheet" href="/CssLibs/metro-bootstrap.css" />-->
         <link rel="stylesheet" href="/CssLibs/animate.css" />
         <link rel="stylesheet" href="/style.css" />
         <title>Peamit Management</title>
     </head>
-    <body dir = "rtl">
+    <body dir="rtl">
         <nav class="navbar navbar-inverse" role="navigation">
 
             <div class="navbar-header">
@@ -18,13 +18,13 @@
         </nav>
         <div class="container">
             <div class="row">
-                <div class="view-container col-sm-9">
-                    <div ng-view></div>
-                </div>
                 <div class="col-sm-3">
                     <ul class="nav nav-tabs nav-stacked span1">
-                        <li><a href="#Products">הוסף מוצר</a></li>
+                        <li><a href="#ProductsView">הוסף מוצר</a></li>
                     </ul>
+                </div>
+                <div class="view-container col-sm-9">
+                    <div ng-view></div>
                 </div>
         </div>
         </div>
