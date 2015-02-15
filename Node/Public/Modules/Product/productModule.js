@@ -23,10 +23,17 @@
         };
     }]);
 
-    app.controller("ProductsViewController",["$scope",'ProductResource',"$location",function($scope,productResource,$location){
-        $scope.products = productResource.getAll();
-        $scope.editProduct = function (product) {
+    app.controller("ProductsViewController",['ProductResource',"$location",function(productResource,$location){
+        this.products = productResource.getAll();
+        this.editProduct = function (product) {
             $location.path("/ProductMaintenance/"+product._id);
+        };
+        this.selectProduct = function (product) {
+            this.selectedProduct = product;
+        };
+        this.deleteProduct = function(product){
+            productResource.delete({id:product._id});
+            this.products = productResource.getAll();
         };
     }]);
 

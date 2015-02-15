@@ -4,7 +4,8 @@
         $routeProvider.
             when('/ProductsView', {
                 templateUrl: '/ManagementViews/ProductsView.html',
-                controller : "ProductsViewController"
+                controller : "ProductsViewController",
+                controllerAs : "productViewController"
             }).
             when("/ProductMaintenance/:productId",{
                 templateUrl: '/ManagementViews/ProductMaintenance.html',
