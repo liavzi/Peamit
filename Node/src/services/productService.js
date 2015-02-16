@@ -33,4 +33,8 @@ var productService = {
 	}
 };
 
+productService.deleteProduct = function(productId,callback){
+    Product.findById(productId).remove(callback);
+};
+
 module.exports = productService;

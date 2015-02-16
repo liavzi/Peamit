@@ -25,5 +25,9 @@ GenericService.prototype.getById = function(id,callback){
     this._model.findById(id,callback);
 };
 
+GenericService.prototype.deleteById = function(id,callback){
+    this._model.findById(id).remove(callback);
+};
+
 module.exports = GenericService;
 

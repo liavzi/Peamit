@@ -44,6 +44,11 @@ genericRouter.route("/:entityName/:entityId")
         getService(req).createOrUpdate(req.body,function(err,entity){
             handleErrorOrWriteToResponse(err, next, res, entity);
         });
+    })
+    .delete(function(req,res,next){
+        getService(req).deleteById(req.params.entityId,function(err,entity){
+            handleErrorOrWriteToResponse(err, next, res, entity);
+        });
     });
 
 module.exports = genericRouter;

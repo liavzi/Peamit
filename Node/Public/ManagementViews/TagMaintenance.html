@@ -1,0 +1,34 @@
+<div ng-controller="TagMaintenanceController as tmc">
+    <form name="TagMaintenanceForm" novalidate="true" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-1" for="tagName"> שם</label>
+            <input id="tagName" type="text" name="tagName" ng-model="tag.name" required />
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1" for="tagType"> סוג</label>
+            <input id="tagType"  type="text" name="tagType"  ng-model="tag.type" required />
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1" > מוצרים</label>
+            <div class="col-sm-2">
+                <ui-select id="tagProductIds" multiple ng-model="tmc.tag.productIds" theme="bootstrap" >
+                    <ui-select-match placeholder="Select Products...">{{$item._id}} &lt;{{$item.name}}&gt;</ui-select-match>
+                    <ui-select-choices repeat="product.name as product in tmc.products">
+                        <div ng-bind-html="tmc.trustAsHtml(product.name | highlight: $select.search)"></div>
+                        <small>
+                            name: {{product.name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1" for="tagImgUrl">כתובת תמונה(url)</label>
+            <input id="tagImgUrl" type="text" name="tagImgUrl" ng-model="tag.imageUrl"/>
+        </div>
+        <input type="submit" class="btn btn-default" value="Submit" ng-click = "addTag()">
+    </form>
+
+    {{tmc.tag}}
+</div>
+

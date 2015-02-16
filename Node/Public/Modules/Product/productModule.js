@@ -32,8 +32,40 @@
             this.selectedProduct = product;
         };
         this.deleteProduct = function(product){
-            productResource.delete({id:product._id});
-            this.products = productResource.getAll();
+            var self  = this;
+            productResource.delete({id:product._id},function(){
+                self.products = productResource.getAll();
+            });
+        };
+    }])
+
+    app.controller("TagsViewController",['TagResource',"$location",function(tagResource,$location){
+        this.tags = tagResource.getAll();
+        this.editTag = function (tag) {
+            $location.path("/ProductMaintenance/"+tag._id);
+        };
+        this.selectTag = function (tag) {
+            this.selectedTag = tag;
+        };
+        this.deleteTag = function(tag){
+            var self  = this;
+            tagResource.delete({id:tag._id},function(){
+                self.tags = tagResource.getAll();
+            });
+        };
+    }]);
+
+    app.controller('TagMaintenanceController', ['$scope',"$sce","$routeParams",'TagResource',"ProductResource",function ($scope,$routeParams,tagResource,productResource) {
+        this.products = productResource.getAll();
+        if ($routeParams.tag)
+            $scope.tag = tagResource.getById({id:$routeParams.tagId});
+        else
+            $scope.tag = {};
+        this.addTag = function() {
+            tagResource.put({},$scope.tag);
+        };
+        this.trustAsHtml = function(value) {
+            return $sce.trustAsHtml(value);
         };
     }]);
 
@@ -77,9 +109,10 @@
     } ]);
 
     app.factory('TagResource', ['$resource', function ($resource) {
-        return $resource('http://localhost:8080/api/tags/:tagId', {tagId : '@_id'},
+        return $resource('http://localhost:8080/api/tags/:id', {id : '@_id'},
             {
-                "getAll": {mehod:"GET",isArray:true}
+                "getAll": {mehod:"GET",isArray:true},
+                "getById" : {method : "GET"}
             });
     } ]);
 
