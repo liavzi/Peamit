@@ -42,7 +42,7 @@
     app.controller("TagsViewController",['TagResource',"$location",function(tagResource,$location){
         this.tags = tagResource.getAll();
         this.editTag = function (tag) {
-            $location.path("/ProductMaintenance/"+tag._id);
+            $location.path("/TagMaintenance/"+tag._id);
         };
         this.selectTag = function (tag) {
             this.selectedTag = tag;
@@ -55,17 +55,14 @@
         };
     }]);
 
-    app.controller('TagMaintenanceController', ['$scope',"$sce","$routeParams",'TagResource',"ProductResource",function ($scope,$routeParams,tagResource,productResource) {
+    app.controller('TagMaintenanceController', ['$scope',"$routeParams",'TagResource',"ProductResource",function ($scope,$routeParams,tagResource,productResource) {
         this.products = productResource.getAll();
-        if ($routeParams.tag)
-            $scope.tag = tagResource.getById({id:$routeParams.tagId});
+        if ($routeParams.tagId)
+            this.tag = tagResource.getById({id:$routeParams.tagId});
         else
-            $scope.tag = {};
+            this.tag = {};
         this.addTag = function() {
             tagResource.put({},$scope.tag);
-        };
-        this.trustAsHtml = function(value) {
-            return $sce.trustAsHtml(value);
         };
     }]);
 

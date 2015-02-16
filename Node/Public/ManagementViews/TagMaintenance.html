@@ -12,12 +12,9 @@
             <label class="col-sm-1" > מוצרים</label>
             <div class="col-sm-2">
                 <ui-select id="tagProductIds" multiple ng-model="tmc.tag.productIds" theme="bootstrap" >
-                    <ui-select-match placeholder="Select Products...">{{$item._id}} &lt;{{$item.name}}&gt;</ui-select-match>
-                    <ui-select-choices repeat="product.name as product in tmc.products">
-                        <div ng-bind-html="tmc.trustAsHtml(product.name | highlight: $select.search)"></div>
-                        <small>
-                            name: {{product.name}}
-                        </small>
+                    <ui-select-match placeholder="Select Products...">{{$item._id}} {{$item.name}} </ui-select-match>
+                    <ui-select-choices repeat="product._id as product in tmc.products | filter :$select.search">
+                        <span class="h2">{{product.name}}</span>
                     </ui-select-choices>
                 </ui-select>
             </div>
