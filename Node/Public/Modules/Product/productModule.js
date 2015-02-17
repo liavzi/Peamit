@@ -56,7 +56,11 @@
     }]);
 
     app.controller('TagMaintenanceController', ['$scope',"$routeParams",'TagResource',"ProductResource",function ($scope,$routeParams,tagResource,productResource) {
-        this.products = productResource.getAll();
+        var self =this;
+        this.products = [];
+        productResource.getAll().$promise.then(function(products){
+            this.products = products;
+        });
         if ($routeParams.tagId)
             this.tag = tagResource.getById({id:$routeParams.tagId});
         else

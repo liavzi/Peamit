@@ -2,26 +2,20 @@
     <form name="TagMaintenanceForm" novalidate="true" class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-1" for="tagName"> שם</label>
-            <input id="tagName" type="text" name="tagName" ng-model="tag.name" required />
+            <input id="tagName" type="text" name="tagName" ng-model="tag.name" required class="col-md-3"/>
         </div>
         <div class="form-group">
             <label class="col-sm-1" for="tagType"> סוג</label>
-            <input id="tagType"  type="text" name="tagType"  ng-model="tag.type" required />
+            <input id="tagType"  type="text" name="tagType"  ng-model="tag.type" required class="col-md-3" />
         </div>
         <div class="form-group">
             <label class="col-sm-1" > מוצרים</label>
-            <div class="col-sm-2">
-                <ui-select id="tagProductIds" multiple ng-model="tmc.tag.productIds" theme="bootstrap" >
-                    <ui-select-match placeholder="Select Products...">{{$item._id}} {{$item.name}} </ui-select-match>
-                    <ui-select-choices repeat="product._id as product in tmc.products | filter :$select.search">
-                        <span class="h2">{{product.name}}</span>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
+            <peamit-select source="tmc.products" searched-property="name" selected ="tmc.tag.productIds" multiple="multiple" class="col-md-3">
+            </peamit-select>
         </div>
         <div class="form-group">
             <label class="col-sm-1" for="tagImgUrl">כתובת תמונה(url)</label>
-            <input id="tagImgUrl" type="text" name="tagImgUrl" ng-model="tag.imageUrl"/>
+            <input id="tagImgUrl" type="text" name="tagImgUrl" ng-model="tag.imageUrl" class="col-md-3"/>
         </div>
         <input type="submit" class="btn btn-default" value="Submit" ng-click = "addTag()">
     </form>

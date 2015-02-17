@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute', 'ngAnimate','ngResource',"Product","ui.select"]);
+    var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute', 'ngAnimate','ngResource',"Product","Utils"]);
     app.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
         $routeProvider.
             when('/ProductsView', {
