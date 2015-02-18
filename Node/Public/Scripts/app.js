@@ -13,7 +13,7 @@
                 templateUrl: 'Views/Catalog.html',
                 controller: 'CatalogController'
             }).
-            when('/ProductsByTag', {
+            when('/ProductsByTag/:tagId?', {
                 templateUrl: 'Views/ProductByTag.html',
                 controller: 'ProductByTagController'
             }).

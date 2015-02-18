@@ -1,19 +1,16 @@
-var Price = require("../models/PriceModel");
-var priceList = {
-    getPrice : function(productId,callback){
-        Price.find().where("productId").equals(productId).exec(function(err,prices){
-            if (err) callback(err);
-            else if (prices.length === 0)
-            {
-                var noPriceError = new Error("no price for product "+productId);
-                noPriceError.name = "NoPriceForProduct";
-                callback(noPriceError)
-            }
-            else{
-                callback(null,prices[0]);
-            }
-        })
-    }
+var Product = require("../models/ProductModel");
+
+var priceList = {};
+priceList.getPrice =function (productId, callback) {
+    Product.findById(productId,function(err,product){
+        var prices = product.prices;
+        if (prices.length === 0) {
+            var noPriceError = new Error("no price for product " + productId);
+            noPriceError.name = "NoPriceForProduct";
+            return callback(noPriceError)
+        }
+        callback(null, prices[0]);
+    });
 };
 
 module.exports = priceList;

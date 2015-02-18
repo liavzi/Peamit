@@ -6,10 +6,16 @@ var Tag = require("../models/TagModel");
 
 var productForSellingRepository = {};
 productForSellingRepository.getById =function(productId,callback){
-    async.parallel([
-        function(callback){getProduct(productId,callback)},
-        function(callback){getPrice(productId,callback)}],
-        createAndReturnProductForSelling(callback));
+    Product.findById(productId,function(err,product){
+        if (err) return callback(err);
+        var productForSelling = createProductForSelling(product);
+        if (!productForSelling.price){
+            var error = new Error();
+            error.name = "NoPriceForProduct";
+            return callback(error);
+        }
+        callback(null,productForSelling);
+    });
 };
 
 productForSellingRepository.getAll = function(searchCriteria,callback){
@@ -36,28 +42,12 @@ productForSellingRepository.getAll = function(searchCriteria,callback){
     });
 };
 
-var getProduct =  function (productId, callback) {
-    Product.findById(productId,callback);
-};
-
-var getPrice =  function (productId, callback) {
-    priceList.getPrice(productId,callback);
-};
-
-function createProductForSelling(results) {
-    var product = results[0].toObject();
-    var price = results[1];
-    product.price = price.value;
-    return product;
+function createProductForSelling(dbProduct) {
+    var productForSelling = dbProduct.toObject();
+    productForSelling.prices = null;
+    if (dbProduct.prices && dbProduct.prices.length>0)
+        productForSelling.price = dbProduct.prices[0];
+    return productForSelling;
 }
-var createAndReturnProductForSelling = function (callback){
-    return function(err,results) {
-        if (err) callback(err);
-        else{
-            var product = createProductForSelling(results);
-            callback(null, product);
-        }
-    };
-};
 
 module.exports = productForSellingRepository;

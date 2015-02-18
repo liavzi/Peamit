@@ -11,17 +11,20 @@
                 searchedProperty : "@"
             },
             link : function(scope,elem){
-                scope.$watch(function(){return scope.source;},function(source){
+                scope.$watch("source",function(source){
                     if (elem.data("select2")) elem.select2("destroy");
-                    var data = _.map(source,function(x){var y=x;y.text = x[scope.searchedProperty];return y});
+                    var data =[];
+                    source.forEach(function(x){
+                       data.push({id: x._id,text: x[scope.searchedProperty]});
+                    });
                     var options = {
-                        data :  source
+                        data :  data
                     };
                     elem.select2(options);
                     elem.on("select2:select",function(){
                         scope.$apply(function(){scope.selected = elem.val();});
                     });
-                });
+                },true);
             }
         };
     }]);

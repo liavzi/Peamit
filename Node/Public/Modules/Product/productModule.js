@@ -7,8 +7,8 @@
         $scope.groupTags = tagResource.getAll({type:"group"});
     } ]);
 
-    app.controller('ProductByTagController', ['$scope',"ProductByTagDataModel","ProductForSellingResource", function ($scope,productByTagDataModel,productForSellingResource){
-        $scope.products = productForSellingResource.getAll({tagId : productByTagDataModel.chosenTag._id});
+    app.controller('ProductByTagController', ['$scope',"$routeParams","ProductForSellingResource", function ($scope,$routeParams,productForSellingResource){
+        $scope.products = productForSellingResource.getAll({tagId : $routeParams.tagId});
     } ]);
 
     app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource',function ($scope,$routeParams,productResource) {
@@ -59,14 +59,14 @@
         var self =this;
         this.products = [];
         productResource.getAll().$promise.then(function(products){
-            this.products = products;
+            self.products = products;
         });
         if ($routeParams.tagId)
             this.tag = tagResource.getById({id:$routeParams.tagId});
         else
             this.tag = {};
         this.addTag = function() {
-            tagResource.put({},$scope.tag);
+            tagResource.post(this.tag);
         };
     }]);
 
@@ -81,8 +81,7 @@
             templateUrl : "Views/ProductTag.html",
             link : function ($scope){
                 $scope.chooseTag = function(){
-                    productByTagDataModel.chosenTag = $scope.tag;
-                    $location.path("/ProductsByTag");
+                    $location.path("/ProductsByTag/"+$scope.tag._id);
                 };
             }
         };
@@ -112,6 +111,7 @@
     app.factory('TagResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/tags/:id', {id : '@_id'},
             {
+                'post': { method: 'POST' },
                 "getAll": {mehod:"GET",isArray:true},
                 "getById" : {method : "GET"}
             });
