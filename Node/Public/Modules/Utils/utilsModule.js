@@ -1,28 +1,46 @@
 (function(){
     var app= angular.module("Utils",[]);
     app.directive("peamitSelect",[function(){
+        function initializeSelectize(elem,scope) {
+            var options = {
+                valueField : "_id",
+                labelField : scope.searchedProperty
+            };
+            var selectize = elem.selectize(options)[0].selectize;
+            elem.data("selectizeIntialized", true);
+            return selectize;
+        }
+
+        function updateSelectizeOptions(selectize,options){
+            selectize.clearOptions();
+            selectize.addOption(options);
+            selectize.refreshOptions();
+        };
+
         return {
             restrict : "E",
             replace : true,
-            template : "<select></select>",
+            template : "<input type=\"text\">",
             scope : {
                 source : "=",
                 selected : "=",
                 searchedProperty : "@"
-            },
+            } ,
             link : function(scope,elem){
+                var selectize = initializeSelectize(elem,scope);
+                updateSelectizeOptions(selectize,scope.source);
                 scope.$watch("source",function(source){
-                    if (elem.data("select2")) elem.select2("destroy");
-                    var data =[];
-                    source.forEach(function(x){
-                       data.push({id: x._id,text: x[scope.searchedProperty]});
-                    });
-                    var options = {
-                        data :  data
-                    };
-                    elem.select2(options);
-                    elem.on("select2:select",function(){
-                        scope.$apply(function(){scope.selected = elem.val();});
+                    updateSelectizeOptions(selectize,source);
+                },true);
+                selectize.on("change",function(value){
+                    scope.$apply(function(){scope.selected = selectize.items;});
+                });
+                scope.$watch("selected",function(selected){
+                    if (!selected || selected.length==0) return;
+                    if (angular.equals(selected,selectize.items,true)) return;
+                    selectize.clear();
+                    selected.forEach(function(x){
+                        selectize.addItem(x,true);
                     });
                 },true);
             }
