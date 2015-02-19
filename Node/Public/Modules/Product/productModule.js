@@ -12,16 +12,27 @@
     } ]);
 
     app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource',function ($scope,$routeParams,productResource) {
-        if ($routeParams.productId)
+        if ($routeParams.productId){
             $scope.product = productResource.getById({id:$routeParams.productId});
-        else
-            $scope.product = {};
-        $scope.product.prices = [];
-        $scope.product.prices.push({});
+            $scope.product.$promise.then(function(product){
+                initializePrices($scope.product);
+            });
+        }
+        else {
+            $scope.product = { };
+            initializePrices($scope.product);
+        }
         $scope.AddProduct = function() {
             productResource.put({},$scope.product);
         };
     }]);
+
+    function initializePrices(product){
+        if (product.prices){
+            product.prices = [];
+            product.prices.push({});
+        }
+    }
 
     app.controller("ProductsViewController",['ProductResource',"$location",function(productResource,$location){
         this.products = productResource.getAll();
@@ -66,7 +77,10 @@
         else
             this.tag = {};
         this.addTag = function() {
-            tagResource.post(this.tag);
+            if (this.tag._id)
+                tagResource.put(this.tag);
+            else
+                tagResource.post(this.tag);
         };
     }]);
 
@@ -111,6 +125,7 @@
     app.factory('TagResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/tags/:id', {id : '@_id'},
             {
+                'put': { method: 'PUT' },
                 'post': { method: 'POST' },
                 "getAll": {mehod:"GET",isArray:true},
                 "getById" : {method : "GET"}

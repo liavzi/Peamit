@@ -14,7 +14,6 @@
         function updateSelectizeOptions(selectize,options){
             selectize.clearOptions();
             selectize.addOption(options);
-            selectize.refreshOptions();
         };
 
         return {
