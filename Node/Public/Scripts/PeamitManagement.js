@@ -1,5 +1,6 @@
-(function () {
-    var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute', 'ngAnimate','ngResource',"Product","Utils"]);
+define(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule"
+,"../Modules/Utils/utilsModule.js","jQuery","underscore"],function () {
+    var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute','ngResource',"Product","Utils"]);
     app.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
         $routeProvider.
             when('/ProductsView', {
@@ -18,4 +19,4 @@
                 templateUrl: '/ManagementViews/TagMaintenance.html'
             });
     }]);
-} ());
+} );

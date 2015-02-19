@@ -1,4 +1,4 @@
-(function(){
+define(["angular","selectize"],function(){
     var app= angular.module("Utils",[]);
     app.directive("peamitSelect",[function(){
         function initializeSelectize(elem,scope) {
@@ -45,4 +45,4 @@
             }
         };
     }]);
-})();
+});
