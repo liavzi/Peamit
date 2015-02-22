@@ -6,7 +6,10 @@
         </div>
         <div class="form-group">
             <label class="col-sm-1" for="tagType"> סוג</label>
-            <input id="tagType"  type="text" name="tagType"  ng-model="tmc.tag.type" required class="col-md-3" />
+            <select id="tagType" name="tagType"  ng-model="tmc.tag.type" required class="col-md-3" >
+                <option>group</option>
+                <option>occasion</option>
+            </select>
         </div>
         <div class="form-group">
             <label class="col-sm-1" > מוצרים</label>
