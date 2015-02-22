@@ -1,4 +1,4 @@
-require.config({
+window.requireConfig={
     paths: {
         'jQuery': '//code.jquery.com/jquery-1.11.2.min',
         'underscore': 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min',
@@ -33,8 +33,4 @@ require.config({
         }
 
     }
-});
-
-require(["angular","PeamitManagement"],function(){
-    angular.bootstrap(document, ['PeamitManagement']);
-});
+};

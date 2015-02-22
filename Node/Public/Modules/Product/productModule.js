@@ -28,7 +28,7 @@ define(["angular"],function(){
     }]);
 
     function initializePrices(product){
-        if (product.prices){
+        if (!product.prices){
             product.prices = [];
             product.prices.push({});
         }

@@ -1,14 +1,12 @@
-﻿(function () {
-    var app = angular.module('AngularTest', ['ui.bootstrap', 'ngRoute', 'ngAnimate','ngResource',"Order","Product"]);
-    app.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
+﻿require.config(requireConfig);
+require(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule"
+    ,"../Modules/Utils/utilsModule.js","../Modules/Order/orderModule.js","jQuery","underscore"],function () {
+    var app = angular.module('Peamit', ['ui.bootstrap', 'ngRoute','ngResource',"Order","Product"]);
+    app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.
             when('/', {
                 templateUrl: 'Views/MainPage.html'
             }).
-            when('/ProductMaintenance', {
-                templateUrl: 'Views/ProductMaintenance.html',
-                controller: 'ProductMaintenanceController'
-            }).           
             when('/Catalog', {
                 templateUrl: 'Views/Catalog.html',
                 controller: 'CatalogController'
@@ -25,4 +23,8 @@
                 redirectTo: '/'
             });
     }]);
-} ())
+
+    $(function(){
+        angular.bootstrap(document, ['Peamit']);
+    });
+});

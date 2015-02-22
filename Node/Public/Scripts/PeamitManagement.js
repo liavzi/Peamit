@@ -1,7 +1,8 @@
-define(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule"
+require.config(requireConfig);
+require(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule"
 ,"../Modules/Utils/utilsModule.js","jQuery","underscore"],function () {
     var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute','ngResource',"Product","Utils"]);
-    app.config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
+    app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.
             when('/ProductsView', {
                 templateUrl: '/ManagementViews/ProductsView.html',
@@ -19,4 +20,8 @@ define(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Produc
                 templateUrl: '/ManagementViews/TagMaintenance.html'
             });
     }]);
+
+    $(function(){
+        angular.bootstrap(document, ['PeamitManagement']);
+    });
 } );

@@ -1,4 +1,4 @@
-(function(){
+define(["angular"],function(){
     var app = angular.module("Order",[]);
 
     //Controllers
@@ -144,4 +144,4 @@
             });
     } ]);
 
-})();
+});

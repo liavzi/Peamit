@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html ng-app="AngularTest" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
         <link href="CssLibs/bootstrap.css" rel="stylesheet" />
         <link href="/CssLibs/metro-bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//cdn.rawgit.com/morteza/bootstrap-rtl/master/dist/cdnjs/3.3.1/css/bootstrap-rtl.min.css">
         <link rel="stylesheet" href="CssLibs/animate.css" />
         <link rel="stylesheet" href="style.css" />
         <title>Login</title>
@@ -16,10 +17,9 @@
                 </div>
                 <div>
                     <ol class="nav navbar-nav navbar-right">
-                        <li><a href="#MyOrder">ההזמנה שלי</a></li>
-                        <li><a href="#Catalog">קטלוג</a></li>
-                        <li><a href="#Product">הוסף מוצר</a></li>
                         <li><a href="#"><i class="fa fa-home"></i> ראשי</a></li>
+                        <li><a href="#Catalog">קטלוג</a></li>
+                        <li><a href="#MyOrder">ההזמנה שלי</a></li>
                     </ol>
                 </div>
 
@@ -27,14 +27,7 @@
         <div class="view-container">
             <div ng-view></div>
         </div>
-        <script type = "text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore.js"></script>
-        <script type = "text/javascript" src="ScriptsLibs/angular.js"></script>
-        <script type = "text/javascript" src="ScriptsLibs/angular-route.js"></script>
-        <script type = "text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-animate.js"></script>
-        <script type = "text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource.js"></script>
-        <script type=  "text/javascript" src="ScriptsLibs/ui-bootstrap-tpls-0.11.0.js"></script>
-        <script type = "text/javascript" src="Scripts/app.js"></script>
-        <script type = "text/javascript" src="Modules/Product/productModule.js"></script>
-        <script type = "text/javascript" src="Modules/Order/orderModule.js"></script>
+        <script type="text/javascript" src=/Scripts/requireConfig.js></script>
+        <script data-main="/Scripts/app.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.16/require.min.js"></script>
     </body>
 </html>
