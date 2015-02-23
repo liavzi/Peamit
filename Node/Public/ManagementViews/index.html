@@ -26,6 +26,9 @@
                     </ul>
                 </div>
                 <div class="view-container col-sm-9">
+                    <div ng-controller="alertsController as ac">
+                        <alert ng-repeat="alert in ac.alerts" type="{{alert.type}}">{{alert.message}}</alert>
+                    </div>
                     <div ng-view></div>
                 </div>
         </div>

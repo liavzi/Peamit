@@ -4,7 +4,8 @@ define(["angular","selectize"],function(){
         function initializeSelectize(elem,scope) {
             var options = {
                 valueField : "_id",
-                labelField : scope.searchedProperty
+                labelField : scope.searchedProperty,
+                searchField : scope.searchedProperty
             };
             var selectize = elem.selectize(options)[0].selectize;
             elem.data("selectizeIntialized", true);
@@ -45,4 +46,37 @@ define(["angular","selectize"],function(){
             }
         };
     }]);
+
+    var AlertService = function ($timeout) {
+        this.alerts = [];
+        this.$timeout = $timeout;
+    };
+
+    AlertService.$inject = ["$timeout"];
+
+    AlertService.prototype.addAlert = function (message,alertType){
+        var self = this;
+        this.alerts.push({message:message,type:alertType});
+
+        if (this.timeoutPromise){
+            this.$timeout.cancel(this.timeoutPromise);
+        }
+
+        this.timeoutPromise = this.$timeout(function(){
+            self.alerts.length = 0;
+            self.timeoutPromise = undefined;
+        },3000);
+    }
+
+    app.service("alertService",AlertService);
+
+    app.controller("alertsController",["alertService",function(alertService){
+        this.alerts = alertService.alerts;
+    }]);
+
+
+
+
+
+
 });

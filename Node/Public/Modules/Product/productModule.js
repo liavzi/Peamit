@@ -11,7 +11,7 @@ define(["angular"],function(){
         $scope.products = productForSellingResource.getAll({tagId : $routeParams.tagId});
     } ]);
 
-    app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource',function ($scope,$routeParams,productResource) {
+    app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource','alertService',function ($scope,$routeParams,productResource,alertService) {
         if ($routeParams.productId){
             $scope.product = productResource.getById({id:$routeParams.productId});
             $scope.product.$promise.then(function(product){
@@ -23,7 +23,11 @@ define(["angular"],function(){
             initializePrices($scope.product);
         }
         $scope.AddProduct = function() {
-            productResource.put({},$scope.product);
+            productResource.put({},$scope.product).$promise.then(function(){
+                alertService.addAlert("נשמר","success");
+            },function(){
+                alertService.addAlert("נכשל","danger");
+            });
         };
     }]);
 
