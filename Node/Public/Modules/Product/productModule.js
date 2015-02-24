@@ -1,5 +1,5 @@
-define(["angular"],function(){
-    var app = angular.module("Product",[]);
+define(["angular","../Infra/infraModule"],function(){
+    var app = angular.module("Product",["infra"]);
 
     //Controllers
     app.controller('CatalogController', ['$scope', 'ProductForSellingResource',"TagResource", function ($scope, productForSellingResource,tagResource) {
@@ -11,7 +11,7 @@ define(["angular"],function(){
         $scope.products = productForSellingResource.getAll({tagId : $routeParams.tagId});
     } ]);
 
-    app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource','alertService',function ($scope,$routeParams,productResource,alertService) {
+    app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource',function ($scope,$routeParams,productResource) {
         if ($routeParams.productId){
             $scope.product = productResource.getById({id:$routeParams.productId});
             $scope.product.$promise.then(function(product){
@@ -23,11 +23,7 @@ define(["angular"],function(){
             initializePrices($scope.product);
         }
         $scope.AddProduct = function() {
-            productResource.put({},$scope.product).$promise.then(function(){
-                alertService.addAlert("נשמר","success");
-            },function(){
-                alertService.addAlert("נכשל","danger");
-            });
+            productResource.put($scope.product);
         };
     }]);
 
@@ -48,7 +44,7 @@ define(["angular"],function(){
         };
         this.deleteProduct = function(product){
             var self  = this;
-            productResource.delete({id:product._id},function(){
+            productResource.delete(product._id,function(){
                 self.products = productResource.getAll();
             });
         };
@@ -64,7 +60,7 @@ define(["angular"],function(){
         };
         this.deleteTag = function(tag){
             var self  = this;
-            tagResource.delete({id:tag._id},function(){
+            tagResource.delete(tag._id,function(){
                 self.tags = tagResource.getAll();
             });
         };
@@ -110,13 +106,8 @@ define(["angular"],function(){
     //Services
     app.service("ProductByTagDataModel",function ProductByTagDataModel(){ });
 
-    app.factory('ProductResource', ['$resource', function ($resource) {
-        return $resource('http://localhost:8080/api/products/:id', {id : '@_id'},
-            {
-                'put': { method: 'PUT' },
-                'getAll': { method: 'GET',isArray:true},
-                "getById" : {method : "GET"}
-            });
+    app.factory('ProductResource', ['peamitResource', function (peamitResource) {
+        return peamitResource("products");
     } ]);
 
     app.factory('ProductForSellingResource', ['$resource', function ($resource) {
@@ -126,14 +117,8 @@ define(["angular"],function(){
             });
     } ]);
 
-    app.factory('TagResource', ['$resource', function ($resource) {
-        return $resource('http://localhost:8080/api/tags/:id', {id : '@_id'},
-            {
-                'put': { method: 'PUT' },
-                'post': { method: 'POST' },
-                "getAll": {mehod:"GET",isArray:true},
-                "getById" : {method : "GET"}
-            });
+    app.factory('TagResource', ['peamitResource', function (peamitResource) {
+        return peamitResource("tags");
     } ]);
 
 });

@@ -2,7 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var tagSchema   = new Schema({
-    name: String,
+    name: {type:String,required:true},
     productIds : [Number],
     type : String,
     imageUrl : String

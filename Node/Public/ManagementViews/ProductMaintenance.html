@@ -1,23 +1,26 @@
 ﻿<div>
-    <form name="ProductMaintenanceForm" novalidate="true" class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-1" for="productId"> מזהה</label>
-            <input id="productId" type="text" name="productId" ng-model="product._id" required />
+    <form name="ProductMaintenanceForm" novalidate class="form-horizontal">
+        <div class="form-group" ng-class="{'has-error':ProductMaintenanceForm.productId.$invalid}">
+            <label class="control-label" for="productId"> מזהה</label>
+            <input class="form-control" id="productId" type="number" name="productId" ng-model="product._id" ng-number="true" ng-required="true" />
+            <span ng-show="ProductMaintenanceForm.productId.$error.required" class="help-block col-sm-2">אנא הכנס מזהה למוצר</span>
+            <span ng-show="ProductMaintenanceForm.productId.$error.number" class="help-block col-sm-2">מזהה חייב להכיל מספר שלם בלבד</span>
+            {{ProductMaintenanceForm.productId.$error}}
         </div>
         <div class="form-group">
-            <label class="col-sm-1" for="productName"> שם</label>
-            <input id="productName" type="text" name="productName" ng-model="product.name" required />
+            <label class="control-label" for="productName"> שם</label>
+            <input class="form-control" id="productName" type="text" name="productName" ng-model="product.name" required />
         </div>
         <div class="form-group">
-            <label class="col-sm-1" for="productPrice"> מחיר</label>
-            <input id="productPrice"  type="text" name="productPrice"  ng-model="product.prices[0].value" required />
+            <label class="control-label" for="productPrice"> מחיר</label>
+            <input  class="form-control" id="productPrice"  type="text" name="productPrice"  ng-model="product.prices[0].value" required />
         </div>
         <div class="form-group">
-            <label class="col-sm-1" for="productImgUrl">כתובת תמונה(url)</label>
-            <input id="productImgUrl" type="text" name="productImgUrl" ng-model="product.imageUrl"/>
+            <label class="control-label" for="productImgUrl">כתובת תמונה(url)</label>
+            <input class="form-control" id="productImgUrl" type="text" name="productImgUrl" ng-model="product.imageUrl"/>
         </div>
 
-        <input type="submit" class="btn btn-default" value="Submit" ng-click = "AddProduct()">
+        <input type="submit" ng-disabled="ProductMaintenanceForm.$invalid" class="btn btn-default" value="Submit" ng-click = "AddProduct()">
     </form>
 </div>
 
