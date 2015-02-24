@@ -3,9 +3,7 @@
         <div class="form-group" ng-class="{'has-error':ProductMaintenanceForm.productId.$invalid}">
             <label class="control-label" for="productId"> מזהה</label>
             <input class="form-control" id="productId" type="number" name="productId" ng-model="product._id" ng-number="true" ng-required="true" />
-            <span ng-show="ProductMaintenanceForm.productId.$error.required" class="help-block col-sm-2">אנא הכנס מזהה למוצר</span>
-            <span ng-show="ProductMaintenanceForm.productId.$error.number" class="help-block col-sm-2">מזהה חייב להכיל מספר שלם בלבד</span>
-            {{ProductMaintenanceForm.productId.$error}}
+            <span ng-show="ProductMaintenanceForm.productId.$error.required" class="help-block col-sm-2">אנא הכנס מספר כמזהה למוצר</span>
         </div>
         <div class="form-group">
             <label class="control-label" for="productName"> שם</label>
