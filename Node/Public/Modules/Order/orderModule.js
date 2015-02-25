@@ -30,7 +30,7 @@ define(["angular"],function(){
     }]);
 
     //Directives
-    app.directive("productForSelling",["$modal","AddItemToCartService",function($modal,addItemToCartService){
+    app.directive("productForSelling",["$modal","OrderDataModel",function($modal,orderDataModel){
         return {
             restrict : "EA",
             scope : {
@@ -42,7 +42,10 @@ define(["angular"],function(){
             },
             link : function(scope){
                 scope.addToCart = function(){
-                    var itemSoldPromise = addItemToCartService.addItemToCart({productId:scope.product._id,quantity:scope.product.quantity});
+                    var saleInfo = {productId: scope.product._id, quantity: scope.product.quantity};
+                    var itemSoldPromise = orderDataModel.getOrCreateOrder().then(function(order) {
+                        return order.addItem(saleInfo);
+                    });
                     var modalInstance = $modal.open({
                         templateUrl:"Views/ProductSoldModal.html",
                         size:"lg",
@@ -60,41 +63,49 @@ define(["angular"],function(){
         };
     }]);
 
-    //Services
-    function OrderDataModel(orderResource,$q){
-        this._orderResource = orderResource;
-        this._$q = $q;
+
+    function Order(orderId,addItemToCartResource){
+        this.id = orderId;
+        this._addItemToCartResource = addItemToCartResource;
     }
 
-    OrderDataModel.prototype._setOrderId = function(orderId){
-        this._orderId = orderId;
-        localStorage.setItem("orderId",orderId);
+    Order.prototype.addItem = function(saleInfo){
+        return this._addItemToCartResource.add({orderId : this.id},saleInfo).$promise;
     };
 
-    OrderDataModel.prototype.getOrCreateOrderId = function(){
-        var self = this;
-        var deferred = self._$q.defer();
-        if (this._orderId) return this._$q.when(this._orderId);
-        var orderIdFromLocalStorage = localStorage.getItem("orderId");
-        if (orderIdFromLocalStorage)
-        {
-            this._orderId = orderIdFromLocalStorage;
-            return this._$q.when(this.orderId);
-        }
-        this._orderResource.create({},function(order){
-            self._setOrderId(order._id);
-            deferred.resolve(order._id);
-        },function(err){deferred.reject(err);});
+    //Services
+    OrderDataModelFactory.$inject = ["OrderResource","$q","AddItemToCartResource"];
+    function OrderDataModelFactory(orderResource,$q,addItemToCartResource){
+        var orderDataModel = {};
+        orderDataModel.initialize = function(){
+            var orderIdFromLocalStorage = localStorage.getItem("orderId");
+            if (orderIdFromLocalStorage)
+                this._setOrder(orderIdFromLocalStorage)
+        };
+        orderDataModel._setOrder = function(orderId){
+            this.order = new Order(orderId,addItemToCartResource);
+            localStorage.setItem("orderId",orderId);
+        };
+        orderDataModel.getOrCreateOrder= function(){
+            var self = this;
+            var deferred = $q.defer();
+            if (this.order) return $q.when(this.order);
+            orderResource.create({},function(order){
+                self._setOrder(order._id);
+                deferred.resolve(self.order);
+            },function(err){deferred.reject(err);});
+            return deferred.promise;
+        };
 
-        return deferred.promise;
-    };
+        orderDataModel.clear = function(){
+            this.order =null;
+            localStorage.removeItem("orderId");
+        };
 
-    OrderDataModel.prototype.clear = function(){
-        this._orderId =null;
-        localStorage.removeItem("orderId");
-    };
-
-    app.service("OrderDataModel",["OrderResource","$q",OrderDataModel]);
+        orderDataModel.initialize();
+        return orderDataModel;
+    }
+    app.factory("OrderDataModel",OrderDataModelFactory);
 
     app.factory('OrderResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/orders/:orderId', {id : '@_id'},
@@ -102,27 +113,6 @@ define(["angular"],function(){
                 'create': { method: 'POST'}
             });
     } ]);
-
-    function AddItemToCartService($q,addItemToCartResource,orderDataModel){
-        this._addItemToCartResource = addItemToCartResource;
-        this._orderDataModel = orderDataModel;
-        this.$q = $q;
-    }
-
-    AddItemToCartService.prototype._addItemToOrder = function(orderId,saleInfo){
-        return this._addItemToCartResource.add({orderId : orderId},saleInfo).$promise;
-    };
-
-    AddItemToCartService.prototype.addItemToCart = function(saleInfo){
-        var deferred = this.$q.defer();
-        var self = this;
-        this._orderDataModel.getOrCreateOrderId()
-            .then(function(orderId){self._addItemToOrder(orderId,saleInfo);})
-            .then(function(value){deferred.resolve(value);});
-        return deferred.promise;
-    };
-
-    app.service('AddItemToCartService', ["$q",'AddItemToCartResource',"OrderDataModel",AddItemToCartService]);
 
     app.factory('AddItemToCartResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/orders/:orderId/items',{},
