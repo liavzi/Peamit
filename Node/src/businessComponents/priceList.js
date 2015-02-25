@@ -7,7 +7,7 @@ priceList.getPrice =function (productId, callback) {
         if (prices.length === 0) {
             var noPriceError = new Error("no price for product " + productId);
             noPriceError.name = "NoPriceForProduct";
-            return callback(noPriceError)
+            return callback(noPriceError);
         }
         callback(null, prices[0]);
     });

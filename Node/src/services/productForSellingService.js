@@ -5,7 +5,7 @@ var productForSellingService = {
         productForSellingRepository.getAll(searchCriteria,callback);
     },
     getById : function(productId,callback){
-        productForSellingRepository.getById(productId,callback)
+        productForSellingRepository.getById(productId,callback);
     }
 };
 

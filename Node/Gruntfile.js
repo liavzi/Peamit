@@ -15,7 +15,8 @@ module.exports = function(grunt) {
 
     // check all js files for errors
     jshint: {
-      all: ['src/**/*.js'] 
+      all:["Public/Scripts/**/*.js","Public/Modules/**/*.js","src/**/*.js"]
+
     },
 
 	// all of our configuration will go herev

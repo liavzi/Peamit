@@ -15,7 +15,7 @@ define(["angular","selectize"],function(){
         function updateSelectizeOptions(selectize,options){
             selectize.clearOptions();
             selectize.addOption(options);
-        };
+        }
 
         return {
             restrict : "E",
@@ -36,7 +36,7 @@ define(["angular","selectize"],function(){
                     scope.$apply(function(){scope.selected = selectize.items;});
                 });
                 scope.$watch("selected",function(selected){
-                    if (!selected || selected.length==0) return;
+                    if (!selected || selected.length===0) return;
                     if (angular.equals(selected,selectize.items,true)) return;
                     selectize.clear();
                     selected.forEach(function(x){

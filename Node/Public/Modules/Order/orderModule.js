@@ -18,7 +18,7 @@ define(["angular"],function(){
             orderLinesResource.delete({orderId:$scope.orderModel.order._id,orderLineId : $scope.orderLine._id},{},function(order){
                 $scope.orderModel.order = order;
             });
-        }
+        };
     } ]);
 
     app.controller("ProductSoldModalController",["$scope","$modalInstance","$location","soldProduct",function ($scope, $modalInstance,$location,soldProduct){
@@ -63,7 +63,7 @@ define(["angular"],function(){
     //Services
     function OrderDataModel(orderResource,$q){
         this._orderResource = orderResource;
-        this._$q = $q
+        this._$q = $q;
     }
 
     OrderDataModel.prototype._setOrderId = function(orderId){
@@ -84,7 +84,7 @@ define(["angular"],function(){
         this._orderResource.create({},function(order){
             self._setOrderId(order._id);
             deferred.resolve(order._id);
-        },function(err){deferred.reject(err)});
+        },function(err){deferred.reject(err);});
 
         return deferred.promise;
     };
@@ -117,8 +117,8 @@ define(["angular"],function(){
         var deferred = this.$q.defer();
         var self = this;
         this._orderDataModel.getOrCreateOrderId()
-            .then(function(orderId){self._addItemToOrder(orderId,saleInfo)})
-            .then(function(value){deferred.resolve(value)});
+            .then(function(orderId){self._addItemToOrder(orderId,saleInfo);})
+            .then(function(value){deferred.resolve(value);});
         return deferred.promise;
     };
 

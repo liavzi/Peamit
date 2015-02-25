@@ -22,8 +22,7 @@ var orderSchema   = new Schema({
 
 orderSchema.virtual("total").get(function(){
     return _.reduce(this.orderLines, function(memo, orderLine){
-    return memo + orderLine.totalPrice;}
-    , 0);
+    return memo + orderLine.totalPrice;},0);
 });
 
 orderSchema.methods.addOrderLine = function(orderLineToAdd){

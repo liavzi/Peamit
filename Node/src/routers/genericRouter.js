@@ -25,12 +25,12 @@ function handleErrorOrWriteToResponse(err, next, res, entity) {
 genericRouter.route("/:entityName")
     .post(function (req,res,next){
         getService(req).create(req.body,function(err,entity){
-            handleErrorOrWriteToResponse(err,next,res,entity)
+            handleErrorOrWriteToResponse(err,next,res,entity);
         });
     })
     .get(function(req,res,next){
         getService(req).getAll(req.query,function(err,entities){
-            handleErrorOrWriteToResponse(err,next,res,entities)
+            handleErrorOrWriteToResponse(err,next,res,entities);
         });
     });
 

@@ -14,7 +14,7 @@ addItemToOrderRouter.route("/orders/:orderId/items")
                 res.json(result);
                 res.end();
             }
-        })
+        });
     });
 
 module.exports = addItemToOrderRouter;

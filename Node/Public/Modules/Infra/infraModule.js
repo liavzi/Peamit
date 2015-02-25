@@ -47,7 +47,7 @@ define(["angular","ngResource"],function(){
             self.alerts.length = 0;
             self.timeoutPromise = undefined;
         },3000);
-    }
+    };
 
     app.service("alertsService",AlertService);
 

@@ -1,5 +1,5 @@
 var express = require("express");
-var productForSellingService = require("../services/productForSellingService")
+var productForSellingService = require("../services/productForSellingService");
 var productForSellingRouter = express.Router();
 productForSellingRouter.route("/productForSelling")
     .get(function(req,res,next){

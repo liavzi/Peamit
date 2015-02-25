@@ -11,7 +11,7 @@ closeOrderByPhoneRouter.route("/orders/:orderId/actions/closeOrderByPhone")
             res.json(result);
             res.end();
 
-        })
+        });
     });
 
 module.exports = closeOrderByPhoneRouter;

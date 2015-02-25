@@ -35,7 +35,7 @@ productForSellingRepository.getAll = function(searchCriteria,callback){
                     productWithPrices.push(productWithPrice);
                     done();
                 }
-            })
+            });
         },function(err){
             callback(err,productWithPrices);
         });

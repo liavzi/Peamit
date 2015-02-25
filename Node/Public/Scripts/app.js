@@ -1,6 +1,5 @@
 ﻿require.config(requireConfig);
-require(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule"
-    ,"../Modules/Utils/utilsModule.js","../Modules/Order/orderModule.js","jQuery","underscore","../Modules/Infra/infraModule"],function () {
+require(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule","../Modules/Utils/utilsModule.js","../Modules/Order/orderModule.js","jQuery","underscore","../Modules/Infra/infraModule"],function () {
     var app = angular.module('Peamit', ['ui.bootstrap', 'ngRoute','ngResource',"Order","Product","infra"]);
     app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.

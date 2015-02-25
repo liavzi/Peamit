@@ -48,7 +48,7 @@ define(["angular","../Infra/infraModule"],function(){
                 self.products = productResource.getAll();
             });
         };
-    }])
+    }]);
 
     app.controller("TagsViewController",['TagResource',"$location",function(tagResource,$location){
         this.tags = tagResource.getAll();
