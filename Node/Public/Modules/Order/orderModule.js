@@ -4,7 +4,9 @@ define(["angular"],function(){
     //Controllers
     app.controller('MyOrderController', ['$scope', 'OrderResource',"CloseOrderByPhoneResource","OrderDataModel", function ($scope, orderResource,closeOrderByPhoneResource,orderDataModel) {
         $scope.orderModel = {};
-        $scope.orderModel.order  =  orderResource.get({orderId:localStorage.getItem("orderId")});
+        var orderId = orderDataModel.getOrder().id;
+        if (orderId)
+            $scope.orderModel.order  =orderResource.get({orderId:order.id});
         $scope.closeOrderByPhone = function (){
             closeOrderByPhoneResource.closeOrderByPhone({orderId:$scope.orderModel.order._id},$scope.orderModel.order.customerDetails,function(){
                 orderDataModel.clear();
@@ -64,18 +66,19 @@ define(["angular"],function(){
     }]);
 
 
-    function Order(orderId,addItemToCartResource){
+    function Order(orderId,addItemToCartResource,$http){
         this.id = orderId;
         this._addItemToCartResource = addItemToCartResource;
+        this._$http = $http;
     }
 
     Order.prototype.addItem = function(saleInfo){
-        return this._addItemToCartResource.add({orderId : this.id},saleInfo).$promise;
+        return this._$http.post("/api/orders/"+this.id+"/items",saleInfo);
     };
 
     //Services
-    OrderDataModelFactory.$inject = ["OrderResource","$q","AddItemToCartResource"];
-    function OrderDataModelFactory(orderResource,$q,addItemToCartResource){
+    OrderDataModelFactory.$inject = ["OrderResource","$q","AddItemToCartResource","$http"];
+    function OrderDataModelFactory(orderResource,$q,addItemToCartResource,$http){
         var orderDataModel = {};
         orderDataModel.initialize = function(){
             var orderIdFromLocalStorage = localStorage.getItem("orderId");
@@ -83,7 +86,7 @@ define(["angular"],function(){
                 this._setOrder(orderIdFromLocalStorage)
         };
         orderDataModel._setOrder = function(orderId){
-            this.order = new Order(orderId,addItemToCartResource);
+            this.order = new Order(orderId,addItemToCartResource,$http);
             localStorage.setItem("orderId",orderId);
         };
         orderDataModel.getOrCreateOrder= function(){
@@ -96,6 +99,10 @@ define(["angular"],function(){
             },function(err){deferred.reject(err);});
             return deferred.promise;
         };
+
+        orderDataModel.getOrder = function(){
+            return this.order;
+        }
 
         orderDataModel.clear = function(){
             this.order =null;
@@ -111,13 +118,6 @@ define(["angular"],function(){
         return $resource('http://localhost:8080/api/orders/:orderId', {id : '@_id'},
             {
                 'create': { method: 'POST'}
-            });
-    } ]);
-
-    app.factory('AddItemToCartResource', ['$resource', function ($resource) {
-        return $resource('http://localhost:8080/api/orders/:orderId/items',{},
-            {
-                'add': { method: 'POST'}
             });
     } ]);
 
