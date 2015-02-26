@@ -2,13 +2,13 @@ define(["angular"],function(){
     var app = angular.module("Order",[]);
 
     //Controllers
-    app.controller('MyOrderController', ['$scope', 'OrderResource',"CloseOrderByPhoneResource","OrderDataModel", function ($scope, orderResource,closeOrderByPhoneResource,orderDataModel) {
+    app.controller('MyOrderController', ['$scope', 'OrderResource',"OrderDataModel", function ($scope, orderResource,orderDataModel) {
         $scope.orderModel = {};
-        var orderId = orderDataModel.getOrder().id;
-        if (orderId)
+        var order = orderDataModel.getOrder();
+        if (order)
             $scope.orderModel.order  =orderResource.get({orderId:order.id});
         $scope.closeOrderByPhone = function (){
-            closeOrderByPhoneResource.closeOrderByPhone({orderId:$scope.orderModel.order._id},$scope.orderModel.order.customerDetails,function(){
+            orderDataModel.getOrder().closeOrderByPhone($scope.orderModel.order.customerDetails).then(function(){
                 orderDataModel.clear();
             });
         };
@@ -66,19 +66,26 @@ define(["angular"],function(){
     }]);
 
 
-    function Order(orderId,addItemToCartResource,$http){
+    function Order(orderId,$http){
         this.id = orderId;
-        this._addItemToCartResource = addItemToCartResource;
         this._$http = $http;
     }
 
+    Order.prototype._post = function(path,postdata){
+        return this._$http.post("/api/orders/"+this.id+"/"+path,postdata);
+    }
+
     Order.prototype.addItem = function(saleInfo){
-        return this._$http.post("/api/orders/"+this.id+"/items",saleInfo);
+        return this._post("items",saleInfo);
+    };
+
+    Order.prototype.closeOrderByPhone = function(customerDetails){
+        return this._post("actions/closeOrderByPhone",customerDetails);
     };
 
     //Services
-    OrderDataModelFactory.$inject = ["OrderResource","$q","AddItemToCartResource","$http"];
-    function OrderDataModelFactory(orderResource,$q,addItemToCartResource,$http){
+    OrderDataModelFactory.$inject = ["OrderResource","$q","$http"];
+    function OrderDataModelFactory(orderResource,$q,$http){
         var orderDataModel = {};
         orderDataModel.initialize = function(){
             var orderIdFromLocalStorage = localStorage.getItem("orderId");
@@ -86,7 +93,7 @@ define(["angular"],function(){
                 this._setOrder(orderIdFromLocalStorage)
         };
         orderDataModel._setOrder = function(orderId){
-            this.order = new Order(orderId,addItemToCartResource,$http);
+            this.order = new Order(orderId,$http);
             localStorage.setItem("orderId",orderId);
         };
         orderDataModel.getOrCreateOrder= function(){
@@ -126,12 +133,4 @@ define(["angular"],function(){
             {
             });
     } ]);
-
-    app.factory('CloseOrderByPhoneResource', ['$resource', function ($resource) {
-        return $resource('http://localhost:8080/api/orders/:orderId/actions/closeOrderByPhone', {},
-            {
-                closeOrderByPhone : {method : "POST"}
-            });
-    } ]);
-
 });
