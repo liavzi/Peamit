@@ -14,10 +14,10 @@ define(["angular"],function(){
         };
     } ]);
 
-    app.controller('OrderLineController', ['$scope', 'ProductResource',"OrderLinesResource", function ($scope, productResource,orderLinesResource) {
+    app.controller('OrderLineController', ['$scope', 'ProductResource',"OrderDataModel",function ($scope, productResource,orderDataModel) {
         $scope.product = productResource.getById({id:$scope.orderLine.productId});
         $scope.removeOrderLine = function(){
-            orderLinesResource.delete({orderId:$scope.orderModel.order._id,orderLineId : $scope.orderLine._id},{},function(order){
+            orderDataModel.getOrder().removeOrderLine($scope.orderLine._id).then(function(order){
                 $scope.orderModel.order = order;
             });
         };
@@ -55,7 +55,8 @@ define(["angular"],function(){
                         resolve : {
                             itemSold : function(){return itemSoldPromise;},
                             soldProduct : function(){return angular.copy(scope.product);}
-                        }
+                        },
+                        windowClass : "product-sold-modal"
                     });
                     scope.product.quantity = 0;
 
@@ -64,7 +65,6 @@ define(["angular"],function(){
             windowClass  : "center-modal"
         };
     }]);
-
 
     function Order(orderId,$http){
         this.id = orderId;
@@ -82,6 +82,10 @@ define(["angular"],function(){
     Order.prototype.closeOrderByPhone = function(customerDetails){
         return this._post("actions/closeOrderByPhone",customerDetails);
     };
+
+    Order.prototype.removeOrderLine = function(orderLineId){
+        return this._$http.delete("/api/orders/"+this.id+"/lines/"+orderLineId).then(function(response){return response.data;});
+    }
 
     //Services
     OrderDataModelFactory.$inject = ["OrderResource","$q","$http"];
@@ -125,12 +129,6 @@ define(["angular"],function(){
         return $resource('http://localhost:8080/api/orders/:orderId', {id : '@_id'},
             {
                 'create': { method: 'POST'}
-            });
-    } ]);
-
-    app.factory('OrderLinesResource', ['$resource', function ($resource) {
-        return $resource('http://localhost:8080/api/orders/:orderId/lines/:orderLineId', {},
-            {
             });
     } ]);
 });

@@ -84,6 +84,14 @@ define(["angular","../Infra/infraModule"],function(){
         };
     }]);
 
+    app.controller('TagSideMenuController', ['TagResource',function (tagResource) {
+        var self =this;
+        this.tags = [];
+        tagResource.getAll().$promise.then(function(tags){
+            self.tags = tags;
+        });
+    }]);
+
 
     //Directives
     app.directive("productTag",["$location","ProductByTagDataModel",function($location,productByTagDataModel){

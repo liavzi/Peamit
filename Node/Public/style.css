@@ -14,3 +14,8 @@
 .thumbnail{
 	text-align: center;
 }
+
+.product-sold-modal{
+    position: fixed;
+    top: 25%;
+}
