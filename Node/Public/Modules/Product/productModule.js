@@ -100,6 +100,7 @@ define(["angular","../Infra/infraModule"],function(){
             scope : {
                 tag : "="
             },
+            replace:true,
             templateUrl : "Views/ProductTag.html",
             link : function ($scope){
                 $scope.chooseTag = function(){
