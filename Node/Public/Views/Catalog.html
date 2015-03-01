@@ -1,6 +1,6 @@
 ﻿<div class="h4">בחר לפי אירוע:</div>
 <div class="row">
-    <div ng-repeat="occasionTag in occasionTags">
+    <div ng-repeat="occasionTag in occasionTags" class="catalog-tag">
         <div class="col-xs-4">
             <div product-tag tag="occasionTag"></div>
         </div>
@@ -8,7 +8,7 @@
 </div>
 <div class="h4">בחר לפי סוג מוצר:</div>
 <div class="row">
-    <div ng-repeat="groupTag in groupTags" class="catalog-tags">
+    <div ng-repeat="groupTag in groupTags" class="catalog-tag">
         <div class="col-xs-4">
             <div product-tag tag="groupTag"></div>
         </div>
