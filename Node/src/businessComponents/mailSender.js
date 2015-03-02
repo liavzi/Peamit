@@ -4,7 +4,7 @@ var wellknown = require('nodemailer-wellknown');
 var config = wellknown('Gmail');
 config.auth = {
     user : "liavzi@gmail.com",
-    pass : "Lz124812"
+    pass :""
 };
 var transporter = nodemailer.createTransport(smtpTransport(config));
 
