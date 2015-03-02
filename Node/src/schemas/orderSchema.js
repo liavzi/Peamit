@@ -45,7 +45,6 @@ orderSchema.methods.closeByPhone = function(customerDetails){
     this.customerDetails = customerDetails;
     this.state = "ClosedByPhone";
 
-    //uncomment when we will want to send mails
     //var orderAsString = JSON.stringify(this);
     //mailSender.send(orderAsString);
 };
