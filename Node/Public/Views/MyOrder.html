@@ -5,7 +5,7 @@
                 <th>כמות</th>
                 <th>מחיר</th>
             </tr>
-            <tr ng-repeat="orderLine in orderModel.order.orderLines track by orderLine._id" ng-controller="OrderLineController">
+            <tr ng-repeat="orderLine in orderModel.order.orderLines track by orderLine._id" ng-controller="OrderLineController" class="order-line">
                 <div >
                     <td>{{product.name}}</td>
                     <td>{{orderLine.quantity}}</td>
@@ -25,7 +25,7 @@
     </div>
     <div class="row">
     <div class="col-sm-offset-4 col-sm-4">
-        <form  novalidate class="form-horizontal" role="form" ng-show = "showCustomerDetails == true">
+        <form  novalidate class="form-horizontal customer-details" role="form" ng-show = "showCustomerDetails == true">
             <div class="form-group">
                 <label for="nameInput" class="control-label">שם מלא:</label>
                 <input ng-model="orderModel.order.customerDetails.fullName" type="text" class="form-control" id="nameInput" placeholder="שם מלא">

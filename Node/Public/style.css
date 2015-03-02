@@ -1,28 +1,49 @@
-﻿body {
-	background-color: #e5e5e5;
-	color: #333;
-	font-family: "Roboto",Arial,sans-serif;
-	font-size: 13px;
-	font-weight: 300;
-	line-height: 1.4;
-	height: 100%;
-	min-width: 1024px;
-	position: relative;
-	text-rendering: optimizeLegibility;
+body {
+  background-color: #e5e5e5;
+  color: #333;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.4;
+  height: 100%;
+  min-width: 1024px;
+  position: relative;
+  text-rendering: optimizeLegibility;
 }
-
-.thumbnail{
-	text-align: center;
+.thumbnail {
+  text-align: center;
 }
-
-.product-sold-modal{
-    position: fixed;
-    top: 25%;
+.product-sold-modal {
+  position: fixed;
+  top: 25%;
 }
-
-.ng-enter.catalog-tag{
-    -webkit-animation: bounceIn 1s;
-    -moz-animation: bounceIn 1s;
-    -ms-animation: bounceIn 1s;
-    animation: bounceIn 1s;
+.catalog-tag.ng-enter {
+  -webkit-animation: fadeIn 0.75s ease;
+  -moz-animation: fadeIn 0.75s ease;
+  -ms-animation: fadeIn 0.75s ease;
+  animation: fadeIn 0.75s ease;
+}
+.catalog-product.ng-enter {
+  -webkit-animation: fadeIn 0.75s ;
+  -moz-animation: fadeIn 0.75s ;
+  -ms-animation: fadeIn 0.75s ;
+  animation: fadeIn 0.75s ;
+}
+.order-line.ng-enter {
+  -webkit-animation: bounceIn 0.75s ;
+  -moz-animation: bounceIn 0.75s ;
+  -ms-animation: bounceIn 0.75s ;
+  animation: bounceIn 0.75s ;
+}
+.order-line.ng-leave {
+  -webkit-animation: bounceOut 0.75s ;
+  -moz-animation: bounceOut 0.75s ;
+  -ms-animation: bounceOut 0.75s ;
+  animation: bounceOut 0.75s ;
+}
+.customer-details.ng-hide-remove {
+  -webkit-animation: fadeIn 0.75s ;
+  -moz-animation: fadeIn 0.75s ;
+  -ms-animation: fadeIn 0.75s ;
+  animation: fadeIn 0.75s ;
 }
