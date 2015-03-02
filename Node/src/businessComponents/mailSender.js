@@ -1,13 +1,13 @@
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
-var options = {
-    service : "gmail",
-    auth : {
-        user : "liavzi@gmail.com",
-        pass : "Lz124812"
-    }
+var wellknown = require('nodemailer-wellknown');
+var config = wellknown('Gmail');
+config.auth = {
+    user : "liavzi@gmail.com",
+    pass : "Lz124812"
 };
-var transporter = nodemailer.createTransport(smtpTransport(options));
+var transporter = nodemailer.createTransport(smtpTransport(config));
+
 
 
 var mailSender = {};
@@ -28,3 +28,4 @@ mailSender.send = function(text){
 };
 
 module.exports = mailSender;
+
