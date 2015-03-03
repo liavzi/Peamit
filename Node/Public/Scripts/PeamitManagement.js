@@ -1,6 +1,6 @@
 require.config(requireConfig);
-require(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule","../Modules/Utils/utilsModule.js","jQuery","underscore","../Modules/Infra/infraModule"],function () {
-    var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute','ngResource',"Product","Utils","infra"]);
+require(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Product/productModule","../Modules/Order/orderModule","../Modules/Utils/utilsModule.js","jQuery","underscore","../Modules/Infra/infraModule","ngAnimate"],function () {
+    var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute','ngResource',"Product","Utils","infra","ngAnimate"]);
     app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.
             when('/ProductsView', {
@@ -17,6 +17,9 @@ require(["angular","ui.bootstrap","angular-route","ngResource","../Modules/Produ
             }).
             when("/TagMaintenance/:tagId?",{
                 templateUrl: '/ManagementViews/TagMaintenance.html'
+            }).
+            when("/ClosedOrders",{
+                templateUrl: "/ManagementViews/ClosedOrders.html"
             });
     }]);
 

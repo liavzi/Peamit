@@ -47,3 +47,15 @@ body {
   -ms-animation: fadeIn 0.75s ;
   animation: fadeIn 0.75s ;
 }
+.peamit-alert.ng-enter {
+  -webkit-animation: fadeIn 0.75s ;
+  -moz-animation: fadeIn 0.75s ;
+  -ms-animation: fadeIn 0.75s ;
+  animation: fadeIn 0.75s ;
+}
+.peamit-alert.ng-leave {
+  -webkit-animation: fadeOut 0.75s ;
+  -moz-animation: fadeOut 0.75s ;
+  -ms-animation: fadeOut 0.75s ;
+  animation: fadeOut 0.75s ;
+}

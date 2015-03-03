@@ -22,7 +22,6 @@ define(["angular"],function(){
             });
         };
     } ]);
-
     app.controller("ProductSoldModalController",["$scope","$modalInstance","$location","soldProduct",function ($scope, $modalInstance,$location,soldProduct){
         $scope.soldProduct = soldProduct;
         $scope.pay = function(){
@@ -30,8 +29,27 @@ define(["angular"],function(){
             $location.path("/MyOrder");
         };
     }]);
+    
+    app.controller("closedOrdersController", function () {
+
+    });
 
     //Directives
+    app.directive("peamitOrder",["OrderResource",function(orderResource){
+        return {
+            restrict : "EA",
+            replace : true,
+            scope :  {
+                orderId : "@"
+            },
+            templateUrl : "/Views/PeamitOrder.html",
+            link : function(scope){
+                scope.orderModel.order = orderResource.get({orderId:scope.orderId});
+            }
+
+        };
+    }]);
+
     app.directive("productForSelling",["$modal","OrderDataModel",function($modal,orderDataModel){
         return {
             restrict : "EA",
@@ -128,7 +146,8 @@ define(["angular"],function(){
     app.factory('OrderResource', ['$resource', function ($resource) {
         return $resource('http://localhost:8080/api/orders/:orderId', {id : '@_id'},
             {
-                'create': { method: 'POST'}
+                'create': { method: 'POST'},
+                "getAll": {method:"GET"}
             });
     } ]);
 });
