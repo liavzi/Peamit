@@ -30,24 +30,8 @@ define(["angular"],function(){
         };
     }]);
     
-    app.controller("closedOrdersController", function () {
-
-    });
-
-    //Directives
-    app.directive("peamitOrder",["OrderResource",function(orderResource){
-        return {
-            restrict : "EA",
-            replace : true,
-            scope :  {
-                orderId : "@"
-            },
-            templateUrl : "/Views/PeamitOrder.html",
-            link : function(scope){
-                scope.orderModel.order = orderResource.get({orderId:scope.orderId});
-            }
-
-        };
+    app.controller("closedOrdersController", ["OrderResource",function (orderResource) {
+        this.orders = orderResource.getAll();
     }]);
 
     app.directive("productForSelling",["$modal","OrderDataModel",function($modal,orderDataModel){
@@ -147,7 +131,7 @@ define(["angular"],function(){
         return $resource('http://localhost:8080/api/orders/:orderId', {id : '@_id'},
             {
                 'create': { method: 'POST'},
-                "getAll": {method:"GET"}
+                "getAll": {method:"GET",isArray:true}
             });
     } ]);
 });

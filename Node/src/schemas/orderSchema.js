@@ -43,8 +43,7 @@ orderSchema.methods.removeLineById= function(orderLineId){
 orderSchema.methods.closeByPhone = function(customerDetails){
     if (!customerDetails.phoneNumber) throw new Error("Customer must supply phone number");
     this.customerDetails = customerDetails;
-    this.state = "ClosedByPhone";
-
+    this.state = "Closed";
     //var orderAsString = JSON.stringify(this);
     //mailSender.send(orderAsString);
 };
