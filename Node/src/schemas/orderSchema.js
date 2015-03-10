@@ -17,7 +17,10 @@ var orderSchema   = new Schema({
         phoneNumber : Number,
         email : String
     },
-    state : String
+    state : String,
+    closeDetails : {
+        method :String
+    }
 });
 
 orderSchema.virtual("total").get(function(){
@@ -43,15 +46,24 @@ orderSchema.methods.removeLineById= function(orderLineId){
 orderSchema.methods.closeByPhone = function(customerDetails){
     if (!customerDetails.phoneNumber) throw new Error("Customer must supply phone number");
     this.customerDetails = customerDetails;
-    this.state = "Closed";
+    this._close({method:"ClosedByPhone"});
     //var orderAsString = JSON.stringify(this);
     //mailSender.send(orderAsString);
+};
+
+orderSchema.methods._close = function(closeDetails){
+    this.state = "Closed";
+    this.closeDetails = closeDetails;
 };
 
 orderSchema.statics.strictFindById = function(orderId,callback){
     this.findById(orderId,function(err,order) {
         if (err) return callback(err);
-        if (!order) return callback(new Error("order with id" + orderId + "does not exists"));
+        if (!order){
+            var error = new Error("order with id " + orderId + "does not exists");
+            error.name = "OrderNotExists";
+            return callback(error);
+        }
         callback(null,order);
     });
 };

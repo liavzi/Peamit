@@ -74,8 +74,6 @@ function ensureAuthenticated(req, res, next) {
 
 var port = process.env.PORT || 8080; 		// set our port
 
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
 registerRoutes(express,app);
 
 // START THE SERVER

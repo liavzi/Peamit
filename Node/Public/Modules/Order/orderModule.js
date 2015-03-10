@@ -75,7 +75,7 @@ define(["angular"],function(){
 
     Order.prototype._post = function(path,postdata){
         return this._$http.post("/api/orders/"+this.id+"/"+path,postdata);
-    }
+    };
 
     Order.prototype.addItem = function(saleInfo){
         return this._post("items",saleInfo);
@@ -87,7 +87,7 @@ define(["angular"],function(){
 
     Order.prototype.removeOrderLine = function(orderLineId){
         return this._$http.delete("/api/orders/"+this.id+"/lines/"+orderLineId).then(function(response){return response.data;});
-    }
+    };
 
     //Services
     OrderDataModelFactory.$inject = ["OrderResource","$q","$http"];
@@ -96,7 +96,7 @@ define(["angular"],function(){
         orderDataModel.initialize = function(){
             var orderIdFromLocalStorage = localStorage.getItem("orderId");
             if (orderIdFromLocalStorage)
-                this._setOrder(orderIdFromLocalStorage)
+                this._setOrder(orderIdFromLocalStorage);
         };
         orderDataModel._setOrder = function(orderId){
             this.order = new Order(orderId,$http);
@@ -115,7 +115,7 @@ define(["angular"],function(){
 
         orderDataModel.getOrder = function(){
             return this.order;
-        }
+        };
 
         orderDataModel.clear = function(){
             this.order =null;
