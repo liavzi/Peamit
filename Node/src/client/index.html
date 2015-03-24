@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+        <link href="content/bootstrap.css" rel="stylesheet" />
+        <link href="content/metro-bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//cdn.rawgit.com/morteza/bootstrap-rtl/master/dist/cdnjs/3.3.1/css/bootstrap-rtl.min.css">
+        <link rel="stylesheet" href="content/animate.css" />
+        <link rel="stylesheet" href="content/style.css" />
+        <title>Peamit</title>
+    </head>
+    <body dir = "rtl">
+        <nav class="navbar navbar-inverse" role="navigation">
+
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">פעמית</a>
+                </div>
+                <div>
+                    <ol class="nav navbar-nav navbar-right">
+                        <li><a href="#"><i class="fa fa-home"></i> ראשי</a></li>
+                        <li><a href="#Catalog">קטלוג</a></li>
+                        <li><a href="#MyOrder">ההזמנה שלי</a></li>
+                    </ol>
+                </div>
+
+        </nav>
+        <div class="container">
+            <div ng-view class="main-view"></div>
+        </div>
+        <script type="text/javascript" src=/Scripts/requireConfig.js></script>
+        <script data-main="/Scripts/app.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.16/require.min.js"></script>
+    </body>
+</html>

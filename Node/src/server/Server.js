@@ -3,7 +3,7 @@ var express    = require('express'); 		// call express
 var app        = express(); 				// define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var registerRoutes = require("./src/routers/registerRouters");
+var registerRoutes = require("./routers/registerRouters");
 var path = require('path');
 var databaseConfig = require("./config/databaseConfig.json");
 var passport = require('passport');
@@ -35,7 +35,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/ManagementViews",ensureAuthenticated);
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname,"../client")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

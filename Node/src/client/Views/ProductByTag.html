@@ -1,0 +1,14 @@
+﻿<div ng-clock class="row">
+    <div ng-controller="TagSideMenuController as tsmc" class="col-md-2">
+        <ul class="nav nav-tabs nav-stacked span1">
+            <li ng-repeat="tag in tsmc.tags"><a href="#ProductsByTag/{{tag._id}}">{{tag.name}}</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div ng-repeat="product in products" class="catalog-product">
+            <div class="col-xs-3">
+                <div product-for-selling product="product"></div>
+            </div>
+        </div>
+    </div>
+</div>

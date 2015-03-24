@@ -1,0 +1,16 @@
+<div ng-controller="closedOrdersController as coc">
+    <table class="table table-responsive">
+        <tr>
+            <th>מזהה</th>
+            <th>שם</th>
+            <th>טלפון</th>
+            <th>מייל</th>
+        </tr>
+        <tr ng-repeat="order in coc.orders">
+            <td>{{order._id}}</td>
+            <td>{{order.customerDetails.name}}</td>
+            <td>{{order.customerDetails.phoneNumber}}</td>
+            <td>{{order.customerDetails.email}}</td>
+        </tr>
+    </table>
+</div>
