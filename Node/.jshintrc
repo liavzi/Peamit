@@ -23,7 +23,6 @@
   "maxdepth": 5,
   "maxstatements": 40,
   "maxcomplexity": 8,
-  "maxlen": 120,
 
   "asi": false,
   "boss": false,
@@ -50,12 +49,15 @@
   "supernew": false,
   "validthis": false,
   "noyield": false,
+  "laxcomma" : true,
 
   "browser": true,
   "node": true,
 
   "globals": {
     "angular": false,
-    "$": false
+    "$": false,
+    "requireConfig" : false,
+    "define" : false
   }
 }

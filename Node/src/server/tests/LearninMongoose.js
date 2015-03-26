@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost/test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-  console.log("Logged on to mongo")
+  console.log("Logged on to mongo");
 });
 
 var kittySchema = mongoose.Schema({
@@ -17,5 +17,5 @@ var k = new Kitten({ name: 'liav' });
 
 k.save(function (err, kitten) {
   if (err) return console.error(err);
-  console.log("Saved "+kitten.name)
+  console.log("Saved "+kitten.name);
 });

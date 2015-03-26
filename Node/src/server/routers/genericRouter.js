@@ -4,7 +4,7 @@ var GenericService = require("../services/genericService");
 var orderService = require("../services/orderService");
 var tagService = require("../services/tagService");
 
-entityToService = {
+var entityToService = {
     "products" :  new GenericService(require("../models/ProductModel")),
     "prices" : new GenericService(require("../models/PriceModel")),
     "orders" : orderService,

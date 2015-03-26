@@ -26,7 +26,7 @@ productForSellingRepository.getAll = function(searchCriteria,callback){
         async.each(tag.productIds,function(productId,done){
             getById(productId,function(err,productWithPrice){
                 if (err)
-                    if (err.name!="NoPriceForProduct")
+                    if (err.name!=="NoPriceForProduct")
                         done(err);
                     else
                         done();

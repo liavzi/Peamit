@@ -34,7 +34,7 @@ productRouter.route("/products/:productId")
 		});
 	})
     .delete(function(req,res){
-        productService.deleteProduct(reqreq.params.productId,function(err,product){
+        productService.deleteProduct(req.params.productId,function(err,product){
             if (err) return res.end(err.toString());
             res.json(product);
             res.end();
