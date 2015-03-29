@@ -25,8 +25,8 @@ var testUtils = {
            createPrice(product._id,price,function(err,returnedPrice){
                product.price  = returnedPrice.value;
                callback(err,product);
-           })
+           });
         });
     }
-}
+};
 module.exports = testUtils;

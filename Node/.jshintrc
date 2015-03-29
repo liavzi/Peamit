@@ -58,6 +58,8 @@
     "angular": false,
     "$": false,
     "requireConfig" : false,
-    "define" : false
+    "define" : false,
+    "describe" :false,
+    "it" :false
   }
 }

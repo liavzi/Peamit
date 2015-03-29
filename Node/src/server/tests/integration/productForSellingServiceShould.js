@@ -23,12 +23,12 @@ describe('productForSellingService should', function(){
             serverActor.productForSellingService.getAll(function(err,products){
                 expect(products.some(function(x){
                     return x._id === results[0]._id && x.price === 5.5;
-                })).to.be.true;
+                })).to.be.true();
                 expect(products.some(function(x){
                     return x._id === results[1]._id && x.price === 2;
-                })).to.be.true;
+                })).to.be.true();
                 done();
-            })
+            });
         });
     });
 });
