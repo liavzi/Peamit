@@ -1,11 +1,11 @@
 require.config(requireConfig);
 require(["angular","ui.bootstrap"
     ,"angular-route","ngResource"
-    ,"../Modules/Product/productModule"
-    ,"../Modules/Order/orderModule"
-    ,"../Modules/Utils/utilsModule.js"
+    ,"../product/productModule"
+    ,"../order/orderModule"
+    ,"../utils/utilsModule.js"
     ,"jQuery","underscore"
-    ,"../Modules/Infra/infraModule"
+    ,"../infra/infraModule"
     ,"ngAnimate"],function () {
     var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute','ngResource',"Product","Utils","infra","ngAnimate"
         ,"Order"]);
