@@ -1,10 +1,10 @@
 ﻿require.config(requireConfig);
-require(["angular","ui.bootstrap","angular-route","ngResource","../product/productModule"
-    ,"../utils/utilsModule.js"
-    ,"../order/orderModule.js"
+require(["angular","ui.bootstrap","angular-route","ngResource","../product/product-module"
+    ,"../utils/utils-module"
+    ,"../order/order-module"
     ,"jQuery","underscore"
-    ,"../infra/infraModule","ngAnimate"],function () {
-    var app = angular.module('Peamit', ['ui.bootstrap', 'ngRoute','ngResource',"Order","Product","infra","ngAnimate"]);
+    ,"../infra/infra-module","ngAnimate"],function () {
+    var app = angular.module('Peamit', ['ui.bootstrap', 'ngRoute','ngResource',"order","product","infra","ngAnimate"]);
     app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.
             when('/', {
