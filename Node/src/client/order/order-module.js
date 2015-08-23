@@ -1,5 +1,5 @@
 define(["angular"],function(){
-  var app = angular.module("Order",[]);
+  var app = angular.module("order",[]);
 
   //Controllers
   app.controller('MyOrderController', ['$scope', 'OrderResource',"OrderDataModel", function ($scope, orderResource,orderDataModel) {

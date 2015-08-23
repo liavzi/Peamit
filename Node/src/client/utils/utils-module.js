@@ -1,5 +1,5 @@
 define(["angular","selectize"],function(){
-  var app= angular.module("Utils",[]);
+  var app= angular.module("utils",[]);
   app.directive("peamitSelect",[function(){
     function initializeSelectize(elem,scope) {
       var options = {
