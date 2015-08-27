@@ -32,9 +32,9 @@ app.use(session({
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use("/ManagementViews",ensureAuthenticated);
+//app.use(passport.initialize());
+//app.use(passport.session());
+//app.use("/ManagementViews",ensureAuthenticated);
 app.use(express.static(path.join(__dirname,"../client")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
