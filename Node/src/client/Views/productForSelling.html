@@ -5,13 +5,13 @@
         <h4>{{product.price.value}}</h4>
         <div class="input-group">
             <span class="input-group-btn">
-                <button class="fa fa-plus  btn btn-default btn-sm input" ng-click="product.quantity = product.quantity + 1"></button>
+                <button class="fa fa-plus  btn btn-default btn-sm input"  ng-click="product.quantity = product.quantity + 1"></button>
             </span>
-            <input type="text" ng-model="product.quantity" class="form-control input-sm">
+            <input type="number" ng-model="product.quantity" class="form-control input-sm" min="0">
             <span class="input-group-btn">
-                <button class="fa fa-minus  btn btn-default btn-sm input" ng-click="product.quantity = product.quantity - 1"></button>
+                <button class="fa fa-minus  btn btn-default btn-sm input" ng-disabled="product.quantity<=0" ng-click="product.quantity = product.quantity - 1"></button>
             </span>
         </div>
-        <button ng-click="addToCart()" class="btn btn-success">הזמן</button>
+        <button ng-disabled="product.quantity<=0" ng-click="addToCart()" class="btn btn-success">הזמן</button>
     </div>
 </div>
