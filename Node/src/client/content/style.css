@@ -62,3 +62,7 @@ body {
 .product-tag {
   cursor: pointer;
 }
+.product-tag img {
+  height: 300px;
+  width: 300px;
+}
