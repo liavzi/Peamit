@@ -2,7 +2,7 @@ body {
   background-color: #e5e5e5;
   color: #333;
   font-family: "Roboto", Arial, sans-serif;
-  font-size: 13px;
+  font-size: large;
   font-weight: 300;
   line-height: 1.4;
   height: 100%;
@@ -65,4 +65,8 @@ body {
 .product-tag img {
   height: 300px;
   width: 300px;
+}
+.navbar .navbar-nav .fa {
+  font-size: large;
+  margin-left: 3px;
 }
