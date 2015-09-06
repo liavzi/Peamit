@@ -11,7 +11,11 @@
         </div>
         <div class="form-group">
             <label class="control-label" for="productPrice"> מחיר</label>
-            <input  class="form-control" id="productPrice"  type="text" name="productPrice"  ng-model="product.prices[0].value" required />
+            <input  class="form-control" id="productPrice"  type="number" name="productPrice"  ng-model="product.prices[0].value" required />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="productQuantity"> מס' יחידות</label>
+            <input  class="form-control" id="productQuantity"  type="number" name="productQuantity"  ng-model="product.quantityInPkg" required />
         </div>
         <div class="form-group">
             <label class="control-label" for="productImgUrl">כתובת תמונה(url)</label>

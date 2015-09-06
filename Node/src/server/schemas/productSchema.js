@@ -9,6 +9,7 @@ var productSchema   = new Schema({
 		startDate : Date,
 		endDate : Date
 	}],
+	quantityInPkg : Number,
 	imageUrl : String
 });
 
