@@ -76,3 +76,17 @@ body {
 .product-for-selling {
   font-weight: bold;
 }
+.hermeny-logo .first-line {
+  font-size: 27px;
+  font-style: italic;
+}
+.hermeny-logo .first-line .sub-header {
+  font-style: initial;
+  margin-right: 5px;
+  font-size: 20px;
+  color: goldenrod;
+}
+.hermeny-logo .second-line {
+  font-size: 20px;
+  color: goldenrod;
+}
