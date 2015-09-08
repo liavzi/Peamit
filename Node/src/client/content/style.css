@@ -70,3 +70,9 @@ body {
   font-size: large;
   margin-left: 3px;
 }
+.bold {
+  font-weight: bold;
+}
+.product-for-selling {
+  font-weight: bold;
+}
