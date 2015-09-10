@@ -61,6 +61,7 @@ body {
 }
 .product-tag {
   cursor: pointer;
+  height: 370px;
 }
 .product-tag img {
   height: 300px;
@@ -76,17 +77,13 @@ body {
 .product-for-selling {
   font-weight: bold;
 }
-.hermeny-logo .first-line {
-  font-size: 27px;
+.navbar-brand {
+  font-size: 50px;
   font-style: italic;
 }
-.hermeny-logo .first-line .sub-header {
-  font-style: initial;
-  margin-right: 5px;
-  font-size: 20px;
-  color: goldenrod;
-}
-.hermeny-logo .second-line {
-  font-size: 20px;
+.navbar-brand .sub-header {
+  margin-right: 15px;
+  font-size: 35px;
+  font-style: normal;
   color: goldenrod;
 }
