@@ -61,11 +61,13 @@ body {
 }
 .product-tag {
   cursor: pointer;
-  height: 370px;
+  padding-bottom: 0px;
 }
 .product-tag img {
-  height: 300px;
-  width: 300px;
+  height: 270px;
+}
+.product-tag .caption {
+  padding-bottom: 0px;
 }
 .navbar .navbar-nav .fa {
   font-size: large;

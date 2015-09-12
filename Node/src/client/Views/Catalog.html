@@ -1,16 +1,27 @@
-﻿<div class="h3 bold">בחר לפי סוג מוצר:</div>
-<div class="row">
-    <div ng-repeat="groupTag in groupTags" class="catalog-tag">
-        <div class="col-xs-4">
-            <div product-tag tag="groupTag"></div>
+﻿<div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10">
+        <div class="h3 bold">בחר לפי סוג מוצר:</div>
+
+        <div class="row">
+            <div ng-repeat="groupTag in groupTags" class="catalog-tag">
+                <div class="col-xs-4">
+                    <div product-tag tag="groupTag"></div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="h3 bold">בחר לפי אירוע:</div>
-<div class="row">
-    <div ng-repeat="occasionTag in occasionTags" class="catalog-tag">
-        <div class="col-xs-4">
-            <div product-tag tag="occasionTag"></div>
+        <div class="h3 bold">בחר לפי אירוע:</div>
+        <div class="row">
+            <div ng-repeat="occasionTag in occasionTags" class="catalog-tag">
+                <div class="col-xs-4">
+                    <div product-tag tag="occasionTag"></div>
+                </div>
+            </div>
         </div>
+
     </div>
+
+    <div class="col-xs-1"></div>
 </div>
+
+
