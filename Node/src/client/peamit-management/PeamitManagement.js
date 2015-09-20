@@ -6,8 +6,8 @@ require(["angular","ui.bootstrap"
     ,"../utils/utils-module"
     ,"jQuery","underscore"
     ,"../infra/infra-module"
-    ,"ngAnimate"],function () {
-    var app = angular.module('PeamitManagement', ['ui.bootstrap', 'ngRoute','ngResource',"product","utils","infra","ngAnimate"
+    ,"ngAnimate","uiGrid"],function () {
+    var app = angular.module('PeamitManagement', ['ui.bootstrap',"ui.grid", 'ngRoute','ngResource',"product","utils","infra","ngAnimate"
         ,"order"]);
     app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.

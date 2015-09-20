@@ -32,6 +32,19 @@ define(["angular"],function(){
 
   app.controller("closedOrdersController", ["OrderResource",function (orderResource) {
     this.orders = orderResource.getAll();
+    this.gridOptions ={
+      data : this.orders,
+      columnDefs : [
+        {
+          field : "id",
+          displayName : "מזהה"
+        },
+        {
+          field : "state",
+          displayName : "סטטוס"
+        }
+      ]
+    };
   }]);
 
   app.directive("productForSelling",["$modal","OrderDataModel",function($modal,orderDataModel){
