@@ -110,10 +110,8 @@ body {
 }
 
 .sub-menu{
-  .facebook-link{
-    &::after{
-      content: url("/resources/images/facebook_logo.png");
-    }
+  a{
+    cursor: pointer;
   }
 }
 
@@ -122,4 +120,10 @@ body {
   a{
     color: #ffffff;
   }
+}
+
+.facebook-link{
+  position: absolute;
+  margin-top: 70px;
+  margin-right: 95%;
 }

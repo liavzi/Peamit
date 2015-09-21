@@ -1,9 +1,11 @@
 <div class="row">
-    <table class="table table-responsive row">
+    <div class="col-xs-8">
+        <table class="table table-responsive">
             <tr dir ="rtl">
                 <th>שם מוצר</th>
                 <th>כמות</th>
                 <th>מחיר</th>
+                <th></th>
             </tr>
             <tr ng-repeat="orderLine in orderModel.order.orderLines track by orderLine._id" ng-controller="OrderLineController" class="order-line">
                 <div >
@@ -18,35 +20,52 @@
                 <td></td>
                 <td>{{orderModel.order.total}}</td>
             </tr>
-    </table>
-    </div>
-    <div class="row">
-        <button class="btn btn-primary row" ng-click="showCustomerDetails = true" ng-hide="showCustomerDetails == true">לתשלום</button>
-    </div>
-    <div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
-        <form  novalidate class="form-horizontal customer-details" role="form" ng-show = "showCustomerDetails == true">
-            <div class="form-group">
-                <label for="nameInput" class="control-label">שם מלא:</label>
-                <input ng-model="orderModel.order.customerDetails.fullName" type="text" class="form-control" id="nameInput" placeholder="שם מלא">
-            </div>
-            <div class="form-group">
-                <label for="addressInput" class="control-label">כתובת:</label>
-                <input ng-model="orderModel.order.customerDetails.address" type="text" class="form-control" id="addressInput" placeholder="כתובת">
-            </div>
-            <div class="form-group">
-                <label for="phoneInput" class="control-label">טלפון\פלאפון:</label>
-                <input ng-model="orderModel.order.customerDetails.phoneNumber" type="text" class="form-control" id="phoneInput" placeholder="טלפון\פלאפון">
-            </div>
-            <div class="form-group">
-                <label for="emailInput" class="control-label">אימייל:</label>
-                <input ng-model="orderModel.order.customerDetails.email" type="email" class="form-control" id="emailInput" placeholder="אימייל">
-            </div>
-            <div class="form-group">
-                <button ng-click="closeOrderByPhone()" type="submit" class="btn btn-primary">בצע הזמנה</button>
-            </div>
-        </form>
+        </table>
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-3">
+        <div class="form-group">
+            <label for="coupon" class="control-label">קוד קופון:</label>
+            <input ng-model="orderModel.order.coupon" type="text" class="form-control" id="coupon" placeholder="הכנס קוד קופון">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-1">
+        <button class="btn btn-primary row" ng-click="showCustomerDetails = true" ng-hide="showCustomerDetails == true">לתשלום</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-offset-4 col-sm-4">
+    <form  novalidate class="form-horizontal customer-details" role="form" ng-show = "showCustomerDetails == true">
+        <div class="form-group">
+            <label for="nameInput" class="control-label">שם מלא:</label>
+            <input ng-model="orderModel.order.customerDetails.fullName" type="text" class="form-control" id="nameInput" placeholder="שם מלא">
+        </div>
+        <div class="form-group">
+            <label for="addressInput" class="control-label">כתובת:</label>
+            <input ng-model="orderModel.order.customerDetails.address" type="text" class="form-control" id="addressInput" placeholder="כתובת">
+        </div>
+        <div class="form-group">
+            <label for="phoneInput" class="control-label">טלפון\פלאפון:</label>
+            <input ng-model="orderModel.order.customerDetails.phoneNumber" type="text" class="form-control" id="phoneInput" placeholder="טלפון\פלאפון">
+        </div>
+        <div class="form-group">
+            <label for="emailInput" class="control-label">אימייל:</label>
+            <input ng-model="orderModel.order.customerDetails.email" type="email" class="form-control" id="emailInput" placeholder="אימייל">
+        </div>
+        <div class="form-group">
+            <label for="emailInput" class="control-label">אימייל:</label>
+            <input ng-model="orderModel.order.customerDetails.email" type="email" class="form-control" id="emailInput" placeholder="אימייל">
+        </div>
+        <div class="form-group">
+            <button ng-click="closeOrderByPhone()" type="submit" class="btn btn-primary">בצע הזמנה</button>
+        </div>
+    </form>
+</div>
+</div>
+
+
 
 

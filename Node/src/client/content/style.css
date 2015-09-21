@@ -94,12 +94,17 @@ body {
   background-color: #bbffbb;
   display: inline-block;
 }
-.sub-menu .facebook-link::after {
-  content: url("/resources/images/facebook_logo.png");
+.sub-menu a {
+  cursor: pointer;
 }
 .navbar {
   background-color: #46b8da;
 }
 .navbar a {
   color: #ffffff;
+}
+.facebook-link {
+  position: absolute;
+  margin-top: 70px;
+  margin-right: 95%;
 }
