@@ -1,5 +1,5 @@
 body {
-  background-image: url("/resources/images/cutesetbg54 (2).jpg");
+  background-image: url("/resources/images/polka-dot-background24 (3).jpg");
   color: #333;
   font-family: "Roboto", Arial, sans-serif;
   font-size: large;
@@ -88,12 +88,18 @@ body {
   margin-right: 15px;
   font-size: 35px;
   font-style: normal;
-  color: goldenrod;
+  color: #ffffff;
 }
 .product-tags-title {
-  background-color: #ffff00;
+  background-color: #bbffbb;
   display: inline-block;
 }
 .sub-menu .facebook-link::after {
   content: url("/resources/images/facebook_logo.png");
+}
+.navbar {
+  background-color: #46b8da;
+}
+.navbar a {
+  color: #ffffff;
 }
