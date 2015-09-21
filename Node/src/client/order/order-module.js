@@ -30,10 +30,21 @@ define(["angular"],function(){
     };
   }]);
 
-  app.controller("closedOrdersController", ["OrderResource",function (orderResource) {
+  app.controller("closedOrdersController", ["$scope","OrderResource",function ($scope,orderResource) {
+    var _this = this;
     this.orders = orderResource.getAll();
     this.gridOptions ={
       data : this.orders,
+      onRegisterApi : function(gridApi){
+        _this.gridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope,function(row){
+          _this.selectedOrder = row.entity;
+        });
+      },
+      enableFullRowSelection :true,
+      enableSelectionBatchEvent :false,
+      multiSelect:false,
+      noUnselect :true,
       columnDefs : [
         {
           field : "id",
