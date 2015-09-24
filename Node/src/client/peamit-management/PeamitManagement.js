@@ -3,10 +3,12 @@ require(["angular","ui.bootstrap"
     ,"angular-route","ngResource"
     ,"../product/product-module"
     ,"../order/order-module"
+    ,"../order/order-directive"
     ,"../utils/utils-module"
     ,"jQuery","underscore"
     ,"../infra/infra-module"
-    ,"ngAnimate","uiGrid"],function () {
+    ,"ngAnimate","uiGrid","toastr",
+    ],function () {
     var app = angular.module('PeamitManagement', ['ui.bootstrap',"ui.grid","ui.grid.selection",'ngRoute','ngResource',"product","utils","infra","ngAnimate"
         ,"order"]);
     app.config(['$routeProvider',function ($routeProvider) {
@@ -28,6 +30,9 @@ require(["angular","ui.bootstrap"
             }).
             when("/ClosedOrders",{
                 templateUrl: "/ManagementViews/ClosedOrders.html"
+            }).
+            when("/OrderMaintenance/:orderId?",{
+                templateUrl: '/ManagementViews/OrderMaintenance.html'
             });
     }]);
 

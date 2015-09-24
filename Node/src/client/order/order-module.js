@@ -1,4 +1,4 @@
-define(["angular"],function(){
+define(["angular"],function(a){
   var app = angular.module("order",[]);
 
   //Controllers
@@ -30,11 +30,10 @@ define(["angular"],function(){
     };
   }]);
 
-  app.controller("closedOrdersController", ["$scope","OrderResource",function ($scope,orderResource) {
+  app.controller("closedOrdersController", ["$scope","$location","OrderResource","toastr",function ($scope,$location,orderResource,toastr) {
     var _this = this;
-    this.orders = orderResource.getAll();
     this.gridOptions ={
-      data : this.orders,
+      data : [],
       onRegisterApi : function(gridApi){
         _this.gridApi = gridApi;
         gridApi.selection.on.rowSelectionChanged($scope,function(row){
@@ -48,14 +47,32 @@ define(["angular"],function(){
       columnDefs : [
         {
           field : "id",
-          displayName : "×ž×–×”×”"
+          displayName : "îæää"
         },
         {
           field : "state",
-          displayName : "×¡×˜×˜×•×¡"
+          displayName : "ñèèåñ"
         }
       ]
     };
+    this.loadOrders = function(){
+      this.gridOptions.data = orderResource.getAll();
+    };
+    this.loadOrders();
+    this.editOrder = function(order){
+      $location.path("/OrderMaintenance/"+order._id);
+    };
+    this.deleteOrder = function(order){
+      orderResource.delete({orderId:order._id}).$promise.then(function(){
+        toastr.success("äæîðä ðîç÷ä");
+        _this.loadOrders();});
+    };
+  }]);
+
+  app.controller("orderMaintenance", ["$scope","$routeParams","OrderResource",function ($scope,$routeParams,orderResource) {
+    var _this = this;
+    var orderId = $routeParams.orderId;
+    this.order = orderResource.get({orderId:orderId});
   }]);
 
   app.directive("productForSelling",["$modal","OrderDataModel",function($modal,orderDataModel){

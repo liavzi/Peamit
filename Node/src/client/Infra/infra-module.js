@@ -1,4 +1,4 @@
-define(["angular","ngResource"],function(){
+define(["angular","ngResource","toastr"],function(a,r,toastr){
     var app = angular.module("infra",["ngResource"]);
     app.factory("peamitResource",["$resource","alertsService",function($resource,alertsService){
         function addSavedAlert(){
@@ -54,4 +54,12 @@ define(["angular","ngResource"],function(){
     app.controller("alertsController",["alertsService",function(alertService){
         this.alerts = alertService.alerts;
     }]);
+
+    function toastrService(){
+    }
+    toastrService.prototype.success = function(message){
+        toastr.success(message);
+    }
+
+    app.service("toastr",toastrService);
 });

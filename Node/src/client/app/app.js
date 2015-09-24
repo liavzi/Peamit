@@ -2,7 +2,8 @@
 require(["angular","ui.bootstrap","angular-route","ngResource","../product/product-module"
     ,"../utils/utils-module"
     ,"../order/order-module"
-    ,"jQuery","underscore"
+    ,"../order/order-directive"
+    ,"jQuery","underscore","toastr"
     ,"../infra/infra-module","ngAnimate"],function () {
     var app = angular.module('Peamit', ['ui.bootstrap', 'ngRoute','ngResource',"order","product","infra","ngAnimate"]);
     app.config(['$routeProvider',function ($routeProvider) {
