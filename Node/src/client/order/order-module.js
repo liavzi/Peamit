@@ -47,11 +47,11 @@ define(["angular"],function(a){
       columnDefs : [
         {
           field : "id",
-          displayName : "îæää"
+          displayName : "×ž×–×”×”"
         },
         {
           field : "state",
-          displayName : "ñèèåñ"
+          displayName : "×¡×˜×˜×•×¡"
         }
       ]
     };
@@ -64,7 +64,7 @@ define(["angular"],function(a){
     };
     this.deleteOrder = function(order){
       orderResource.delete({orderId:order._id}).$promise.then(function(){
-        toastr.success("äæîðä ðîç÷ä");
+        toastr.success("×”×”×–×ž× ×” × ×ž×—×§×”");
         _this.loadOrders();});
     };
   }]);

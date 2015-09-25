@@ -23,6 +23,15 @@ require(["angular","ui.bootstrap","angular-route","ngResource","../product/produ
                 templateUrl: 'Views/MyOrder.html',
                 controller: 'MyOrderController'
             }).
+            when("/Contact",{
+                templateUrl :"Views/Contact.html"
+            }).
+            when("/Delivery",{
+                templateUrl :"Views/Delivery.html"
+            }).
+            when("/About",{
+                templateUrl :"Views/About.html"
+            }).
             otherwise({
                 redirectTo: '/'
             });
