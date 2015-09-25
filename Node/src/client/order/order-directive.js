@@ -8,6 +8,9 @@ define(["./order-module"],function(){
             },
             templateUrl : "/Views/Order.html",
             link : function(scope,elem){
+                scope.orderModel = {
+                    order : scope.order
+                }
             }
         };
     });
