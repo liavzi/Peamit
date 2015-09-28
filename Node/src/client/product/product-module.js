@@ -7,8 +7,8 @@ define(["angular","../Infra/infra-module"],function(){
     $scope.groupTags = tagResource.getAll({type:"group"});
   } ]);
 
-  app.controller('ProductByTagController', ['$scope',"$routeParams","ProductForSellingResource", function ($scope,$routeParams,productForSellingResource){
-    $scope.products = productForSellingResource.getAll({tagId : $routeParams.tagId});
+  app.controller('ProductByTagController', ['$scope',"$stateParams","ProductForSellingResource", function ($scope,$stateParams,productForSellingResource){
+    $scope.products = productForSellingResource.getAll({tagId : $stateParams.tagId});
   } ]);
 
   app.controller('ProductMaintenanceController', ['$scope',"$routeParams",'ProductResource',function ($scope,$routeParams,productResource) {
@@ -94,7 +94,7 @@ define(["angular","../Infra/infra-module"],function(){
 
 
   //Directives
-  app.directive("productTag",["$location","ProductByTagDataModel",function($location,productByTagDataModel){
+  app.directive("productTag",["$state","ProductByTagDataModel",function($state,productByTagDataModel){
     return {
       restrict : "EA",
       scope : {
@@ -104,7 +104,7 @@ define(["angular","../Infra/infra-module"],function(){
       templateUrl : "Views/ProductTag.html",
       link : function ($scope){
         $scope.chooseTag = function(){
-          $location.path("/ProductsByTag/"+$scope.tag._id);
+          $state.go("productsByTag",{tagId:$scope.tag._id});
         };
       }
     };

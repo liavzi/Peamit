@@ -17,13 +17,13 @@
         <nav class="navbar" role="navigation">
 
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">hermeny<span class="sub-header">כל מוצר לכל אירוע</span></a>
+                    <a class="navbar-brand" ui-sref="home">hermeny<span class="sub-header">כל מוצר לכל אירוע</span></a>
                 </div>
                 <div>
                     <ol class="nav navbar-nav navbar-left">
-                        <li><a href="#"><i class="fa fa-home"></i> ראשי</a></li>
-                        <li><a href="#Catalog"><i  class="fa fa-book"></i>קטלוג</a></li>
-                        <li><a href="#MyOrder"><i  class="fa fa-shopping-cart"></i>ההזמנה שלי</a></li>
+                        <li><a ui-sref="home"><i class="fa fa-home"></i> ראשי</a></li>
+                        <li><a ui-sref="catalog"><i  class="fa fa-book"></i>קטלוג</a></li>
+                        <li><a ui-sref="myOrder"><i  class="fa fa-shopping-cart"></i>ההזמנה שלי</a></li>
                     </ol>
                 </div>
 
@@ -32,14 +32,14 @@
             <div class="row">
                 <div class="col-xs-7 col-xs-offset-4">
                     <ol class="list-inline sub-menu">
-                        <li><a href="#Contact" style="color :red">צור קשר</a></li>
-                        <li><a href="#Delivery" style="color :red">מדיניות משלוחים</a></li>
-                        <li><a href="#About" style="color :red">אודות</a></li>
+                        <li><a ui-sref="contact" style="color :red">צור קשר</a></li>
+                        <li><a ui-sref="delivery" style="color :red">מדיניות משלוחים</a></li>
+                        <li><a ui-sref="about" style="color :red">אודות</a></li>
                     </ol>
                 </div>
             </div>
             <div class="row">
-                <div ng-view class="main-view"></div>
+                <div ui-view="main-view" class="main-view"></div>
             </div>
         </div>
         <script type="text/javascript" src=/requireJS-config/requireConfig.js></script>

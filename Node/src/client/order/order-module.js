@@ -22,11 +22,11 @@ define(["angular"],function(a){
       });
     };
   } ]);
-  app.controller("ProductSoldModalController",["$scope","$modalInstance","$location","soldProduct",function ($scope, $modalInstance,$location,soldProduct){
+  app.controller("ProductSoldModalController",["$scope","$modalInstance","$state","soldProduct",function ($scope, $modalInstance,$state,soldProduct){
     $scope.soldProduct = soldProduct;
     $scope.pay = function(){
       $modalInstance.close();
-      $location.path("/MyOrder");
+      $state.go("myOrder");
     };
   }]);
 

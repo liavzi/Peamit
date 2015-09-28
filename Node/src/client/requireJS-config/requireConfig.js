@@ -9,7 +9,8 @@ window.requireConfig={
         "angular-route" : "..//ScriptsLibs/angular-route",
         "ngAnimate" : "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate",
         "uiGrid" : "https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min",
-        "toastr" : "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr"
+        "toastr" : "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr",
+        "ui.router" : "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router"
     },
     shim: {
         'jQuery': {
@@ -43,6 +44,9 @@ window.requireConfig={
         "toastr" : {
             exports : "toastr",
             deps : ["jQuery"]
+        },
+        "ui.router" : {
+            deps : ["angular"]
         }
     }
 };

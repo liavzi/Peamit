@@ -1,39 +1,56 @@
 ﻿require.config(requireConfig);
-require(["angular","ui.bootstrap","angular-route","ngResource","../product/product-module"
+require(["angular","ui.bootstrap","ngResource","../product/product-module"
     ,"../utils/utils-module"
     ,"../order/order-module"
     ,"../order/order-directive"
     ,"jQuery","underscore","toastr"
-    ,"../infra/infra-module","ngAnimate"],function () {
-    var app = angular.module('Peamit', ['ui.bootstrap', 'ngRoute','ngResource',"order","product","infra","ngAnimate"]);
-    app.config(['$routeProvider',function ($routeProvider) {
-        $routeProvider.
-            when('/', {
-                templateUrl: 'Views/MainPage.html'
+    ,"../infra/infra-module","ngAnimate",
+    "ui.router"],function () {
+    var app = angular.module('Peamit', ['ui.bootstrap','ngResource',"order","product","infra","ngAnimate","ui.router"]);
+    app.config(['$stateProvider',"$urlRouterProvider",function ($stateProvider,$urlRouterProvider) {
+        $urlRouterProvider.otherwise("/");
+        $stateProvider.
+            state('home',{
+                url : "/",
+                views:{
+                    "main-view" : {templateUrl: 'Views/MainPage.html'}
+                }
             }).
-            when('/Catalog', {
-                templateUrl: 'Views/Catalog.html',
-                controller: 'CatalogController'
+            state('catalog', {
+                url:"/catalog",
+                views:{
+                    "main-view" : {templateUrl: 'Views/Catalog.html',controller: 'CatalogController'}
+                }
             }).
-            when('/ProductsByTag/:tagId?', {
-                templateUrl: 'Views/ProductByTag.html',
-                controller: 'ProductByTagController'
+            state('productsByTag', {
+                url:"/productsByTag/:tagId",
+                views:{
+                    "main-view" : {templateUrl: 'Views/ProductByTag.html',controller: 'ProductByTagController'}
+                }
             }).
-            when('/MyOrder', {
-                templateUrl: 'Views/MyOrder.html',
-                controller: 'MyOrderController'
+            state('myOrder', {
+                url:"/myOrder",
+                views:{
+                    "main-view" : {templateUrl: 'Views/MyOrder.html',controller: 'MyOrderController'}
+                }
             }).
-            when("/Contact",{
-                templateUrl :"Views/Contact.html"
+            state("contact",{
+                url:"/contact",
+                views:{
+                    "main-view" : {templateUrl: 'Views/Contact.html'}
+                }
             }).
-            when("/Delivery",{
-                templateUrl :"Views/Delivery.html"
+            state("delivery",{
+                url:"/delivery",
+                views:{
+                    "main-view" : {templateUrl: 'Views/Delivery.html'}
+                }
             }).
-            when("/About",{
-                templateUrl :"Views/About.html"
-            }).
-            otherwise({
-                redirectTo: '/'
+            state("about",{
+                url:"/about",
+                views:{
+                    "main-view" : {templateUrl: 'Views/About.html'}
+                }
             });
     }]);
 
