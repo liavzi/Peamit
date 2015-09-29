@@ -3,6 +3,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
     ,"../utils/utils-module"
     ,"../order/order-module"
     ,"../order/order-directive"
+    ,"../order/payment-controller"
     ,"jQuery","underscore","toastr"
     ,"../infra/infra-module","ngAnimate",
     "ui.router"],function () {
@@ -51,6 +52,16 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                 views:{
                     "main-view" : {templateUrl: 'Views/About.html'}
                 }
+            }).
+            state("payment",{
+                url:"/payment",
+                views:{
+                    "main-view" : {templateUrl: 'Views/Payment.html',controller : "payment as payment"}
+                }
+            }).
+            state("payment.customerDetails",{
+                url:"/payment/customerDetails",
+                templateUrl : "Views/CustomerDetails.html"
             });
     }]);
 

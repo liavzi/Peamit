@@ -13,36 +13,8 @@
 </div>
 <div class="row">
     <div class="col-xs-1">
-        <button class="btn btn-primary row" ng-click="showCustomerDetails = true" ng-hide="showCustomerDetails == true">לתשלום</button>
+        <button ng-click="goToPayment()" class="btn btn-primary row">לתשלום</button>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
-    <form  novalidate class="form-horizontal customer-details" role="form" ng-show = "showCustomerDetails == true">
-        <div class="form-group">
-            <label for="nameInput" class="control-label">שם מלא:</label>
-            <input ng-model="orderModel.order.customerDetails.fullName" type="text" class="form-control" id="nameInput" placeholder="שם מלא">
-        </div>
-        <div class="form-group">
-            <label for="addressInput" class="control-label">כתובת:</label>
-            <input ng-model="orderModel.order.customerDetails.address" type="text" class="form-control" id="addressInput" placeholder="כתובת">
-        </div>
-        <div class="form-group">
-            <label for="phoneInput" class="control-label">טלפון\פלאפון:</label>
-            <input ng-model="orderModel.order.customerDetails.phoneNumber" type="text" class="form-control" id="phoneInput" placeholder="טלפון\פלאפון">
-        </div>
-        <div class="form-group">
-            <label for="emailInput" class="control-label">אימייל:</label>
-            <input ng-model="orderModel.order.customerDetails.email" type="email" class="form-control" id="emailInput" placeholder="אימייל">
-        </div>
-        <div class="form-group">
-            <label for="emailInput" class="control-label">אימייל:</label>
-            <input ng-model="orderModel.order.customerDetails.email" type="email" class="form-control" id="emailInput" placeholder="אימייל">
-        </div>
-        <div class="form-group">
-            <button ng-click="closeOrderByPhone()" type="submit" class="btn btn-primary">בצע הזמנה</button>
-        </div>
-    </form>
 </div>
 </div>
 
