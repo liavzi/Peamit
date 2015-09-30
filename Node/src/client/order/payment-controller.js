@@ -1,4 +1,3 @@
-/// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
 define(["require", "exports", './order-module'], function (require, exports, module) {
     var CustomerDetails = (function () {
         function CustomerDetails() {

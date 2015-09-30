@@ -1,9 +1,5 @@
 /// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
-
 import module = require('./order-module');
-
-
-
 
 class CustomerDetails {
     fullName : string;
