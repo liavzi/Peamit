@@ -27,7 +27,7 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
             $scope.soldProduct = soldProduct;
             $scope.pay = function () {
                 $modalInstance.close();
-                $state.go("myOrder");
+                $state.go("payment.myOrder");
             };
         }]);
     app.controller("closedOrdersController", ["$scope", "$location", "OrderResource", "toastr", function ($scope, $location, orderResource, toastr) {

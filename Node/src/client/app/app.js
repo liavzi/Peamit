@@ -29,12 +29,6 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                     "main-view" : {templateUrl: 'Views/ProductByTag.html',controller: 'ProductByTagController'}
                 }
             }).
-            state('myOrder', {
-                url:"/myOrder",
-                views:{
-                    "main-view" : {templateUrl: 'Views/MyOrder.html',controller: 'MyOrderController'}
-                }
-            }).
             state("contact",{
                 url:"/contact",
                 views:{
@@ -59,10 +53,19 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                     "main-view" : {templateUrl: 'Views/Payment.html',controller : "payment as payment"}
                 }
             }).
+            state('payment.myOrder', {
+                url:"/myOrder",
+                templateUrl: 'Views/MyOrder.html',
+                controller: "MyOrderController"
+            }).
             state("payment.customerDetails",{
-                url:"/payment/customerDetails",
+                url:"/customerDetails",
                 templateUrl : "Views/CustomerDetails.html"
-            });
+            }).
+            state("payment.paymentMethod",{
+                url:"/paymentMethod",
+                templateUrl : "Views/PaymentMethod.html"
+            });;
     }]);
 
     $(function(){

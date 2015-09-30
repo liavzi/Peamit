@@ -30,7 +30,7 @@ app.controller("ProductSoldModalController",["$scope","$modalInstance","$state",
     $scope.soldProduct = soldProduct;
     $scope.pay = function(){
         $modalInstance.close();
-        $state.go("myOrder");
+        $state.go("payment.myOrder");
     };
 }]);
 

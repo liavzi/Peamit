@@ -1,4 +1,9 @@
-import module = require("./order-module");
+/// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
+
+import module = require('./order-module');
+
+
+
 
 class CustomerDetails {
     fullName : string;
@@ -8,14 +13,23 @@ class CustomerDetails {
 }
 
 class PaymentController{
+    static $inject = ["$state","OrderDataModel","toastr"];
+
     customerDetails : CustomerDetails;
 
-    constructor(){
+    constructor(private $state : angular.ui.IStateService,private orderDataModel,private toastr){
         this.customerDetails = new CustomerDetails();
     }
 
     goToChoosePaymentMethod(){
-        alert("goToChoosePaymentMethod");
+        this.$state.go("payment.paymentMethod");
+    }
+
+    closeByPhone(){
+        this.orderDataModel.getOrder().closeOrderByPhone(this.customerDetails).then(()=>{
+            this.toastr.success("ההזמנה הושלמה");
+            this.orderDataModel.clear();
+        });
     }
 }
 module.controller("payment",PaymentController);
