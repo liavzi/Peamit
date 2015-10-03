@@ -120,7 +120,7 @@ define(["angular","../Infra/infra-module"],function(){
   } ]);
 
   app.factory('ProductForSellingResource', ['$resource', function ($resource) {
-    return $resource('http://localhost:8080/api/productForSelling/:id', {id : '@_id'},
+    return $resource('/api/productForSelling/:id', {id : '@_id'},
         {
           'getAll': { method: 'GET',isArray:true}
         });
