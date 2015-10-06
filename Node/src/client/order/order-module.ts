@@ -1,3 +1,5 @@
+///<reference path="../../../typings/angularjs/angular.d.ts"/>
+
 import angular = require("angular");
 
 var app = angular.module("order",[]);

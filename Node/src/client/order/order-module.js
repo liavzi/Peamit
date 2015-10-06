@@ -1,3 +1,4 @@
+///<reference path="../../../typings/angularjs/angular.d.ts"/>
 define(["require", "exports", "angular"], function (require, exports, angular) {
     var app = angular.module("order", []);
     //Controllers
