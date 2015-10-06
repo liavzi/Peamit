@@ -1,9 +1,9 @@
 ///<reference path="../../../typings/tsd.d.ts" />
-///<reference path="../../../src/schemas/exceptions/IValidationException" />
 import express = require("express");
+import ValidationError = require("../errors/ValidationError");
 
 var validationErrorHandler = function(err:any,req,res : express.Response,next :Function){
-    if (err instanceof IValidationException)
+    if (err instanceof ValidationError)
     {
         return res.json(400,err);
     }
