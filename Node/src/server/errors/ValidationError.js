@@ -5,5 +5,4 @@ var ValidationError = (function () {
     }
     return ValidationError;
 })();
-
 module.exports = ValidationError;
