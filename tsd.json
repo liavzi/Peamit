@@ -27,10 +27,10 @@
       "commit": "98d3168c2c570352a3a7393788e2ec9fbb08ade6"
     },
     "mongoose/mongoose.d.ts": {
-      "commit": "55f5aec4260b7679892cbd586d11cc8fd811615f"
+      "commit": "d6c98baa7fd703e449cf37f3ec39ed3bd92cfd35"
     },
     "underscore/underscore.d.ts": {
-      "commit": "55f5aec4260b7679892cbd586d11cc8fd811615f"
+      "commit": "d6c98baa7fd703e449cf37f3ec39ed3bd92cfd35"
     }
   }
 }

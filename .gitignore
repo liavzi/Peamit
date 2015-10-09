@@ -27,5 +27,5 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
-Node/node_modules/
+node_modules/
 **/.idea/**
