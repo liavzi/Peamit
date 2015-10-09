@@ -8,6 +8,7 @@ var validationErrorHandler = function(err:any,req,res : express.Response,next :F
         return res.json(400,err);
     }
     next(err);
+    var x= 4;
 };
 
 export =validationErrorHandler;

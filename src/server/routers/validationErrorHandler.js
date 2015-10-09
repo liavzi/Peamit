@@ -4,5 +4,6 @@ var validationErrorHandler = function (err, req, res, next) {
         return res.json(400, err);
     }
     next(err);
+    var x = 4;
 };
 module.exports = validationErrorHandler;
