@@ -9,7 +9,7 @@ var tsServerProject = ts.createProject({
    target: 'ES5'
 });
 
-var srcServer = 'src/server/**/*.ts'
+var srcServer = ['src/server/**/*.ts',"src/schemas/**/*.ts"];
 
 gulp.task('watch-server', ['compile-server'], watchServer);
 gulp.task('compile-server', compileServer);

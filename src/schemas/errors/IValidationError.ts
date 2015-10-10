@@ -1,5 +1,9 @@
+interface ISingleValidationError{
+    type :string;
+}
+
 interface IValidationError extends Error {
-    message : string;
+    errors:ISingleValidationError[];
 }
 
 export = IValidationError;
