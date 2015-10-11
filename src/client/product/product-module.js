@@ -1,5 +1,5 @@
-define(["angular","../Infra/infra-module"],function(){
-  var app = angular.module("product",["infra"]);
+define(["angular"],function(){
+  var app = angular.module("product",[]);
 
   //Controllers
   app.controller('CatalogController', ['$scope', 'ProductForSellingResource',"TagResource", function ($scope, productForSellingResource,tagResource) {
