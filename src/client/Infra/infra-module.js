@@ -1,5 +1,5 @@
 define(["angular","ngResource","toastr"],function(a,r,toastr){
-    var x = 6;
+    var x = 2;
     var app = angular.module("infra",["ngResource"]);
     app.factory("peamitResource",["$resource","alertsService",function($resource,alertsService){
         function addSavedAlert(){
