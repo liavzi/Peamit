@@ -13,7 +13,7 @@ var session      = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 if(process.env.OPENSHIFT_MONGODB_DB_URL){
-    mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + node;
+    mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + "node";
     mongoose.connect(mongodb_connection_string);
 }
 else{
