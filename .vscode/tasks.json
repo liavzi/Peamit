@@ -15,8 +15,24 @@
     ],
     "tasks": [
 		{
-			"taskName": "watch-server",
+			"taskName": "watch",
 			"isBuildCommand": true,
+			"showOutput": "always",
+			"problemMatcher": [
+				"$tsc"
+			]
+		},
+		{
+			"taskName": "watch-server",
+			"isBuildCommand": false,
+			"showOutput": "always",
+			"problemMatcher": [
+				"$tsc"
+			]
+		},
+		{
+			"taskName": "watch-client",
+			"isBuildCommand": false,
 			"showOutput": "always",
 			"problemMatcher": [
 				"$tsc"
