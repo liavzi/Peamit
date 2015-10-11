@@ -12,7 +12,14 @@ var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect(databaseConfig.url);
+if(process.env.OPENSHIFT_MONGODB_DB_URL){
+    mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + node;
+    mongoose.connect(mongodb_connection_string);
+}
+else{
+    mongoose.connect(databaseConfig.url);   
+}
+
 
 
 passport.use(new GoogleStrategy({
@@ -73,11 +80,12 @@ function ensureAuthenticated(req, res, next) {
 }
 
 
-var port = process.env.PORT || 8080; 		// set our port
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080; 		// set our port
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 registerRoutes(express,app);
 
 // START THE SERVER
 // =============================================================================
-app.listen(port);
+app.listen(port,server_ip_address);
 console.log('Magic happens on port ' + port);
