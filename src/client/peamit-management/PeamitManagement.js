@@ -6,7 +6,7 @@ require(["angular","ui.bootstrap"
     ,"../order/order-directive"
     ,"../utils/utils-module"
     ,"jQuery","underscore"
-    ,"../infra/infra-module"
+    ,"../Infra/infra-module"
     ,"ngAnimate","uiGrid","toastr",
     ],function () {
     var app = angular.module('PeamitManagement', ['ui.bootstrap',"ui.grid","ui.grid.selection",'ngRoute','ngResource',"product","utils","infra","ngAnimate"
