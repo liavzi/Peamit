@@ -175,7 +175,7 @@ function OrderDataModelFactory(orderResource,$q,$http){
 app.factory("OrderDataModel",OrderDataModelFactory);
 
 app.factory('OrderResource', ['$resource', function ($resource) {
-    return $resource('http://localhost:8080/api/orders/:orderId', {id : '@_id'},
+    return $resource('/api/orders/:orderId', {id : '@_id'},
         {
             'create': { method: 'POST'},
             "getAll": {method:"GET",isArray:true}
