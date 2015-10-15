@@ -31,6 +31,12 @@
     },
     "underscore/underscore.d.ts": {
       "commit": "d6c98baa7fd703e449cf37f3ec39ed3bd92cfd35"
+    },
+    "angular-ui-bootstrap/angular-ui-bootstrap.d.ts": {
+      "commit": "3a6e1b8988eba0ba74fe4db20c950242552857e2"
+    },
+    "toastr/toastr.d.ts": {
+      "commit": "3a6e1b8988eba0ba74fe4db20c950242552857e2"
     }
   }
 }

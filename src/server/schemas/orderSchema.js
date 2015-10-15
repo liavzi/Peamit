@@ -12,7 +12,7 @@ var orderSchema = new Schema({
     customerDetails: {
         fullName: String,
         address: String,
-        phoneNumber: Number,
+        phoneNumber: { type: Number, required: "חובה להכניס מספר טלפון" },
         email: String
     },
     state: String,
@@ -38,12 +38,8 @@ orderSchema.method("removeLineById", function (orderLineId) {
     this.orderLines.id(orderLineId).remove();
 });
 orderSchema.method("closeByPhone", function (customerDetails) {
-    if (!customerDetails.phoneNumber)
-        throw new Error("Customer must supply phone number");
     this.customerDetails = customerDetails;
     this._close({ method: "ClosedByPhone" });
-    //var orderAsString = JSON.stringify(this);
-    //mailSender.send(orderAsString);
 });
 orderSchema.method("_close", function (closeDetails) {
     this.state = "Closed";

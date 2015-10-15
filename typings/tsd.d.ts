@@ -8,3 +8,5 @@
 /// <reference path="mime/mime.d.ts" />
 /// <reference path="mongoose/mongoose.d.ts" />
 /// <reference path="underscore/underscore.d.ts" />
+/// <reference path="angular-ui-bootstrap/angular-ui-bootstrap.d.ts" />
+/// <reference path="toastr/toastr.d.ts" />

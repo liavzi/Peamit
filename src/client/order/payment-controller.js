@@ -26,4 +26,3 @@ define(["require", "exports", './order-module'], function (require, exports, mod
     })();
     module.controller("payment", PaymentController);
 });
-//# sourceMappingURL=payment-controller.js.map

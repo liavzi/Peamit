@@ -1,5 +1,6 @@
 interface ISingleValidationError{
     type :string;
+    message:string;
 }
 
 interface IValidationError extends Error {
