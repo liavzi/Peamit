@@ -12,9 +12,11 @@ var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
+var callbackURL = "http://localhost:8080/auth/google/callback";
 if(process.env.OPENSHIFT_MONGODB_DB_URL){
     mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + "node";
     mongoose.connect(mongodb_connection_string);
+    callbackURL = "http://node-hermeny.rhcloud.com/auth/google/callback";
 }
 else{
     mongoose.connect(databaseConfig.url);   
@@ -25,7 +27,7 @@ else{
 passport.use(new GoogleStrategy({
         clientID: "182243328912-qgkbqvdkv3g81lr5sbuithf04jrcns24.apps.googleusercontent.com",
         clientSecret: "tmol5ZgFbBvSd81Zi682DZaK",
-        callbackURL: "http://localhost:8080/auth/google/callback"
+        callbackURL: callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
         if (profile.id ==="102414180728342095926")
