@@ -5,14 +5,15 @@ import angular = require("angular");
 var app = angular.module("order",[]);
 
 //Controllers
-app.controller('MyOrderController', ['$scope', 'OrderResource',"OrderDataModel","$state", function ($scope, orderResource,orderDataModel,$state) {
+app.controller('MyOrderController', ['$scope', 'OrderResource',"myOrder","$state", function ($scope, orderResource,myOrder : MyOrder,$state) {
     $scope.orderModel = {};
-    var order = orderDataModel.getOrder();
-    if (order)
-        $scope.orderModel.order  =orderResource.get({orderId:order.id});
+    $scope.orderModel.order={};
+    myOrder.getFullOrder().then(order=>{
+        $scope.orderModel.order  =order;
+    });
     $scope.closeOrderByPhone = function (){
-        orderDataModel.getOrder().closeOrderByPhone($scope.orderModel.order.customerDetails).then(function(){
-            orderDataModel.clear();
+        myOrder.closeOrderByPhone($scope.orderModel.order.customerDetails).then(function(){
+            
         });
     };
     $scope.goToPayment = function(){
@@ -20,10 +21,10 @@ app.controller('MyOrderController', ['$scope', 'OrderResource',"OrderDataModel",
     };
 } ]);
 
-app.controller('OrderLineController', ['$scope', 'ProductResource',"OrderDataModel",function ($scope, productResource,orderDataModel) {
+app.controller('OrderLineController', ['$scope', 'ProductResource',"myOrder",function ($scope, productResource,myOrder : MyOrder) {
     $scope.product = productResource.getById({id:$scope.orderLine.productId});
     $scope.removeOrderLine = function(){
-        orderDataModel.getOrder().removeOrderLine($scope.orderLine._id).then(function(order){
+        myOrder.removeOrderLine($scope.orderLine._id).then(function(order){
             $scope.orderModel.order = order;
         });
     };
@@ -81,7 +82,7 @@ app.controller("orderMaintenance", ["$scope","$routeParams","OrderResource",func
     this.order = orderResource.get({orderId:orderId});
 }]);
 
-app.directive("productForSelling",["$modal","OrderDataModel",function($modal,orderDataModel){
+app.directive("productForSelling",["$modal","myOrder",function($modal,myOrder : MyOrder){
     return {
         restrict : "EA",
         scope : {
@@ -94,9 +95,7 @@ app.directive("productForSelling",["$modal","OrderDataModel",function($modal,ord
         link : function(scope){
             scope.addToCart = function(){
                 var saleInfo = {productId: scope.product._id, quantity: scope.product.quantity};
-                var itemSoldPromise = orderDataModel.getOrCreateOrder().then(function(order) {
-                    return order.addItem(saleInfo);
-                });
+                var itemSoldPromise = myOrder.addItem(saleInfo);           
                 var modalInstance = $modal.open({
                     templateUrl:"Views/ProductSoldModal.html",
                     size:"lg",
@@ -115,64 +114,34 @@ app.directive("productForSelling",["$modal","OrderDataModel",function($modal,ord
     };
 }]);
 
-function Order(orderId,$http){
-    this.id = orderId;
-    this._$http = $http;
+class MyOrder{
+    static $inject = ["$http"];
+    constructor(private $http : ng.IHttpService){
+    }
+    private post(path,postdata){
+        return this.$http.post("/api/myOrder/"+path,postdata);
+    };
+    
+    public addItem(saleInfo){
+        return this.post("items",saleInfo);
+    };
+    
+    public closeOrderByPhone(customerDetails){
+        return this.post("actions/closeOrderByPhone",customerDetails);
+    };
+    
+    public removeOrderLine(orderLineId){
+        return this.$http.delete("/api/myOrder/lines/"+orderLineId).then(function(response){return response.data;});
+    };      
+    
+    public getFullOrder(){
+        return this.$http.get("api/myOrder").then(res=>res.data);
+    }     
 }
 
-Order.prototype._post = function(path,postdata){
-    return this._$http.post("/api/orders/"+this.id+"/"+path,postdata);
-};
-
-Order.prototype.addItem = function(saleInfo){
-    return this._post("items",saleInfo);
-};
-
-Order.prototype.closeOrderByPhone = function(customerDetails){
-    return this._post("actions/closeOrderByPhone",customerDetails);
-};
-
-Order.prototype.removeOrderLine = function(orderLineId){
-    return this._$http.delete("/api/orders/"+this.id+"/lines/"+orderLineId).then(function(response){return response.data;});
-};
+app.service("myOrder",MyOrder);
 
 //Services
-(<any> OrderDataModelFactory).$inject = ["OrderResource","$q","$http"];
-function OrderDataModelFactory(orderResource,$q,$http){
-    var orderDataModel : any = {};
-    orderDataModel.initialize = function(){
-        var orderIdFromLocalStorage = localStorage.getItem("orderId");
-        if (orderIdFromLocalStorage)
-            this._setOrder(orderIdFromLocalStorage);
-    };
-    orderDataModel._setOrder = function(orderId){
-        this.order = new Order(orderId,$http);
-        localStorage.setItem("orderId",orderId);
-    };
-    orderDataModel.getOrCreateOrder= function(){
-        var self = this;
-        var deferred = $q.defer();
-        if (this.order) return $q.when(this.order);
-        orderResource.create({},function(order){
-            self._setOrder(order._id);
-            deferred.resolve(self.order);
-        },function(err){deferred.reject(err);});
-        return deferred.promise;
-    };
-
-    orderDataModel.getOrder = function(){
-        return this.order;
-    };
-
-    orderDataModel.clear = function(){
-        this.order =null;
-        localStorage.removeItem("orderId");
-    };
-
-    orderDataModel.initialize();
-    return orderDataModel;
-}
-app.factory("OrderDataModel",OrderDataModelFactory);
 
 app.factory('OrderResource', ['$resource', function ($resource) {
     return $resource('/api/orders/:orderId', {id : '@_id'},

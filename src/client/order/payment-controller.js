@@ -5,9 +5,9 @@ define(["require", "exports", './order-module'], function (require, exports, mod
         return CustomerDetails;
     })();
     var PaymentController = (function () {
-        function PaymentController($state, orderDataModel, toastr) {
+        function PaymentController($state, myOrder, toastr) {
             this.$state = $state;
-            this.orderDataModel = orderDataModel;
+            this.myOrder = myOrder;
             this.toastr = toastr;
             this.customerDetails = new CustomerDetails();
         }
@@ -16,12 +16,11 @@ define(["require", "exports", './order-module'], function (require, exports, mod
         };
         PaymentController.prototype.closeByPhone = function () {
             var _this = this;
-            this.orderDataModel.getOrder().closeOrderByPhone(this.customerDetails).then(function () {
+            this.myOrder.getFullOrder().closeOrderByPhone(this.customerDetails).then(function () {
                 _this.toastr.success("ההזמנה הושלמה");
-                _this.orderDataModel.clear();
             });
         };
-        PaymentController.$inject = ["$state", "OrderDataModel", "toastr"];
+        PaymentController.$inject = ["$state", "myOrder", "toastr"];
         return PaymentController;
     })();
     module.controller("payment", PaymentController);

@@ -1,20 +1,29 @@
 var express = require("express");
 var addItemToOrderService = require("../services/addItemToOrderService");
 var addItemToOrderRouter = express.Router();
+var Order = require("../models/OrderModel");
 addItemToOrderRouter.route("/items")
-    .post(function(req,res,next){
-        var request = {};
-        request.order = req.order;
-        request.saleInfo = req.body;
-        addItemToOrderService.addItemToOrder(request,function(err,result){
+    .post(function (req, res, next) {
+    var request = {};
+    request.saleInfo = req.body;
+    request.order = req.order;
+    if (!request.order) {
+        return Order.create({}, function (err, newOrder) {
             if (err)
-                next(err);
-            else
-            {
-                res.json(result);
-                res.end();
-            }
+                return next(err);
+            req.session.orderId = newOrder._id;
+            request.order = newOrder;
+            addItemToOrder(request, req, res, next);
         });
-    });
-
+    }
+    addItemToOrder(request, req, res, next);
+    function addItemToOrder(request, req, res, next) {
+        addItemToOrderService.addItemToOrder(request, function (err, result) {
+            if (err)
+                return next(err);
+            res.json(result);
+            res.end();
+        });
+    }
+});
 module.exports = addItemToOrderRouter;

@@ -2,12 +2,19 @@ var gulp = require("gulp");
 var plugin = require("gulp-load-plugins")();
 var ts = plugin.typescript;
 
-gulp.task('watch',["watch-server","watch-client"]);
+gulp.task('watch',["watch-server","watch-client","start"]);
 
 var srcServer = ['src/server/**/*.ts'];
 gulp.task('watch-server', ['compile-server'], watchServer);
 gulp.task('compile-server', compileServer);
-
+gulp.task('start', function () {
+  plugin.nodemon({
+  nodeArgs: ["--debug"]
+  , ext: 'js'
+  , env: { 'NODE_ENV': 'development' }
+  , watch:["src/server/"]
+  })
+})
 
 function watchServer(params) {
    gulp.watch(srcServer, ['compile-server']);

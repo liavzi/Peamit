@@ -1,3 +1,5 @@
+///<reference path="../../../typings/tsd.d.ts"/>
+import e = require("express");
 var productForSellingRouter = require("./productForSellingRouter");
 var genericRouter = require("./genericRouter");
 var orderRouter = require("./orderRouter");
@@ -7,14 +9,25 @@ function registerRouters (express,app){
     var apiRouter = express.Router();
     apiRouter.use(productForSellingRouter);
     apiRouter.use(genericRouter);
-    apiRouter.use("/orders/:orderId",loadOrder);
-    apiRouter.use("/orders/:orderId",orderRouter);
+    apiRouter.use("/myOrder",loadOrder);
+    apiRouter.use("/myOrder",orderRouter);
     apiRouter.use(validationErrorHandler);
     app.use("/api",apiRouter);
 }
 
-function loadOrder(req,res,next){
-    Order.strictFindById(req.params.orderId, function (err,order) {
+interface RequestWithSession extends e.Request{
+    session :any;
+}
+
+interface OrderActionRequest extends RequestWithSession{
+    order :any;
+}
+
+
+function loadOrder(req : OrderActionRequest,res,next){
+    if (req.path.indexOf("items")!==-1 && !req.session.orderId)
+        return next();
+    Order.strictFindById(req.session.orderId, function (err,order) {
         if (err) return next(err);
         req.order = order;
         next();

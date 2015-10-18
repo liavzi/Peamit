@@ -4,13 +4,10 @@ define(["./order-module"],function(){
         return {
             restrict : "EA",
             scope : {
-                order : "="
+                orderModel : "="
             },
             templateUrl : "/Views/Order.html",
             link : function(scope,elem){
-                scope.orderModel = {
-                    order : scope.order
-                }
             }
         };
     });

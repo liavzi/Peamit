@@ -11,12 +11,16 @@ var entityToService = {
     "tags" : tagService
 };
 
-function getService(req) {
-    return entityToService[req.params.entityName];
+function processRequest(req,res,next,actionName,params) {
+    var entityService =  entityToService[req.params.entityName];
+    if (!entityService) return next();
+    entityService[actionName](params,function(err,result){
+        handleErrorOrWriteToResponse(err,next,res,result);
+    });
 }
 
 function handleErrorOrWriteToResponse(err, next, res, entity) {
-    if (err) next(err);
+    if (err) next(err);  
     else{
         res.json(entity);
         res.end();
@@ -24,31 +28,21 @@ function handleErrorOrWriteToResponse(err, next, res, entity) {
 }
 genericRouter.route("/:entityName")
     .post(function (req,res,next){
-        getService(req).create(req.body,function(err,entity){
-            handleErrorOrWriteToResponse(err,next,res,entity);
-        });
+        processRequest(req,res,next,"create",req.body);
     })
     .get(function(req,res,next){
-        getService(req).getAll(req.query,function(err,entities){
-            handleErrorOrWriteToResponse(err,next,res,entities);
-        });
+        processRequest(req,res,next,"getAll",req.query);
     });
 
 genericRouter.route("/:entityName/:entityId")
     .get(function (req,res,next){
-        getService(req).getById(req.params.entityId,function(err,entity){
-            handleErrorOrWriteToResponse(err, next, res, entity);
-        });
+        processRequest(req,res,next,"getById",req.params.entityId);
     })
     .put(function(req,res,next){
-        getService(req).createOrUpdate(req.body,function(err,entity){
-            handleErrorOrWriteToResponse(err, next, res, entity);
-        });
+        processRequest(req,res,next,"createOrUpdate",req.body);
     })
     .delete(function(req,res,next){
-        getService(req).deleteById(req.params.entityId,function(err,entity){
-            handleErrorOrWriteToResponse(err, next, res, entity);
-        });
+        processRequest(req,res,next,"deleteById",req.params.entityId);
     });
 
 module.exports = genericRouter;

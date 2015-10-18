@@ -1,6 +1,6 @@
 // call the packages we need
-var express = require('express'); // call express
-var app = express(); // define our app using express
+var express    = require('express'); 		// call express
+var app        = express(); 				// define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var registerRoutes = require("./routers/registerRouters");
@@ -9,26 +9,33 @@ var databaseConfig = require("./config/databaseConfig.json");
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
+var session      = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+
 var callbackURL = "http://localhost:8080/auth/google/callback";
-if (process.env.OPENSHIFT_MONGODB_DB_URL) {
-    var mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + "node";
+if(process.env.OPENSHIFT_MONGODB_DB_URL){
+    let mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + "node";
     mongoose.connect(mongodb_connection_string);
     callbackURL = "http://node-hermeny.rhcloud.com/auth/google/callback";
 }
-else {
-    mongoose.connect(databaseConfig.url);
+else{
+    mongoose.connect(databaseConfig.url);   
 }
+
+
+
 passport.use(new GoogleStrategy({
-    clientID: "182243328912-qgkbqvdkv3g81lr5sbuithf04jrcns24.apps.googleusercontent.com",
-    clientSecret: "tmol5ZgFbBvSd81Zi682DZaK",
-    callbackURL: callbackURL
-}, function (accessToken, refreshToken, profile, done) {
-    if (profile.id === "102414180728342095926")
-        return done(null, accessToken);
-    done(null, false);
-}));
+        clientID: "182243328912-qgkbqvdkv3g81lr5sbuithf04jrcns24.apps.googleusercontent.com",
+        clientSecret: "tmol5ZgFbBvSd81Zi682DZaK",
+        callbackURL: callbackURL
+    },
+    function(accessToken, refreshToken, profile, done) {
+        if (profile.id ==="102414180728342095926")
+            return done(null,accessToken);
+        done(null,false);
+    }
+));
+
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -37,36 +44,50 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/ManagementViews", ensureAuthenticated);
-app.use(express.static(path.join(__dirname, "../client")));
+app.use("/ManagementViews",ensureAuthenticated);
+app.use(express.static(path.join(__dirname,"../client")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-passport.serializeUser(function (user, done) {
+
+
+passport.serializeUser(function(user, done) {
     done(null, user);
 });
-passport.deserializeUser(function (obj, done) {
+
+passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
+
 // Redirect the user to Google for authentication.  When complete, Google
 // will redirect the user back to the application at
 //     /auth/google/return
-app.get('/auth/google', passport.authenticate('google', { scope: ["email"] }));
+app.get('/auth/google', passport.authenticate('google',{scope : ["email"]}));
+
+
+
 // Google will redirect the user to this URL after authentication.  Finish
 // the process by verifying the assertion.  If valid, the user will be
 // logged in.  Otherwise, authentication has failed.
-app.get('/auth/google/callback', passport.authenticate('google', {
+app.get('/auth/google/callback',passport.authenticate('google', {
     successRedirect: '/ManagementViews',
     failureRedirect: '/ManagementViews/managementLogin' }));
+
+
+
+
+
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
+    if (req.isAuthenticated()) { return next(); }
     res.redirect('/Views/managementLogin.html');
 }
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080; // set our port
+
+
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080; 		// set our port
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-registerRoutes(express, app);
+
+registerRoutes(express,app);
+
 // START THE SERVER
 // =============================================================================
-app.listen(port, server_ip_address);
+app.listen(port,server_ip_address);
 console.log('Magic happens on port ' + port);

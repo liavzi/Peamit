@@ -13,7 +13,7 @@ var orderSchema   = new Schema({
     customerDetails : {
         fullName : String,
         address : String,
-        phoneNumber : {type : Number,required:"חובה להכניס מספר טלפון"},
+        phoneNumber : {type : Number/*,required:"חובה להכניס מספר טלפון"*/},
         email : String
     },
     state : String,

@@ -9,11 +9,11 @@ class CustomerDetails {
 }
 
 class PaymentController{
-    static $inject = ["$state","OrderDataModel","toastr"];
+    static $inject = ["$state","myOrder","toastr"];
 
     customerDetails : CustomerDetails;
 
-    constructor(private $state : angular.ui.IStateService,private orderDataModel,private toastr){
+    constructor(private $state : angular.ui.IStateService,private myOrder,private toastr){
         this.customerDetails = new CustomerDetails();
     }
 
@@ -22,9 +22,8 @@ class PaymentController{
     }
 
     closeByPhone(){
-        this.orderDataModel.getOrder().closeOrderByPhone(this.customerDetails).then(()=>{
+        this.myOrder.getFullOrder().closeOrderByPhone(this.customerDetails).then(()=>{
             this.toastr.success("ההזמנה הושלמה");
-            this.orderDataModel.clear();
         });
     }
 }
