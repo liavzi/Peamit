@@ -2,6 +2,7 @@
 var addItemToOrderRouter = require("./addItemToOrderRouter");
 var orderLinesRouter = require("./orderLinesRouter");
 var closeOrderByPhoneRouter = require("./closeOrderByPhoneRouter");
+var paypalButtonRouter = require("./paypalButtonRouter");
 var express = require("express");
 var orderRouter = express.Router();
 orderRouter.get("/", function (req, res, next) {
@@ -11,4 +12,5 @@ orderRouter.get("/", function (req, res, next) {
 orderRouter.use(addItemToOrderRouter);
 orderRouter.use(orderLinesRouter);
 orderRouter.use(closeOrderByPhoneRouter);
+orderRouter.use(paypalButtonRouter);
 module.exports = orderRouter;

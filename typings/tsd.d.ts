@@ -10,3 +10,5 @@
 /// <reference path="underscore/underscore.d.ts" />
 /// <reference path="angular-ui-bootstrap/angular-ui-bootstrap.d.ts" />
 /// <reference path="toastr/toastr.d.ts" />
+/// <reference path="request/request.d.ts" />
+/// <reference path="form-data/form-data.d.ts" />

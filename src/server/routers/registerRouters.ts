@@ -15,11 +15,11 @@ function registerRouters (express,app){
     app.use("/api",apiRouter);
 }
 
-interface RequestWithSession extends e.Request{
+export interface RequestWithSession extends e.Request{
     session :any;
 }
 
-interface OrderActionRequest extends RequestWithSession{
+export interface OrderActionRequest extends RequestWithSession{
     order :any;
 }
 
