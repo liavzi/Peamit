@@ -14,8 +14,9 @@ paypalButtonRouter.get("/paypalButton", function (req, res, next) {
             METHOD: "BMCreateButton",
             BUTTONCODE: "ENCRYPTED",
             BUTTONTYPE: "BUYNOW",
-            L_BUTTONVAR1 : "item_name=סכום הזמנה",
-            L_BUTTONVAR2 : "amount="+req.order.total
+            L_BUTTONVAR1: "item_name=סכום הזמנה",
+            L_BUTTONVAR2: "amount=" + req.order.total,
+            L_BUTTONVAR3: "currency_code=ILS",
         }
     }, function (err, httpResponse, body) {
         var response = querystring.parse(body);
