@@ -1,6 +1,7 @@
 ///<reference path="../../../typings/tsd.d.ts" />
 var express = require("express");
 var request = require("request");
+var querystring = require("querystring");
 var paypalButtonRouter = express.Router();
 paypalButtonRouter.get("/paypalButton", function (req, res, next) {
     request.post({
@@ -10,12 +11,15 @@ paypalButtonRouter.get("/paypalButton", function (req, res, next) {
             PWD: "UCR8LUJ9PM9TVJCQ",
             SIGNATURE: "AFcWxV21C7fd0v3bYYYRCpSSRl31A4EARGvq3nRJnENEMMv1Xa0yzasr",
             VERSION: 124,
-            METOD: "BMCreateButton",
+            METHOD: "BMCreateButton",
             BUTTONCODE: "ENCRYPTED",
-            BUTTONTYPE: "BUYNOW"
+            BUTTONTYPE: "BUYNOW",
+            L_BUTTONVAR1 : "item_name=סכום הזמנה",
+            L_BUTTONVAR2 : "amount="+req.order.total
         }
     }, function (err, httpResponse, body) {
-        res.end("<button>liav</button>");
+        var response = querystring.parse(body);
+        res.end(response.WEBSITECODE);
     });
 });
 module.exports = paypalButtonRouter;

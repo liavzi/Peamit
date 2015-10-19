@@ -2,6 +2,7 @@
 import express = require("express");
 import R = require("./registerRouters");
 import request = require("request");
+import querystring = require("querystring");
 let paypalButtonRouter  = express.Router();
 paypalButtonRouter.get("/paypalButton",(req : R.OrderActionRequest,res :express.Response,next)=>{
 	request.post({
@@ -16,7 +17,8 @@ paypalButtonRouter.get("/paypalButton",(req : R.OrderActionRequest,res :express.
 			BUTTONTYPE : "BUYNOW"
 		}	
 	},function(err,httpResponse,body){
-		res.end("<button>liav</button>");
+		let response = querystring.parse(body);
+		res.end(response.WEBSITECODE);
 	});
 });
 export = paypalButtonRouter;

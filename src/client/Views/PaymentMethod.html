@@ -7,9 +7,6 @@
 </div>
 <div class="row">
   <button ng-click="payment.closeByPhone()" ng-if="payment.paymentMethod ==='1'">בצע הזמנה</button>
-  <div ng-if="payment.paymentMethod ==='2'">
-    sasad
-    <ng-include src="'api/myOrder/paypalButton'"></ng-include>
+  <div ng-if="payment.paymentMethod ==='2'" ng-include="'api/myOrder/paypalButton'">
   </div>
-  <ng-include src="'api/myOrder/paypalButton'"></ng-include>
 </div>
