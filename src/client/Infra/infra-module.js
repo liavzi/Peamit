@@ -83,4 +83,5 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
         return Toaster;
     })();
     app.service("toastr", Toaster);
+    return app;
 });

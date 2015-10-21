@@ -10,7 +10,8 @@ window.requireConfig={
         "ngAnimate" : "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate",
         "uiGrid" : "https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min",
         "toastr" : "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr",
-        "ui.router" : "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router"
+        "ui.router" : "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router",
+        "ng-file-upload" :"https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.0.19/ng-file-upload"
     },
     shim: {
         'jQuery': {
@@ -46,6 +47,9 @@ window.requireConfig={
             deps : ["jQuery"]
         },
         "ui.router" : {
+            deps : ["angular"]
+        },
+        "ng-file-upload" :{
             deps : ["angular"]
         }
     }

@@ -1,0 +1,9 @@
+
+<div ng-controller="imageMaintenance as im">
+  <form name="imageMaintenanceForm">
+    <div ngf-select="" ng-model="im.files" ngf-multiple="true" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB" class="button">Select</div>
+    <div ngf-drop="" ng-model="im.files" class="drop-box">Drop</div>
+    <button type="submit" ng-click="im.uploadFiles()">submit</button>
+  </form>
+  <div ng-repeat="file in im.files"><img ngf-thumbnail="file || '/thumb.jpg'"/></div>
+</div>

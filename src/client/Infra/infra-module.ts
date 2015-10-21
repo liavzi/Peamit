@@ -97,3 +97,5 @@ class Toaster{
 }
 
 app.service("toastr",Toaster);
+ 
+ export = app;

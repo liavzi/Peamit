@@ -2,7 +2,7 @@ var gulp = require("gulp");
 var plugin = require("gulp-load-plugins")();
 var ts = plugin.typescript;
 
-gulp.task('watch',["watch-server","watch-client","start"]);
+gulp.task('watch',["watch-server","watch-client","start","jade"]);
 
 var srcServer = ['src/server/**/*.ts'];
 gulp.task('watch-server', ['compile-server'], watchServer);
@@ -14,6 +14,17 @@ gulp.task('start', function () {
   , env: { 'NODE_ENV': 'development' }
   , watch:["src/server/"]
   })
+})
+
+gulp.task('jade', function () {
+  var jadeFiles = "src/client/**/*.jade";
+  gulp.watch(jadeFiles, function(){
+    gulp.src(jadeFiles)
+    .pipe(plugin.jade({
+        pretty:true
+    }))
+    .pipe(gulp.dest("src/client/"));
+  });
 })
 
 function watchServer(params) {

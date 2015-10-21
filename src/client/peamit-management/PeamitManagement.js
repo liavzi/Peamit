@@ -7,9 +7,10 @@ require(["angular","ui.bootstrap"
     ,"../utils/utils-module"
     ,"jQuery","underscore"
     ,"../Infra/infra-module"
-    ,"ngAnimate","uiGrid","toastr",
+    ,"../Infra/imageMaintenanceController"
+    ,"ngAnimate","uiGrid","toastr","ng-file-upload",
     ],function () {
-    var app = angular.module('PeamitManagement', ['ui.bootstrap',"ui.grid","ui.grid.selection",'ngRoute','ngResource',"product","utils","infra","ngAnimate"
+    var app = angular.module('PeamitManagement', ['ui.bootstrap',"ui.grid","ui.grid.selection",'ngRoute','ngResource',"product","utils","infra","ngAnimate","ngFileUpload"
         ,"order"]);
     app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.
@@ -33,6 +34,9 @@ require(["angular","ui.bootstrap"
             }).
             when("/OrderMaintenance/:orderId?",{
                 templateUrl: '/ManagementViews/OrderMaintenance.html'
+            }).
+            when("/ImageMaintenance",{
+                templateUrl: '/ManagementViews/ImageMaintenance.html'
             });
     }]);
 

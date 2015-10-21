@@ -5,6 +5,7 @@ var genericRouter = require("./genericRouter");
 var orderRouter = require("./orderRouter");
 var Order = require("../models/OrderModel");
 import validationErrorHandler = require("./validationErrorHandler");
+import imagesRouter = require("./imagesRouter");
 function registerRouters (express,app){
     var apiRouter = express.Router();
     apiRouter.use(productForSellingRouter);
@@ -12,6 +13,7 @@ function registerRouters (express,app){
     apiRouter.use("/myOrder",loadOrder);
     apiRouter.use("/myOrder",orderRouter);
     apiRouter.use(validationErrorHandler);
+    apiRouter.use(imagesRouter);
     app.use("/api",apiRouter);
 }
 

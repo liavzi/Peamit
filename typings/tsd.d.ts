@@ -12,3 +12,4 @@
 /// <reference path="toastr/toastr.d.ts" />
 /// <reference path="request/request.d.ts" />
 /// <reference path="form-data/form-data.d.ts" />
+/// <reference path="multer/multer.d.ts" />
