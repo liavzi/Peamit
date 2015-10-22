@@ -12,8 +12,10 @@ GenericService.prototype.createOrUpdate = function(entity,callback){
         if (err) callback(err);
         if (!dbEntity)
             model.create(entity,callback);
-        else
-            dbEntity.update(entity,callback);
+        else{
+            delete entity._id;
+            dbEntity.update(entity,callback); 
+        }
     });
 };
 
