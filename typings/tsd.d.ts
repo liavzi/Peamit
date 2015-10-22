@@ -13,3 +13,5 @@
 /// <reference path="request/request.d.ts" />
 /// <reference path="form-data/form-data.d.ts" />
 /// <reference path="multer/multer.d.ts" />
+/// <reference path="angularjs/angular-resource.d.ts" />
+/// <reference path="../src/schemas/schemas.d.ts" />

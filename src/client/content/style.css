@@ -108,3 +108,12 @@ body {
   margin-top: 70px;
   margin-right: 95%;
 }
+.reg-table-row {
+  max-height: 20px;
+}
+.reg-table-row td {
+  height: 100%;
+}
+.reg-table-row td img {
+  height: 100%;
+}

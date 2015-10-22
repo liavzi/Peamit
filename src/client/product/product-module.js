@@ -44,7 +44,7 @@ define(["angular"],function(){
     };
     this.deleteProduct = function(product){
       var self  = this;
-      productResource.delete(product._id,function(){
+      productResource.delete(product._id).then(function(){
         self.products = productResource.getAll();
       });
     };
@@ -60,7 +60,7 @@ define(["angular"],function(){
     };
     this.deleteTag = function(tag){
       var self  = this;
-      tagResource.delete(tag._id,function(){
+      tagResource.delete(tag._id).then(function(){
         self.tags = tagResource.getAll();
       });
     };

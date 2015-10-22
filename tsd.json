@@ -46,6 +46,9 @@
     },
     "multer/multer.d.ts": {
       "commit": "68548c2daab053869f323d475419c693478bbb73"
+    },
+    "angularjs/angular-resource.d.ts": {
+      "commit": "44cbde48eecd1918ed54b3be49a9752688b6c65a"
     }
   }
 }

@@ -5,7 +5,7 @@ import ui = require("angular-bootstrap");
 import IValidationError = require("../../schemas/errors/IValidationError");
 
 
-var app = angular.module("infra",["ngResource"]);
+export var app = angular.module("infra",["ngResource"]);
 app.config(["$httpProvider",($httpProvider : ng.IHttpProvider)=>{
     $httpProvider.interceptors.push("validationErrorInterceptorFactory");
 }])
@@ -32,15 +32,15 @@ function validationErrorInterceptorFactory(toastr : Toastr) : ng.IHttpIntercepto
 validationErrorInterceptorFactory.$inject = ["toastr"];
 app.factory("validationErrorInterceptorFactory",validationErrorInterceptorFactory)
 
-app.factory("peamitResource",["$resource","alertsService",function($resource,alertsService){
+app.factory("peamitResource",["$resource","toastr",function($resource,toastr :Toaster){
     function addSavedAlert(){
-        alertsService.addAlert("נשמר","success");
+        toastr.success("נשמר");
     }
     function addDeletedAlert(){
-        alertsService.addAlert("נמחק","success");
+        toastr.success("נמחק");
     }
     function addFailedAlert(){
-        alertsService.addAlert("נכשל","danger");
+        toastr.error("נכשל");
     }
     return function(path){
         var innerReource =  $resource("/api/"+path+"/:id",{id:"@_id"},{
@@ -51,43 +51,17 @@ app.factory("peamitResource",["$resource","alertsService",function($resource,ale
         });
         var peamitResource  = Object.create(innerReource);
         peamitResource.put = function(entity){
-            innerReource.put(entity).$promise.then(addSavedAlert,addFailedAlert);
+            return innerReource.put(entity).$promise.then(addSavedAlert,addFailedAlert);
         };
-        peamitResource.delete = function(id,callback){
-            innerReource.delete({id: id}).$promise.then(function(){addDeletedAlert();callback();},addFailedAlert);
+        peamitResource.delete = function(id){
+            return innerReource.delete({id: id}).$promise.then(addDeletedAlert,addFailedAlert);
         };
         return peamitResource;
     };
 }]);
 
-var AlertService = function ($timeout) {
-    this.alerts = [];
-    this.$timeout = $timeout;
-};
 
-AlertService.$inject = ["$timeout"];
-
-AlertService.prototype.addAlert = function (message,alertType){
-    var self = this;
-    this.alerts.push({message:message,type:alertType});
-
-    if (this.timeoutPromise){
-        this.$timeout.cancel(this.timeoutPromise);
-    }
-
-    this.timeoutPromise = this.$timeout(function(){
-        self.alerts.length = 0;
-        self.timeoutPromise = undefined;
-    },3000);
-};
-
-app.service("alertsService",AlertService);
-
-app.controller("alertsController",["alertsService",function(alertService){
-    this.alerts = alertService.alerts;
-}]);
-
-class Toaster{
+export class Toaster{
     success(message:string){
         toastr.success(message);
     }
@@ -97,5 +71,3 @@ class Toaster{
 }
 
 app.service("toastr",Toaster);
- 
- export = app;

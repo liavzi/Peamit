@@ -1,7 +1,26 @@
 div(ng-controller="imageMaintenance as im")
-    form(name='imageMaintenanceForm')
-      .button(ngf-select='', ng-model='im.files', ngf-multiple='true',ngf-pattern="'image/*'", accept='image/*', ngf-max-size='20MB') Select
-      .drop-box(ngf-drop='', ng-model='im.files') Drop
-      button(type='submit', ng-click='im.uploadFiles()') submit
-    div(ng-repeat="file in im.files")
-      img(ngf-thumbnail="file || '/thumb.jpg'")
+  .row
+    a(ng-disabled="!im.selectedImage",ng-click="im.deleteImage(im.selectedProduct)",class="btn btn-danger") מחק 
+  .row
+     .col-2
+        form(name='imageMaintenanceForm')
+          button(ngf-select='', ng-model='im.files', ngf-multiple='true',ngf-pattern="'image/*'", accept='image/*', ngf-max-size='20MB') בחר תמונות
+          button(type='submit', ng-click='im.uploadFiles()') העלה                  
+     .col-10
+        .row
+            .col-2(ng-repeat="file in im.files")
+               img(ngf-thumbnail="file || '/thumb.jpg'")
+  .row
+     .col-12
+        table.table.table-hover.table-responsive
+          th
+            tbody
+              tr
+                th שם
+                th תצוגה
+              tr(ng-repeat='image in im.images', ng-click='im.selectedImage=image', ng-class='{active:image.selectedImage.name===image.name}' class="reg-table-row")
+                td {{image._id}}
+                td
+                  img(ng-src='{{image.imageUrl}}')
+
+  

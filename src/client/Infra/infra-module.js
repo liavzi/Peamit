@@ -1,6 +1,6 @@
 define(["require", "exports", "angular", "toastr"], function (require, exports, angular, toastr) {
-    var app = angular.module("infra", ["ngResource"]);
-    app.config(["$httpProvider", function ($httpProvider) {
+    exports.app = angular.module("infra", ["ngResource"]);
+    exports.app.config(["$httpProvider", function ($httpProvider) {
             $httpProvider.interceptors.push("validationErrorInterceptorFactory");
         }]);
     function validationErrorInterceptorFactory(toastr) {
@@ -23,16 +23,16 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
         };
     }
     validationErrorInterceptorFactory.$inject = ["toastr"];
-    app.factory("validationErrorInterceptorFactory", validationErrorInterceptorFactory);
-    app.factory("peamitResource", ["$resource", "alertsService", function ($resource, alertsService) {
+    exports.app.factory("validationErrorInterceptorFactory", validationErrorInterceptorFactory);
+    exports.app.factory("peamitResource", ["$resource", "toastr", function ($resource, toastr) {
             function addSavedAlert() {
-                alertsService.addAlert("נשמר", "success");
+                toastr.success("נשמר");
             }
             function addDeletedAlert() {
-                alertsService.addAlert("נמחק", "success");
+                toastr.success("נמחק");
             }
             function addFailedAlert() {
-                alertsService.addAlert("נכשל", "danger");
+                toastr.error("נכשל");
             }
             return function (path) {
                 var innerReource = $resource("/api/" + path + "/:id", { id: "@_id" }, {
@@ -43,33 +43,13 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
                 });
                 var peamitResource = Object.create(innerReource);
                 peamitResource.put = function (entity) {
-                    innerReource.put(entity).$promise.then(addSavedAlert, addFailedAlert);
+                    return innerReource.put(entity).$promise.then(addSavedAlert, addFailedAlert);
                 };
-                peamitResource.delete = function (id, callback) {
-                    innerReource.delete({ id: id }).$promise.then(function () { addDeletedAlert(); callback(); }, addFailedAlert);
+                peamitResource.delete = function (id) {
+                    return innerReource.delete({ id: id }).$promise.then(addDeletedAlert, addFailedAlert);
                 };
                 return peamitResource;
             };
-        }]);
-    var AlertService = function ($timeout) {
-        this.alerts = [];
-        this.$timeout = $timeout;
-    };
-    AlertService.$inject = ["$timeout"];
-    AlertService.prototype.addAlert = function (message, alertType) {
-        var self = this;
-        this.alerts.push({ message: message, type: alertType });
-        if (this.timeoutPromise) {
-            this.$timeout.cancel(this.timeoutPromise);
-        }
-        this.timeoutPromise = this.$timeout(function () {
-            self.alerts.length = 0;
-            self.timeoutPromise = undefined;
-        }, 3000);
-    };
-    app.service("alertsService", AlertService);
-    app.controller("alertsController", ["alertsService", function (alertService) {
-            this.alerts = alertService.alerts;
         }]);
     var Toaster = (function () {
         function Toaster() {
@@ -82,6 +62,6 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
         };
         return Toaster;
     })();
-    app.service("toastr", Toaster);
-    return app;
+    exports.Toaster = Toaster;
+    exports.app.service("toastr", Toaster);
 });
