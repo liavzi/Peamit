@@ -5,7 +5,8 @@ var tagSchema   = new Schema({
     name: {type:String,required:true},
     productIds : [Number],
     type : String,
-    imageUrl : String
+    imageUrl : String,
+    order : {type : Number,default : 1000}
 });
 
 module.exports = tagSchema;

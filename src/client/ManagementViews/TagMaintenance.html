@@ -21,6 +21,10 @@
             <label class="control-label" for="tagImgUrl">כתובת תמונה(url)</label>
             <input dir="ltr" id="tagImgUrl" type="text" name="tagImgUrl" ng-model="tmc.tag.imageUrl" class="form-control"/>
         </div>
+        <div class="form-group">
+            <label class="control-label" for="tagOrder">סדר</label>
+            <input dir="ltr" id="tagOrder" type="number" name="tagOrder" ng-model="tmc.tag.order" class="form-control"/>
+        </div>      
         <input type="submit" ng-disabled="TagMaintenanceForm.$invalid" class="btn btn-default" value="Submit" ng-click = "tmc.addTag()">
     </form>
 </div>
