@@ -1,4 +1,4 @@
-// call the packages we need
+var users = require("./businessComponents/users");
 var express = require('express'); // call express
 var app = express(); // define our app using express
 var bodyParser = require('body-parser');
@@ -25,9 +25,13 @@ passport.use(new GoogleStrategy({
     clientSecret: "tmol5ZgFbBvSd81Zi682DZaK",
     callbackURL: callbackURL
 }, function (accessToken, refreshToken, profile, done) {
-    if (profile.id === "102414180728342095926")
-        return done(null, accessToken);
-    done(null, false);
+    users.userRepository.getByGoogleProfileId(profile.id, function (err, user) {
+        if (err)
+            return done(err);
+        if (user)
+            return done(null, user);
+        done(null, false);
+    });
 }));
 app.use(session({
     secret: 'keyboard cat',
@@ -37,15 +41,19 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/ManagementViews", ensureAuthenticated);
+app.use("/ManagementViews", users.ensureAdminOrRedirectToLogin);
 app.use(express.static(path.join(__dirname, "../client")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 passport.serializeUser(function (user, done) {
-    done(null, user);
+    done(null, user._id);
 });
 passport.deserializeUser(function (obj, done) {
-    done(null, obj);
+    users.userRepository.getById(obj, function (err, user) {
+        if (err)
+            return done(err);
+        done(null, user);
+    });
 });
 // Redirect the user to Google for authentication.  When complete, Google
 // will redirect the user back to the application at
@@ -56,13 +64,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ["email"] }));
 // logged in.  Otherwise, authentication has failed.
 app.get('/auth/google/callback', passport.authenticate('google', {
     successRedirect: '/ManagementViews',
-    failureRedirect: '/ManagementViews/managementLogin' }));
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/Views/managementLogin.html');
-}
+    failureRedirect: '/Views/managementLogin.html' }));
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080; // set our port
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 registerRoutes(express, app);

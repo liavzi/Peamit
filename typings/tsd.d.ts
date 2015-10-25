@@ -15,3 +15,4 @@
 /// <reference path="multer/multer.d.ts" />
 /// <reference path="angularjs/angular-resource.d.ts" />
 /// <reference path="../src/schemas/schemas.d.ts" />
+/// <reference path="passport/passport.d.ts" />

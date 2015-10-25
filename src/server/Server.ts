@@ -1,4 +1,4 @@
-// call the packages we need
+import users = require("./businessComponents/users");
 var express    = require('express'); 		// call express
 var app        = express(); 				// define our app using express
 var bodyParser = require('body-parser');
@@ -30,9 +30,11 @@ passport.use(new GoogleStrategy({
         callbackURL: callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-        if (profile.id ==="102414180728342095926")
-            return done(null,accessToken);
-        done(null,false);
+        users.userRepository.getByGoogleProfileId(profile.id,(err,user : users.IUser)=>{
+            if (err) return done(err);
+            if (user) return done(null,user);
+            done(null,false);
+        });
     }
 ));
 
@@ -44,18 +46,21 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/ManagementViews",ensureAuthenticated);
+app.use("/ManagementViews",users.ensureAdminOrRedirectToLogin);
 app.use(express.static(path.join(__dirname,"../client")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
+passport.serializeUser(function(user : users.IUser, done) {
+    done(null, user._id);
 });
 
 passport.deserializeUser(function(obj, done) {
-    done(null, obj);
+    users.userRepository.getById(obj,(err,user :users.IUser)=>{
+       if (err) return done(err);
+       done(null,user); 
+    });
 });
 
 // Redirect the user to Google for authentication.  When complete, Google
@@ -64,22 +69,17 @@ passport.deserializeUser(function(obj, done) {
 app.get('/auth/google', passport.authenticate('google',{scope : ["email"]}));
 
 
-
 // Google will redirect the user to this URL after authentication.  Finish
 // the process by verifying the assertion.  If valid, the user will be
 // logged in.  Otherwise, authentication has failed.
 app.get('/auth/google/callback',passport.authenticate('google', {
     successRedirect: '/ManagementViews',
-    failureRedirect: '/ManagementViews/managementLogin' }));
+    failureRedirect: '/Views/managementLogin.html' }));
 
 
 
 
 
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    res.redirect('/Views/managementLogin.html');
-}
 
 
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080; 		// set our port
