@@ -4,6 +4,7 @@ var multer = require("multer");
 var fs = require("fs");
 var _ = require("underscore");
 var path = require("path");
+var users = require("../businessComponents/users");
 var imagesRouter = express.Router();
 var imagesDirPath = __dirname + "/../../client/resources/images";
 var storage = multer.diskStorage({
@@ -25,11 +26,11 @@ var upload = multer({
     storage: storage
 }).array("file[0]", 500);
 imagesRouter.route("/images")
-    .post(upload, function (req, res, next) {
+    .post(users.ensureAdmin, upload, function (req, res, next) {
     res.status(200);
     res.end();
 })
-    .get(function (req, res, next) {
+    .get(users.ensureAdmin, function (req, res, next) {
     fs.readdir(imagesDirPath, function (err, fileNames) {
         if (err)
             return next(err);
@@ -44,7 +45,7 @@ imagesRouter.route("/images")
     });
 });
 imagesRouter.route("/images/:imageId")
-    .delete(function (req, res, next) {
+    .delete(users.ensureAdmin, function (req, res, next) {
     fs.unlink(path.resolve(imagesDirPath, req.params.imageId), function (err) {
         if (err)
             return err;

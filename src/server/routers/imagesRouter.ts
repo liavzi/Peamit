@@ -5,6 +5,7 @@ import fs = require("fs");
 import schemas = require("schemas");
 import _ = require("underscore");
 import path = require("path");
+import users = require("../businessComponents/users");
 let imagesRouter = express.Router();
 let imagesDirPath = `${__dirname}/../../client/resources/images`;	
 let storage = (<any>multer).diskStorage({
@@ -29,11 +30,11 @@ let upload =(<any> multer(<any>{
 	
 	
 imagesRouter.route("/images")
-	.post(upload,function(req,res,next){
+	.post(users.ensureAdmin,upload,function(req,res,next){
 		res.status(200);
 		res.end();
 	})
-	.get(function(req,res,next){
+	.get(users.ensureAdmin,function(req,res,next){
 		fs.readdir(imagesDirPath,(err,fileNames)=>{
 			if (err) return next(err);
 			let images : schemas.Image[] = _.map(fileNames,(fileName)=>{
@@ -47,7 +48,7 @@ imagesRouter.route("/images")
 		})
 	})
 imagesRouter.route("/images/:imageId")
-	.delete((req,res,next)=>{
+	.delete(users.ensureAdmin,(req,res,next)=>{
 		fs.unlink(path.resolve(imagesDirPath,req.params.imageId),(err)=>{
 			if (err) return err;
 			res.status(200).end();
