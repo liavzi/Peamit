@@ -12,6 +12,7 @@ window.requireConfig={
         "toastr" : "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr",
         "ui.router" : "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router",
         "ng-file-upload" :"https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.0.19/ng-file-upload"
+        ,"blockUI" : "/ScriptsLibs/blockUI/jquery.blockUI"
     },
     shim: {
         'jQuery': {
@@ -51,6 +52,9 @@ window.requireConfig={
         },
         "ng-file-upload" :{
             deps : ["angular"]
+        },
+        "blockUI" :{
+            deps : ["jQuery"]
         }
     }
 };

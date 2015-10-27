@@ -1,7 +1,7 @@
 define(["require", "exports", "angular", "toastr"], function (require, exports, angular, toastr) {
     exports.app = angular.module("infra", ["ngResource"]);
     exports.app.config(["$httpProvider", function ($httpProvider) {
-            $httpProvider.interceptors.push("validationErrorInterceptorFactory");
+            $httpProvider.interceptors.push("blockUiInterceptorFactory", "validationErrorInterceptorFactory");
         }]);
     function validationErrorInterceptorFactory(toastr) {
         function formatError(err) {
@@ -24,6 +24,23 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
     }
     validationErrorInterceptorFactory.$inject = ["toastr"];
     exports.app.factory("validationErrorInterceptorFactory", validationErrorInterceptorFactory);
+    function blockUiInterceptorFactory($templateCache) {
+        var count = 0;
+        return {
+            request: function (config) {
+                if (!(config.method === 'GET' && $templateCache.get(config.url))) {
+                    $.blockUI();
+                }
+                return config;
+            },
+            response: function (response) {
+                $.unblockUI();
+                return response;
+            }
+        };
+    }
+    blockUiInterceptorFactory.$inject = ["$templateCache"];
+    exports.app.factory("blockUiInterceptorFactory", blockUiInterceptorFactory);
     exports.app.factory("peamitResource", ["$resource", "toastr", function ($resource, toastr) {
             function addSavedAlert() {
                 toastr.success("נשמר");
