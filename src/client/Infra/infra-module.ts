@@ -7,7 +7,7 @@ import IValidationError = require("../../schemas/errors/IValidationError");
 
 export var app = angular.module("infra",["ngResource"]);
 app.config(["$httpProvider",($httpProvider : ng.IHttpProvider)=>{
-    $httpProvider.interceptors.push("validationErrorInterceptorFactory");
+    $httpProvider.interceptors.push("blockUiInterceptorFactory","validationErrorInterceptorFactory");
 }])
 
 function validationErrorInterceptorFactory(toastr : Toastr) : ng.IHttpInterceptor{   
@@ -31,6 +31,24 @@ function validationErrorInterceptorFactory(toastr : Toastr) : ng.IHttpIntercepto
 }
 validationErrorInterceptorFactory.$inject = ["toastr"];
 app.factory("validationErrorInterceptorFactory",validationErrorInterceptorFactory)
+
+function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService) : ng.IHttpInterceptor{
+    let count=0;
+    return {
+        request : function(config){
+            if (!(config.method ==='GET' && $templateCache.get(config.url))){
+                $.blockUI();
+            }
+            return config;
+        },
+        response: function(response){
+            $.unblockUI();
+            return response;
+        }
+    };
+}
+blockUiInterceptorFactory.$inject = ["$templateCache"]
+app.factory("blockUiInterceptorFactory",blockUiInterceptorFactory);
 
 app.factory("peamitResource",["$resource","toastr",function($resource,toastr :Toaster){
     function addSavedAlert(){

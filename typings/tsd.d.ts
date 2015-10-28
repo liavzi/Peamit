@@ -16,3 +16,4 @@
 /// <reference path="angularjs/angular-resource.d.ts" />
 /// <reference path="../src/schemas/schemas.d.ts" />
 /// <reference path="passport/passport.d.ts" />
+/// <reference path="jquery.blockUI/jquery.blockUI.d.ts" />

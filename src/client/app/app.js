@@ -6,7 +6,8 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
     ,"../order/payment-controller"
     ,"jQuery","underscore","toastr"
     ,"../Infra/infra-module","ngAnimate",
-    "ui.router"],function () {
+    "ui.router"
+    ,"blockUI"],function () {
     var app = angular.module('Peamit', ['ui.bootstrap','ngResource',"order","product","infra","ngAnimate","ui.router"]);
     app.config(['$stateProvider',"$urlRouterProvider",function ($stateProvider,$urlRouterProvider) {
         $urlRouterProvider.otherwise("/");
