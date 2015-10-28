@@ -81,4 +81,9 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
     })();
     exports.Toaster = Toaster;
     exports.app.service("toastr", Toaster);
+    exports.app.filter("sanitize", ['$sce', function ($sce) {
+            return function (htmlCode) {
+                return $sce.trustAsHtml(htmlCode);
+            };
+        }]);
 });

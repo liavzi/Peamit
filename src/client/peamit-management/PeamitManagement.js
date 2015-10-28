@@ -9,9 +9,11 @@ require(["angular","ui.bootstrap"
     ,"../Infra/infra-module"
     ,"../Infra/imageMaintenanceController"
     ,"ngAnimate","uiGrid","toastr","ng-file-upload",
-    ],function () {
+    ,"ui.select"
+    ,"blockUI"],function () {
     var app = angular.module('PeamitManagement', ['ui.bootstrap',"ui.grid","ui.grid.selection",'ngRoute','ngResource',"product","utils","infra","ngAnimate","ngFileUpload"
-        ,"order"]);
+    ,"ui.select"
+    ,"order"]);
     app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.
             when('/ProductsView', {
