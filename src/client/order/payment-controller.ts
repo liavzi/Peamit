@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
-import module = require('./order-module');
+import orderModule = require('./order-module');
 
 class CustomerDetails {
     fullName : string;
@@ -22,9 +22,9 @@ class PaymentController{
     }
 
     closeByPhone(){
-        this.myOrder.getFullOrder().closeOrderByPhone(this.customerDetails).then(()=>{
+        this.myOrder.closeOrderByPhone(this.customerDetails).then(()=>{
             this.toastr.success("ההזמנה הושלמה");
         });
     }
 }
-module.controller("payment",PaymentController);
+orderModule.controller("payment",PaymentController);

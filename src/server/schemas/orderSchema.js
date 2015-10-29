@@ -1,6 +1,7 @@
 ///<reference path="../../../typings/tsd.d.ts" />
 var _ = require("underscore");
 var mongoose = require('mongoose');
+var BusinessError = require("../errors/BusinessError");
 var Schema = mongoose.Schema;
 var orderLineSchema = new Schema({
     productId: Number,
@@ -37,9 +38,12 @@ orderSchema.method("addOrderLine", function (orderLineToAdd) {
 orderSchema.method("removeLineById", function (orderLineId) {
     this.orderLines.id(orderLineId).remove();
 });
-orderSchema.method("closeByPhone", function (customerDetails) {
+orderSchema.method("closeByPhone", function (customerDetails, cb) {
     this.customerDetails = customerDetails;
+    if (!customerDetails.phoneNumber)
+        cb(new BusinessError("חובה לציין מס טלפון"));
     this._close({ method: "ClosedByPhone" });
+    cb(null);
 });
 orderSchema.method("_close", function (closeDetails) {
     this.state = "Closed";

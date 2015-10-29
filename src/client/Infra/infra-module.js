@@ -3,7 +3,7 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
     exports.app.config(["$httpProvider", function ($httpProvider) {
             $httpProvider.interceptors.push("blockUiInterceptorFactory", "validationErrorInterceptorFactory");
         }]);
-    function validationErrorInterceptorFactory(toastr) {
+    function validationErrorInterceptorFactory(toastr, $q) {
         function formatError(err) {
             var msgs = [];
             Object.keys(err.errors).forEach(function (key) {
@@ -17,14 +17,20 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
             responseError: function (response) {
                 if (response.status && response.status === 400) {
                     var error = response.data;
-                    toastr.error(formatError(error));
+                    if (error.name === "ValidationError") {
+                        toastr.error(formatError(error));
+                    }
+                    else if (error.name === "BusinessError") {
+                        toastr.error(error.message);
+                    }
                 }
+                return $q.reject(response);
             }
         };
     }
-    validationErrorInterceptorFactory.$inject = ["toastr"];
+    validationErrorInterceptorFactory.$inject = ["toastr", "$q"];
     exports.app.factory("validationErrorInterceptorFactory", validationErrorInterceptorFactory);
-    function blockUiInterceptorFactory($templateCache) {
+    function blockUiInterceptorFactory($templateCache, $q) {
         var count = 0;
         return {
             request: function (config) {
@@ -36,10 +42,14 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
             response: function (response) {
                 $.unblockUI();
                 return response;
+            },
+            responseError: function (response) {
+                $.unblockUI();
+                return $q.reject(response);
             }
         };
     }
-    blockUiInterceptorFactory.$inject = ["$templateCache"];
+    blockUiInterceptorFactory.$inject = ["$templateCache", "$q"];
     exports.app.factory("blockUiInterceptorFactory", blockUiInterceptorFactory);
     exports.app.factory("peamitResource", ["$resource", "toastr", function ($resource, toastr) {
             function addSavedAlert() {

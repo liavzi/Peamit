@@ -1,6 +1,7 @@
 ///<reference path="../../../typings/tsd.d.ts" />
 import _ = require("underscore");
 import mongoose     = require('mongoose');
+import BusinessError  = require("../errors/BusinessError");
 var Schema       = mongoose.Schema;
 
 var orderLineSchema = new Schema({
@@ -42,9 +43,11 @@ orderSchema.method("removeLineById",function(orderLineId){
     this.orderLines.id(orderLineId).remove();
 });
 
-orderSchema.method("closeByPhone",function(customerDetails){
+orderSchema.method("closeByPhone",function(customerDetails,cb :Function){
     this.customerDetails = customerDetails;
+    if (!customerDetails.phoneNumber) cb(new BusinessError("חובה לציין מס טלפון"));
     this._close({method:"ClosedByPhone"});
+    cb(null);
 });
 
 orderSchema.method("_close", function(closeDetails){

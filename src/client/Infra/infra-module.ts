@@ -3,6 +3,7 @@ import angular = require("angular");
 import toastr = require("toastr");
 import ui = require("angular-bootstrap");
 import IValidationError = require("../../schemas/errors/IValidationError");
+import IBusinessError = require("../../schemas/errors/IBusinessError");
 
 
 export var app = angular.module("infra",["ngResource"]);
@@ -10,7 +11,7 @@ app.config(["$httpProvider",($httpProvider : ng.IHttpProvider)=>{
     $httpProvider.interceptors.push("blockUiInterceptorFactory","validationErrorInterceptorFactory");
 }])
 
-function validationErrorInterceptorFactory(toastr : Toastr) : ng.IHttpInterceptor{   
+function validationErrorInterceptorFactory(toastr : Toastr,$q: ng.IQService) : ng.IHttpInterceptor{   
     function formatError(err : IValidationError) : string{
         var msgs = [];
         Object.keys(err.errors).forEach(function(key) {
@@ -22,17 +23,23 @@ function validationErrorInterceptorFactory(toastr : Toastr) : ng.IHttpIntercepto
     return {
         responseError : function(response){
             if (response.status && response.status===400){
-                var error : IValidationError= response.data;
-                toastr.error(formatError(error));
+                var error : Error= response.data;
+                if (error.name ==="ValidationError"){
+                    toastr.error(formatError(<IValidationError>error));
+                }
+                else if (error.name ==="BusinessError"){
+                    toastr.error((<IBusinessError>error).message)
+                }
             }
+            return $q.reject(response);
         }
 
     };
 }
-validationErrorInterceptorFactory.$inject = ["toastr"];
+validationErrorInterceptorFactory.$inject = ["toastr","$q"];
 app.factory("validationErrorInterceptorFactory",validationErrorInterceptorFactory)
 
-function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService) : ng.IHttpInterceptor{
+function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService,$q : ng.IQService) : ng.IHttpInterceptor{
     let count=0;
     return {
         request : function(config){
@@ -44,10 +51,14 @@ function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService) : 
         response: function(response){
             $.unblockUI();
             return response;
+        },
+        responseError : function(response){
+            $.unblockUI();
+            return $q.reject(response);
         }
     };
 }
-blockUiInterceptorFactory.$inject = ["$templateCache"]
+blockUiInterceptorFactory.$inject = ["$templateCache","$q"]
 app.factory("blockUiInterceptorFactory",blockUiInterceptorFactory);
 
 app.factory("peamitResource",["$resource","toastr",function($resource,toastr :Toaster){

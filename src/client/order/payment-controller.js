@@ -1,4 +1,4 @@
-define(["require", "exports", './order-module'], function (require, exports, module) {
+define(["require", "exports", './order-module'], function (require, exports, orderModule) {
     var CustomerDetails = (function () {
         function CustomerDetails() {
         }
@@ -16,12 +16,12 @@ define(["require", "exports", './order-module'], function (require, exports, mod
         };
         PaymentController.prototype.closeByPhone = function () {
             var _this = this;
-            this.myOrder.getFullOrder().closeOrderByPhone(this.customerDetails).then(function () {
+            this.myOrder.closeOrderByPhone(this.customerDetails).then(function () {
                 _this.toastr.success("ההזמנה הושלמה");
             });
         };
         PaymentController.$inject = ["$state", "myOrder", "toastr"];
         return PaymentController;
     })();
-    module.controller("payment", PaymentController);
+    orderModule.controller("payment", PaymentController);
 });
