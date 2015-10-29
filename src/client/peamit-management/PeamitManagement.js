@@ -10,10 +10,13 @@ require(["angular","ui.bootstrap"
     ,"../Infra/imageMaintenanceController"
     ,"ngAnimate","uiGrid","toastr","ng-file-upload",
     ,"ui.select"
-    ,"blockUI"],function () {
+    ,"blockUI"
+    ,"jquery.ui"
+    ,"ui.sortable"],function () {
     var app = angular.module('PeamitManagement', ['ui.bootstrap',"ui.grid","ui.grid.selection",'ngRoute','ngResource',"product","utils","infra","ngAnimate","ngFileUpload"
     ,"ui.select"
-    ,"order"]);
+    ,"order"
+    ,"ui.sortable"]);
     app.config(['$routeProvider',function ($routeProvider) {
         $routeProvider.
             when('/ProductsView', {

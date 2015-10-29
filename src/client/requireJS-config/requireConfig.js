@@ -14,6 +14,8 @@ window.requireConfig={
         "ng-file-upload" :"https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.0.19/ng-file-upload"
         ,"blockUI" : "/ScriptsLibs/blockUI/jquery.blockUI"
         ,"ui.select" : "/ScriptsLibs/ui.select/ui.select"
+        ,"jquery.ui" : "http://cdn.jsdelivr.net/g/jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min"
+        ,"ui.sortable" : "/ScriptsLibs/ui.sortable/ui.sortable"
     },
     shim: {
         'jQuery': {
@@ -59,6 +61,12 @@ window.requireConfig={
         },
         "ui.select" :{
             deps : ["angular","jQuery"]
-        }    
+        },
+        "jquery.ui" :{
+            deps : ["jQuery"]
+        },
+        "ui.sortable":{
+            deps : ["jQuery","angular","jquery.ui"]
+        }         
     }
 };
