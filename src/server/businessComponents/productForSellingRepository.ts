@@ -31,7 +31,7 @@ productForSellingRepository.getAll = function(searchCriteria,callback){
               let currentProduct = prodcutsDic[productId];
               if (!currentProduct) return;
               let productForSelling = createProductForSelling(currentProduct);
-              if (!productForSelling.prices || !productForSelling.prices.length) return;
+              if (!productForSelling.price) return;
               productWithPrices.push(productForSelling);
            });
            callback(null,productWithPrices);
@@ -41,7 +41,6 @@ productForSellingRepository.getAll = function(searchCriteria,callback){
 
 function createProductForSelling(dbProduct) {
     var productForSelling = dbProduct.toObject();
-    productForSelling.prices = null;
     if (dbProduct.prices && dbProduct.prices.length>0)
         productForSelling.price = dbProduct.prices[0];
     return productForSelling;

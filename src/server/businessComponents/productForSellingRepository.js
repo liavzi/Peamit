@@ -33,7 +33,7 @@ productForSellingRepository.getAll = function (searchCriteria, callback) {
                 if (!currentProduct)
                     return;
                 var productForSelling = createProductForSelling(currentProduct);
-                if (!productForSelling.prices || !productForSelling.prices.length)
+                if (!productForSelling.price)
                     return;
                 productWithPrices.push(productForSelling);
             });
@@ -43,7 +43,6 @@ productForSellingRepository.getAll = function (searchCriteria, callback) {
 };
 function createProductForSelling(dbProduct) {
     var productForSelling = dbProduct.toObject();
-    productForSelling.prices = null;
     if (dbProduct.prices && dbProduct.prices.length > 0)
         productForSelling.price = dbProduct.prices[0];
     return productForSelling;

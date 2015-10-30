@@ -4,6 +4,7 @@ define(["require", "exports", './order-module'], function (require, exports, ord
         }
         return CustomerDetails;
     })();
+    exports.CustomerDetails = CustomerDetails;
     var PaymentController = (function () {
         function PaymentController($state, myOrder, toastr) {
             this.$state = $state;
@@ -23,5 +24,6 @@ define(["require", "exports", './order-module'], function (require, exports, ord
         PaymentController.$inject = ["$state", "myOrder", "toastr"];
         return PaymentController;
     })();
+    exports.PaymentController = PaymentController;
     orderModule.controller("payment", PaymentController);
 });

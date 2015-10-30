@@ -1,17 +1,18 @@
 /// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
 import orderModule = require('./order-module');
 
-class CustomerDetails {
+export class CustomerDetails {
     fullName : string;
     address :string;
     phoneNumber :string;
     email : string;
 }
 
-class PaymentController{
+export class PaymentController{
     static $inject = ["$state","myOrder","toastr"];
 
     customerDetails : CustomerDetails;
+    paymentMethod : number
 
     constructor(private $state : angular.ui.IStateService,private myOrder,private toastr){
         this.customerDetails = new CustomerDetails();

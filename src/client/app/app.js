@@ -4,6 +4,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
     ,"../order/order-module"
     ,"../order/order-directive"
     ,"../order/payment-controller"
+    ,"../order/paymentMethodcontroller"
     ,"jQuery","underscore","toastr"
     ,"../Infra/infra-module","ngAnimate",
     "ui.router"
@@ -66,6 +67,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
             state("payment.paymentMethod",{
                 url:"/paymentMethod",
                 templateUrl : "Views/PaymentMethod.html"
+                ,controller : "paymentMethod as paymentMethod"
             });;
     }]);
 
