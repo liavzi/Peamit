@@ -17,9 +17,9 @@
             <ui-select multiple ng-model="tmc.tag.productIds" theme="bootstrap">
                 <ui-select-match placeholder="Select product...">{{$item.name}} &lt;{{$item._id}}&gt;</ui-select-match>
                 <ui-select-choices repeat="product._id as product in tmc.products | orFilter:{name :$select.search,_id:$select.search}">
-                    <div ng-bind-html="''+product.name | highlight: $select.search |sanitize"></div>
+                    <div ng-bind-html="''+product.name | highlight: $select.search |asTrusted"></div>
                     <small>
-                        id: <span ng-bind-html="''+product._id | highlight: $select.search | sanitize"></span>
+                        id: <span ng-bind-html="''+product._id | highlight: $select.search | asTrusted"></span>
                     </small>
                 </ui-select-choices>
             </ui-select>

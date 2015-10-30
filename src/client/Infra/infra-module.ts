@@ -101,7 +101,7 @@ export class Toaster{
 
 app.service("toastr",Toaster);
 
-app.filter("sanitize", ['$sce', function($sce) {
+app.filter("asTrusted", ['$sce', function($sce) {
   return function(htmlCode){
     return $sce.trustAsHtml(htmlCode);
   }
