@@ -17,7 +17,11 @@ paypalButtonRouter.get("/paypalButton",(req : R.OrderActionRequest,res :express.
 			BUTTONTYPE : "BUYNOW",
 			L_BUTTONVAR1 : "item_name=סכום הזמנה",
             L_BUTTONVAR2 : "amount="+req.order.total,
-			L_BUTTONVAR3 : "currency_code=ILS",
+			L_BUTTONVAR3 : "currency_code=ILS"
+			,L_BUTTONVAR4 : "cn=הוסף הנחיות מיוחדות למוכר"
+			,L_BUTTONVAR5 : "return=http://www.localhost.com:8080/#/afterPayPalSuccess"
+			,L_BUTTONVAR6 : "cancel_return=http://www.localhost.com:8080/#/afterPayPalCancel"
+			,L_BUTTONVAR7 : "shipping=10.00"
 		}	
 	},function(err,httpResponse,body){
 		let response = querystring.parse(body);
