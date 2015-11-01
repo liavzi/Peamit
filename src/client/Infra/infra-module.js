@@ -31,21 +31,22 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
     validationErrorInterceptorFactory.$inject = ["toastr", "$q"];
     exports.app.factory("validationErrorInterceptorFactory", validationErrorInterceptorFactory);
     function blockUiInterceptorFactory($templateCache, $q) {
-        var count = 0;
+        var requestsCount = 0;
         return {
             request: function (config) {
-                if (!(config.method === 'GET' && $templateCache.get(config.url))) {
-                    $.blockUI();
-                }
+                if (requestsCount++ === 0)
+                    $.blockUI({ message: "אנא המתן" });
                 return config;
             },
             response: function (response) {
-                $.unblockUI();
+                if (--requestsCount === 0)
+                    $.unblockUI();
                 return response;
             },
             responseError: function (response) {
-                $.unblockUI();
-                return $q.reject(response);
+                if (--requestsCount === 0)
+                    $.unblockUI();
+                return response;
             }
         };
     }
