@@ -16,12 +16,14 @@ paypalButtonRouter.get("/paypalButton",(req : R.OrderActionRequest,res :express.
 			BUTTONCODE : "ENCRYPTED",
 			BUTTONTYPE : "BUYNOW",
 			L_BUTTONVAR1 : "item_name=סכום הזמנה",
-            L_BUTTONVAR2 : "amount="+req.order.total,
+            L_BUTTONVAR2 : `amount=${req.order.total}`,
 			L_BUTTONVAR3 : "currency_code=ILS"
 			,L_BUTTONVAR4 : "cn=הוסף הנחיות מיוחדות למוכר"
 			,L_BUTTONVAR5 : "return=http://www.localhost.com:8080/#/afterPayPalSuccess"
 			,L_BUTTONVAR6 : "cancel_return=http://www.localhost.com:8080/#/afterPayPalCancel"
 			,L_BUTTONVAR7 : "shipping=10.00"
+			,L_BUTTONVAR8 : `custom=${req.order._id}`
+			,L_BUTTONVAR9 : `notify_url=https://hermeny.localtunnel.me/api/txn`
 		}	
 	},function(err,httpResponse,body){
 		let response = querystring.parse(body);

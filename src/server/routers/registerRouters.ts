@@ -6,14 +6,16 @@ var orderRouter = require("./orderRouter");
 var Order = require("../models/OrderModel");
 import validationErrorHandler = require("./validationErrorHandler");
 import imagesRouter = require("./imagesRouter");
+import txnRouter = require("./txnRouter");
 function registerRouters (express,app){
     var apiRouter = express.Router();
     apiRouter.use(productForSellingRouter);
-    apiRouter.use(genericRouter);
+    apiRouter.use(txnRouter)
+    apiRouter.use(imagesRouter);
     apiRouter.use("/myOrder",loadOrder);
     apiRouter.use("/myOrder",orderRouter);
+    apiRouter.use(genericRouter);
     apiRouter.use(validationErrorHandler);
-    apiRouter.use(imagesRouter);
     app.use("/api",apiRouter);
 }
 
