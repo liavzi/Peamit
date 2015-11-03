@@ -12,14 +12,13 @@ router.route("/txn")
     res.send(200, 'OK');
     res.end();
     // read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
-    var postreq = "";
+    var postreq = 'cmd=_notify-validate';
     for (var key in req.body) {
         if (req.body.hasOwnProperty(key)) {
             var value = querystring.escape(req.body[key]);
             postreq = postreq + "&" + key + "=" + value;
         }
     }
-    postreq = postreq.slice(1)+"&cmd=_notify-validate";
     // Step 2: POST IPN data back to PayPal to validate
     console.log('Posting back to paypal');
     console.log(postreq);

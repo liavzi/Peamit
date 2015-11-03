@@ -21,8 +21,7 @@ paypalButtonRouter.get("/paypalButton", function (req, res, next) {
             L_BUTTONVAR5: "return=http://www.localhost.com:8080/#/afterPayPalSuccess",
             L_BUTTONVAR6: "cancel_return=http://www.localhost.com:8080/#/afterPayPalCancel",
             L_BUTTONVAR7: "shipping=10.00",
-            L_BUTTONVAR8: "custom=" + req.order._id,
-            L_BUTTONVAR9: "notify_url=https://hermeny.localtunnel.me/api/txn"
+            L_BUTTONVAR8: "custom=" + req.order._id
         }
     }, function (err, httpResponse, body) {
         var response = querystring.parse(body);
