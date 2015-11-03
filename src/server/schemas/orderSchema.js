@@ -2,6 +2,7 @@
 var _ = require("underscore");
 var mongoose = require('mongoose');
 var BusinessError = require("../errors/BusinessError");
+var validator = require("validator");
 var Schema = mongoose.Schema;
 var orderLineSchema = new Schema({
     productId: Number,
@@ -13,8 +14,10 @@ var orderSchema = new Schema({
     customerDetails: {
         fullName: String,
         address: String,
-        phoneNumber: { type: Number /*,required:"חובה להכניס מספר טלפון"*/ },
-        email: String
+        phoneNumber: { type: Number },
+        email: { type: String, validate: function (value) {
+                return validator.isEmail(value);
+            } }
     },
     state: String,
     closeDetails: {

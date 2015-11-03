@@ -1,8 +1,8 @@
 ///<reference path="../../../typings/angularjs/angular.d.ts"/>
 define(["require", "exports", "angular"], function (require, exports, angular) {
-    var app = angular.module("order", []);
+    exports.app = angular.module("order", []);
     //Controllers
-    app.controller('MyOrderController', ['$scope', 'OrderResource', "myOrder", "$state", function ($scope, orderResource, myOrder, $state) {
+    exports.app.controller('MyOrderController', ['$scope', 'OrderResource', "myOrder", "$state", function ($scope, orderResource, myOrder, $state) {
             $scope.orderModel = {};
             $scope.orderModel.order = {};
             myOrder.getFullOrder().then(function (order) {
@@ -16,7 +16,7 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                 $state.go("payment.customerDetails");
             };
         }]);
-    app.controller('OrderLineController', ['$scope', 'ProductResource', "myOrder", function ($scope, productResource, myOrder) {
+    exports.app.controller('OrderLineController', ['$scope', 'ProductResource', "myOrder", function ($scope, productResource, myOrder) {
             $scope.product = productResource.getById({ id: $scope.orderLine.productId });
             $scope.removeOrderLine = function () {
                 myOrder.removeOrderLine($scope.orderLine._id).then(function (order) {
@@ -24,14 +24,14 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                 });
             };
         }]);
-    app.controller("ProductSoldModalController", ["$scope", "$modalInstance", "$state", "soldProduct", function ($scope, $modalInstance, $state, soldProduct) {
+    exports.app.controller("ProductSoldModalController", ["$scope", "$modalInstance", "$state", "soldProduct", function ($scope, $modalInstance, $state, soldProduct) {
             $scope.soldProduct = soldProduct;
             $scope.pay = function () {
                 $modalInstance.close();
                 $state.go("payment.myOrder");
             };
         }]);
-    app.controller("closedOrdersController", ["$scope", "$location", "OrderResource", "toastr", function ($scope, $location, orderResource, toastr) {
+    exports.app.controller("closedOrdersController", ["$scope", "$location", "OrderResource", "toastr", function ($scope, $location, orderResource, toastr) {
             var _this = this;
             this.gridOptions = {
                 data: [],
@@ -70,12 +70,12 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                 });
             };
         }]);
-    app.controller("orderMaintenance", ["$scope", "$routeParams", "OrderResource", function ($scope, $routeParams, orderResource) {
+    exports.app.controller("orderMaintenance", ["$scope", "$routeParams", "OrderResource", function ($scope, $routeParams, orderResource) {
             var _this = this;
             var orderId = $routeParams.orderId;
             this.order = orderResource.get({ orderId: orderId });
         }]);
-    app.directive("productForSelling", ["$modal", "myOrder", function ($modal, myOrder) {
+    exports.app.directive("productForSelling", ["$modal", "myOrder", function ($modal, myOrder) {
             return {
                 restrict: "EA",
                 scope: {
@@ -131,13 +131,13 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
         MyOrder.$inject = ["$http"];
         return MyOrder;
     })();
-    app.service("myOrder", MyOrder);
+    exports.MyOrder = MyOrder;
+    exports.app.service("myOrder", MyOrder);
     //Services
-    app.factory('OrderResource', ['$resource', function ($resource) {
+    exports.app.factory('OrderResource', ['$resource', function ($resource) {
             return $resource('/api/orders/:orderId', { id: '@_id' }, {
                 'create': { method: 'POST' },
                 "getAll": { method: "GET", isArray: true }
             });
         }]);
-    return app;
 });

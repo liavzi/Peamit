@@ -55,7 +55,7 @@ function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService,$q 
         responseError : function(response){
             if (--requestsCount ===0)
                 $.unblockUI();
-            return response;
+            return $q.reject(response);
         }
     };
 }

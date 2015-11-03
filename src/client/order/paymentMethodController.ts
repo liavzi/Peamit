@@ -24,4 +24,4 @@ class PaymentMethodController{
 
 }
 
-orderModule.controller("paymentMethod",PaymentMethodController);
+orderModule.app.controller("paymentMethod",PaymentMethodController);

@@ -2,7 +2,7 @@
 
 import angular = require("angular");
 
-var app = angular.module("order",[]);
+export var app = angular.module("order",[]);
 
 //Controllers
 app.controller('MyOrderController', ['$scope', 'OrderResource',"myOrder","$state", function ($scope, orderResource,myOrder : MyOrder,$state) {
@@ -114,7 +114,7 @@ app.directive("productForSelling",["$modal","myOrder",function($modal,myOrder : 
     };
 }]);
 
-class MyOrder{
+export class MyOrder{
     static $inject = ["$http"];
     constructor(private $http : ng.IHttpService){
     }
@@ -150,5 +150,3 @@ app.factory('OrderResource', ['$resource', function ($resource) {
             "getAll": {method:"GET",isArray:true}
         });
 } ]);
-
-export=app;

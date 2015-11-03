@@ -21,5 +21,5 @@ define(["require", "exports", './order-module'], function (require, exports, ord
         PaymentMethodController.$inject = ["$scope", "$http", "$sce"];
         return PaymentMethodController;
     })();
-    orderModule.controller("paymentMethod", PaymentMethodController);
+    orderModule.app.controller("paymentMethod", PaymentMethodController);
 });

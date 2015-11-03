@@ -25,5 +25,5 @@ define(["require", "exports", './order-module'], function (require, exports, ord
         return PaymentController;
     })();
     exports.PaymentController = PaymentController;
-    orderModule.controller("payment", PaymentController);
+    orderModule.app.controller("payment", PaymentController);
 });

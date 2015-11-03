@@ -46,7 +46,7 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
             responseError: function (response) {
                 if (--requestsCount === 0)
                     $.unblockUI();
-                return response;
+                return $q.reject(response);
             }
         };
     }

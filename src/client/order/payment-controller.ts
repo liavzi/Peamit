@@ -14,7 +14,7 @@ export class PaymentController{
     customerDetails : CustomerDetails;
     paymentMethod : number
 
-    constructor(private $state : angular.ui.IStateService,private myOrder,private toastr){
+    constructor(private $state : angular.ui.IStateService,private myOrder : orderModule.MyOrder,private toastr){
         this.customerDetails = new CustomerDetails();
     }
 
@@ -28,4 +28,4 @@ export class PaymentController{
         });
     }
 }
-orderModule.controller("payment",PaymentController);
+orderModule.app.controller("payment",PaymentController);
