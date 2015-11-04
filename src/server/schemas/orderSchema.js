@@ -9,7 +9,7 @@ var orderLineSchema = new Schema({
     quantity: Number,
     totalPrice: Number
 });
-var orderSchema = new Schema({
+exports.orderSchema = new Schema({
     orderLines: [orderLineSchema],
     customerDetails: {
         fullName: String,
@@ -19,17 +19,14 @@ var orderSchema = new Schema({
                 return validator.isEmail(value);
             } }
     },
-    state: String,
-    closeDetails: {
-        method: String
-    }
+    status: { type: Number, min: 0 /* open */, max: 1 /* paid */ }
 });
-orderSchema.virtual("total").get(function () {
+exports.orderSchema.virtual("total").get(function () {
     return _.reduce(this.orderLines, function (memo, orderLine) {
         return memo + orderLine.totalPrice;
     }, 0);
 });
-orderSchema.method("addOrderLine", function (orderLineToAdd) {
+exports.orderSchema.method("addOrderLine", function (orderLineToAdd) {
     var existingOrderLineWithSameProduct = _.find(this.orderLines, function (x) { return x.productId === orderLineToAdd.productId; });
     if (existingOrderLineWithSameProduct) {
         existingOrderLineWithSameProduct.quantity += orderLineToAdd.quantity;
@@ -38,21 +35,21 @@ orderSchema.method("addOrderLine", function (orderLineToAdd) {
     else
         this.orderLines.push(orderLineToAdd);
 });
-orderSchema.method("removeLineById", function (orderLineId) {
+exports.orderSchema.method("removeLineById", function (orderLineId) {
     this.orderLines.id(orderLineId).remove();
 });
-orderSchema.method("closeByPhone", function (customerDetails, cb) {
+exports.orderSchema.method("closeByPhone", function (customerDetails, cb) {
     this.customerDetails = customerDetails;
     if (!customerDetails.phoneNumber)
         cb(new BusinessError("חובה לציין מס טלפון"));
     this._close({ method: "ClosedByPhone" });
     cb(null);
 });
-orderSchema.method("_close", function (closeDetails) {
+exports.orderSchema.method("_close", function (closeDetails) {
     this.state = "Closed";
     this.closeDetails = closeDetails;
 });
-orderSchema.static("strictFindById", function (orderId, callback) {
+exports.orderSchema.static("strictFindById", function (orderId, callback) {
     this.findById(orderId, function (err, order) {
         if (err)
             return callback(err);
@@ -64,6 +61,11 @@ orderSchema.static("strictFindById", function (orderId, callback) {
         callback(null, order);
     });
 });
-orderSchema.set("toJSON", { getters: true });
-orderSchema.set("toObject", { getters: true });
-module.exports = orderSchema;
+exports.orderSchema.method("markAsPaid", function (cb) {
+    if (cb === void 0) { cb = function () { }; }
+    var order = this;
+    order.status = 1 /* paid */;
+    cb(null);
+});
+exports.orderSchema.set("toJSON", { getters: true });
+exports.orderSchema.set("toObject", { getters: true });

@@ -3,7 +3,8 @@ import e = require("express");
 var productForSellingRouter = require("./productForSellingRouter");
 var genericRouter = require("./genericRouter");
 var orderRouter = require("./orderRouter");
-var Order = require("../models/OrderModel");
+import Order = require("../models/OrderModel");
+import orderSchema = require("../schemas/orderSchema");
 import validationErrorHandler = require("./validationErrorHandler");
 import imagesRouter = require("./imagesRouter");
 import txnRouter = require("./txnRouter");
@@ -24,7 +25,7 @@ export interface RequestWithSession extends e.Request{
 }
 
 export interface OrderActionRequest extends RequestWithSession{
-    order :any;
+    order :orderSchema.IOrder;
 }
 
 
@@ -33,7 +34,11 @@ function loadOrder(req : OrderActionRequest,res,next){
         return next();
     Order.strictFindById(req.session.orderId, function (err,order) {
         if (err) return next(err);
-        req.order = order;
+        if (order.status === orderSchema.OrderStatus.paid){
+            req.session.orderId = null;
+        }
+        else
+            req.order = order;
         next();
     });
 }

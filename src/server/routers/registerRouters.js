@@ -2,6 +2,7 @@ var productForSellingRouter = require("./productForSellingRouter");
 var genericRouter = require("./genericRouter");
 var orderRouter = require("./orderRouter");
 var Order = require("../models/OrderModel");
+var orderSchema = require("../schemas/orderSchema");
 var validationErrorHandler = require("./validationErrorHandler");
 var imagesRouter = require("./imagesRouter");
 var txnRouter = require("./txnRouter");
@@ -22,7 +23,11 @@ function loadOrder(req, res, next) {
     Order.strictFindById(req.session.orderId, function (err, order) {
         if (err)
             return next(err);
-        req.order = order;
+        if (order.status === 1 /* paid */) {
+            req.session.orderId = null;
+        }
+        else
+            req.order = order;
         next();
     });
 }

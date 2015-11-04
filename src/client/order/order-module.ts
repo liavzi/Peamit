@@ -57,7 +57,7 @@ app.controller("closedOrdersController", ["$scope","$location","OrderResource","
                 displayName : "מזהה"
             },
             {
-                field : "state",
+                field : "status",
                 displayName : "סטטוס"
             }
         ]

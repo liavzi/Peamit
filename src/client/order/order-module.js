@@ -51,7 +51,7 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                         displayName: "מזהה"
                     },
                     {
-                        field: "state",
+                        field: "status",
                         displayName: "סטטוס"
                     }
                 ]

@@ -10,7 +10,20 @@ var orderLineSchema = new Schema({
     quantity : Number,
     totalPrice : Number
 });
-var orderSchema   = new Schema({
+
+export const enum OrderStatus{
+    open
+    ,paid
+}
+
+export interface IOrder extends mongoose.Document{
+    status : OrderStatus;
+    markAsPaid(cb?:(err:Error)=>any);
+    total : number;
+}
+
+
+export var orderSchema   = new Schema({
     orderLines : [orderLineSchema],
     customerDetails : {
         fullName : String,
@@ -20,10 +33,7 @@ var orderSchema   = new Schema({
             return validator.isEmail(value);
         }}
     },
-    state : String,
-    closeDetails : {
-        method :String
-    }
+    status : {type:Number,min:OrderStatus.open,max:OrderStatus.paid}
 });
 
 orderSchema.virtual("total").get(function(){
@@ -70,7 +80,11 @@ orderSchema.static("strictFindById",function(orderId,callback){
     });
 });
 
+orderSchema.method("markAsPaid",function(cb :Function = ()=>{} ){
+    let order = <IOrder> this;
+    order.status = OrderStatus.paid;
+    cb(null);
+});
+
 orderSchema.set("toJSON",{getters:true});
 orderSchema.set("toObject",{getters:true});
-
-export = orderSchema;

@@ -1,6 +1,8 @@
 var express = require('express');
 var querystring = require('querystring');
 var request = require('request');
+var Order = require("../models/OrderModel");
+var orderShcema = require("../schemas/orderSchema");
 var router = express.Router();
 router.route("/txn")
     .post(function (req, res) {
@@ -42,28 +44,19 @@ router.route("/txn")
                 // The IPN is verified, process it
                 console.log('Verified IPN!');
                 console.log('\n\n');
-                // assign posted variables to local variables
-                var item_name = req.body['item_name'];
-                var item_number = req.body['item_number'];
-                var payment_status = req.body['payment_status'];
-                var payment_amount = req.body['mc_gross'];
-                var payment_currency = req.body['mc_currency'];
-                var txn_id = req.body['txn_id'];
-                var receiver_email = req.body['receiver_email'];
-                var payer_email = req.body['payer_email'];
                 //Lets check a variable
                 console.log("Checking variable");
-                console.log("payment_status:", payment_status);
                 console.log('\n\n');
-                // IPN message values depend upon the type of notification sent.
-                // To loop through the &_POST array and print the NV pairs to the screen:
-                console.log('Printing all key-value pairs...');
-                for (var key in req.body) {
-                    if (req.body.hasOwnProperty(key)) {
-                        var value = req.body[key];
-                        console.log(key + "=" + value);
-                    }
-                }
+                var invoice = req.body["invoice"];
+                Order.findById(invoice, function (err, order) {
+                    if (err || !order || order.status === 1 /* paid */)
+                        return;
+                    order.markAsPaid(function (err) {
+                        if (err)
+                            return;
+                        order.save();
+                    });
+                });
             }
             else if (body.substring(0, 7) === 'INVALID') {
                 // IPN invalid, log for manual investigation

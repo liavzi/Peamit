@@ -1,14 +1,14 @@
 var express = require("express");
 var addItemToOrderService = require("../services/addItemToOrderService");
 var addItemToOrderRouter = express.Router();
-var Order = require("../models/OrderModel");
+var orderFactory = require("../businessComponents/orderFactory");
 addItemToOrderRouter.route("/items")
     .post(function (req, res, next) {
     var request = {};
     request.saleInfo = req.body;
     request.order = req.order;
     if (!request.order) {
-        return Order.create({}, function (err, newOrder) {
+        return orderFactory.createNewOrder(function (err, newOrder) {
             if (err)
                 return next(err);
             req.session.orderId = newOrder._id;
