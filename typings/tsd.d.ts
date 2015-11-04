@@ -17,3 +17,4 @@
 /// <reference path="../src/schemas/schemas.d.ts" />
 /// <reference path="passport/passport.d.ts" />
 /// <reference path="jquery.blockUI/jquery.blockUI.d.ts" />
+/// <reference path="config/config.d.ts" />

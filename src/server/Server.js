@@ -11,6 +11,9 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+process.env.NODE_CONFIG_DIR = "./config";
+var config = require("config");
+console.log(config.get("test"));
 var callbackURL = "http://localhost:8080/auth/google/callback";
 if (process.env.OPENSHIFT_MONGODB_DB_URL) {
     var mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + "node";
