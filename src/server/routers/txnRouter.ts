@@ -58,7 +58,7 @@ router.route("/txn")
             let invoice = req.body["invoice"];
             Order.findById(invoice,(err,order)=>{
                 if (err || !order || order.status===orderShcema.OrderStatus.paid) return;
-                order.markAsPaid((err)=>{
+                order.markAsPaid(req.body,(err)=>{
                     if (err) return;
                     order.save();
                 });              

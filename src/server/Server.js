@@ -1,17 +1,18 @@
+///<reference path="../../typings/tsd.d.ts" />
+var path = require("path");
+process.env.NODE_CONFIG_DIR = path.join(__dirname, "config");
 var users = require("./businessComponents/users");
 var express = require('express'); // call express
 var app = express(); // define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var registerRoutes = require("./routers/registerRouters");
-var path = require('path');
 var databaseConfig = require("./config/databaseConfig.json");
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-process.env.NODE_CONFIG_DIR = "./config";
 var config = require("config");
 console.log(config.get("test"));
 var callbackURL = "http://localhost:8080/auth/google/callback";

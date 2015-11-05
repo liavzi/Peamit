@@ -51,7 +51,7 @@ router.route("/txn")
                 Order.findById(invoice, function (err, order) {
                     if (err || !order || order.status === 1 /* paid */)
                         return;
-                    order.markAsPaid(function (err) {
+                    order.markAsPaid(req.body, function (err) {
                         if (err)
                             return;
                         order.save();

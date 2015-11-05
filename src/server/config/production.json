@@ -1,3 +1,7 @@
 {
-	"test": "productionTestValue"
+	"test": "defualtTestValue"
+	,"paypal":{
+		"returnUrl" : "return=http://www.hermeny.co.il/#/afterPayPalSuccess"
+		,"cancelUrl" : "cancel_return=http://www.hermeny.co.il/#/afterPayPalCancel"	
+	}
 }

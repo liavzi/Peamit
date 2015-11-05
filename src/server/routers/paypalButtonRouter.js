@@ -2,6 +2,7 @@
 var express = require("express");
 var request = require("request");
 var querystring = require("querystring");
+var config = require("config");
 var paypalButtonRouter = express.Router();
 paypalButtonRouter.get("/paypalButton", function (req, res, next) {
     request.post({
@@ -18,9 +19,9 @@ paypalButtonRouter.get("/paypalButton", function (req, res, next) {
             L_BUTTONVAR2: "amount=" + req.order.total,
             L_BUTTONVAR3: "currency_code=ILS",
             L_BUTTONVAR4: "cn=הוסף הנחיות מיוחדות למוכר",
-            L_BUTTONVAR5: "return=http://www.localhost.com:8080/#/afterPayPalSuccess",
-            L_BUTTONVAR6: "cancel_return=http://www.localhost.com:8080/#/afterPayPalCancel",
-            L_BUTTONVAR7: "shipping=10.00",
+            L_BUTTONVAR5: config.get("paypal.returnUrl"),
+            L_BUTTONVAR6: config.get("paypal.cancelUrl"),
+            L_BUTTONVAR7: "shipping=25.00",
             L_BUTTONVAR8: "invoice=" + req.order._id
         }
     }, function (err, httpResponse, body) {

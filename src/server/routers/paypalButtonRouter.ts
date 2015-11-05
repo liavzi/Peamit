@@ -3,6 +3,7 @@ import express = require("express");
 import R = require("./registerRouters");
 import request = require("request");
 import querystring = require("querystring");
+import config = require("config");
 let paypalButtonRouter  = express.Router();
 paypalButtonRouter.get("/paypalButton",(req : R.OrderActionRequest,res :express.Response,next)=>{
 	request.post({
@@ -19,9 +20,9 @@ paypalButtonRouter.get("/paypalButton",(req : R.OrderActionRequest,res :express.
             L_BUTTONVAR2 : `amount=${req.order.total}`,
 			L_BUTTONVAR3 : "currency_code=ILS"
 			,L_BUTTONVAR4 : "cn=הוסף הנחיות מיוחדות למוכר"
-			,L_BUTTONVAR5 : "return=http://www.localhost.com:8080/#/afterPayPalSuccess"
-			,L_BUTTONVAR6 : "cancel_return=http://www.localhost.com:8080/#/afterPayPalCancel"
-			,L_BUTTONVAR7 : "shipping=10.00"
+			,L_BUTTONVAR5 : config.get("paypal.returnUrl")
+			,L_BUTTONVAR6 : config.get("paypal.cancelUrl")
+			,L_BUTTONVAR7 : "shipping=25.00"
 			,L_BUTTONVAR8 : `invoice=${req.order._id}`
 		}	
 	},function(err,httpResponse,body){

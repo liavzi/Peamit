@@ -18,8 +18,9 @@ export const enum OrderStatus{
 
 export interface IOrder extends mongoose.Document{
     status : OrderStatus;
-    markAsPaid(cb?:(err:Error)=>any);
+    markAsPaid(paymentInformation,cb?:(err:Error)=>any);
     total : number;
+    paymentInformation : any;
 }
 
 
@@ -34,6 +35,7 @@ export var orderSchema   = new Schema({
         }}
     },
     status : {type:Number,min:OrderStatus.open,max:OrderStatus.paid}
+    ,paymentInformation : {}
 });
 
 orderSchema.virtual("total").get(function(){
@@ -80,8 +82,10 @@ orderSchema.static("strictFindById",function(orderId,callback){
     });
 });
 
-orderSchema.method("markAsPaid",function(cb :Function = ()=>{} ){
+orderSchema.method("markAsPaid",function(paymentInformation,cb :Function = ()=>{} ){
     let order = <IOrder> this;
+    order.paymentInformation = paymentInformation;
+    order.markModified("paymentInformation");
     order.status = OrderStatus.paid;
     cb(null);
 });

@@ -19,7 +19,8 @@ exports.orderSchema = new Schema({
                 return validator.isEmail(value);
             } }
     },
-    status: { type: Number, min: 0 /* open */, max: 1 /* paid */ }
+    status: { type: Number, min: 0 /* open */, max: 1 /* paid */ },
+    paymentInformation: {}
 });
 exports.orderSchema.virtual("total").get(function () {
     return _.reduce(this.orderLines, function (memo, orderLine) {
@@ -61,9 +62,11 @@ exports.orderSchema.static("strictFindById", function (orderId, callback) {
         callback(null, order);
     });
 });
-exports.orderSchema.method("markAsPaid", function (cb) {
+exports.orderSchema.method("markAsPaid", function (paymentInformation, cb) {
     if (cb === void 0) { cb = function () { }; }
     var order = this;
+    order.paymentInformation = paymentInformation;
+    order.markModified("paymentInformation");
     order.status = 1 /* paid */;
     cb(null);
 });
