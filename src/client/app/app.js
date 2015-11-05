@@ -4,7 +4,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
     ,"../order/order-module"
     ,"../order/order-directive"
     ,"../order/payment-controller"
-    ,"../order/paymentMethodcontroller"
+    ,"../order/paymentMethodController"
     ,"jQuery","underscore","toastr"
     ,"../Infra/infra-module","ngAnimate",
     "ui.router"
