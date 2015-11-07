@@ -1,5 +1,5 @@
 body {
-  background-image: url("/resources/images/polka-dot-background24 (3).jpg");
+  background-color: beige;
   color: #333;
   font-family: "Roboto", Arial, sans-serif;
   font-size: large;
@@ -65,7 +65,7 @@ body {
   border: solid lightblue;
 }
 .product-tag img {
-  height: 270px;
+  height: 200px;
 }
 .product-tag .caption {
   padding-bottom: 0px;
@@ -79,6 +79,19 @@ body {
 }
 .product-for-selling {
   font-weight: bold;
+  height: 370px;
+}
+.product-for-selling img {
+  height: 150px;
+}
+.product-for-selling .prodcut-price {
+  height: 40px;
+}
+.product-for-selling .product-name {
+  height: 80px;
+}
+.product-for-selling .add-to-order {
+  margin-top: 10px;
 }
 .navbar-brand {
   font-size: 50px;
@@ -122,4 +135,5 @@ body {
 }
 .logo-image {
   height: 53px;
+  margin-right: 674px;
 }
