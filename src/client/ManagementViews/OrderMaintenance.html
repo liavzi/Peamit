@@ -16,5 +16,5 @@
         <label for="emailInput" class="control-label">אימייל:</label>
         <input readonly ng-model="om.order.customerDetails.email" type="email" class="form-control" id="emailInput" placeholder="אימייל">
     </div>
-    {{om.order.paymentInformation}}
+    {{om.order.paymentInformation | json}}
 </div>

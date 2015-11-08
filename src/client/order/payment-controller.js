@@ -6,22 +6,29 @@ define(["require", "exports", './order-module'], function (require, exports, ord
     })();
     exports.CustomerDetails = CustomerDetails;
     var PaymentController = (function () {
-        function PaymentController($state, myOrder, toastr) {
+        function PaymentController($state, myOrder, toastr, $scope, $http, $sce) {
+            var _this = this;
             this.$state = $state;
             this.myOrder = myOrder;
             this.toastr = toastr;
+            this.$scope = $scope;
+            this.$http = $http;
+            this.$sce = $sce;
+            this.showPaymentOptions = false;
             this.customerDetails = new CustomerDetails();
+            this.$scope.$watch(function () { return _this.paymentMethod; }, function (paymentMethod) {
+                if (paymentMethod === "2" || paymentMethod === "1") {
+                    _this.createPaypalButton();
+                }
+            });
         }
-        PaymentController.prototype.goToChoosePaymentMethod = function () {
-            this.$state.go("payment.paymentMethod");
-        };
-        PaymentController.prototype.closeByPhone = function () {
+        PaymentController.prototype.createPaypalButton = function () {
             var _this = this;
-            this.myOrder.closeOrderByPhone(this.customerDetails).then(function () {
-                _this.toastr.success("ההזמנה הושלמה");
+            this.$http.get("/api/myOrder/paypalButton").then(function (result) {
+                _this.paypalButton = _this.$sce.trustAsHtml(result.data);
             });
         };
-        PaymentController.$inject = ["$state", "myOrder", "toastr"];
+        PaymentController.$inject = ["$state", "myOrder", "toastr", "$scope", "$http", "$sce"];
         return PaymentController;
     })();
     exports.PaymentController = PaymentController;

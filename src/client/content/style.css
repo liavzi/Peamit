@@ -96,7 +96,7 @@ body {
 .navbar-header {
   float: none;
   position: absolute;
-  right: calc(50% - 75px);
+  right: calc(50% - 182.5px);
 }
 .navbar-brand {
   font-size: 50px;
@@ -140,4 +140,10 @@ body {
 }
 .logo-image {
   height: 53px;
+}
+.paypal-cards-logo-holder img {
+  height: 75px;
+}
+.paypal-logo-holder img {
+  height: 65px;
 }

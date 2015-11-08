@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="col-xs-8">
+    <div class="col-md-8">
        <hy-order order-model="orderModel"></hy-order>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-3">
+    <div class="col-md-3">
         <div class="form-group">
             <label for="coupon" class="control-label">קוד קופון:</label>
             <input ng-model="orderModel.order.coupon" type="text" class="form-control" id="coupon" placeholder="הכנס קוד קופון">
@@ -12,10 +12,47 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-1">
-        <button ng-click="goToPayment()" class="btn btn-primary row">לתשלום</button>
+    <div class="col-md-2" >
+        <button ng-disabled="payment.showPaymentOptions===true" ng-click="payment.showPaymentOptions = true" class="btn btn-primary">לתשלום</button>
+    </div>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-12 paypal-cards-logo-holder">
+                <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" alt="PayPal - הדרך הקלה והבטוחה לשלם באינטרנט!">               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 paypal-logo-holder">
+                <img src="https://www.paypalobjects.com/webstatic/en_US/logo/pp_cc_mark_111x69.png" alt="PayPal - הדרך הקלה והבטוחה לשלם באינטרנט!">
+            </div>
+        </div>
     </div>
 </div>
+<div class="row" ng-if="payment.showPaymentOptions===true">
+    <div class="col-md-12">      
+        <div class="row">
+            <div class="col-md-12">    
+                <div class="form-group">
+                    <label for="emailInput" class="control-label">בחר אמצעי תשלום:</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <select class="form-control input-lg col-md-3" ng-model="payment.paymentMethod">
+                            <option value="" disabled selected>בחר אמצעי תשלום</option>
+                            <option value="1">כרטיס אשראי</option>
+                            <option value="2">PayPal</option>
+                        </select>   
+                    </div>
+                </div>                      
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">    
+                <p ng-if="payment.paymentMethod ==='1'">הסבר על כרטיס אשראי</p>
+                <div style="margin-top:15px" ng-if="payment.paymentMethod ==='2' || payment.paymentMethod==='1'" ng-bind-html="payment.paypalButton"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
