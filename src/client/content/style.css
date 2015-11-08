@@ -93,6 +93,11 @@ body {
 .product-for-selling .add-to-order {
   margin-top: 10px;
 }
+.navbar-header {
+  float: none;
+  position: absolute;
+  right: calc(50% - 75px);
+}
 .navbar-brand {
   font-size: 50px;
   font-style: italic;
@@ -135,5 +140,4 @@ body {
 }
 .logo-image {
   height: 53px;
-  margin-right: 674px;
 }
