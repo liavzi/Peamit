@@ -1,7 +1,6 @@
 ///<reference path="../../../typings/tsd.d.ts" />
 var _ = require("underscore");
 var mongoose = require('mongoose');
-var BusinessError = require("../errors/BusinessError");
 var validator = require("validator");
 var Schema = mongoose.Schema;
 var orderLineSchema = new Schema({
@@ -20,7 +19,8 @@ exports.orderSchema = new Schema({
             } }
     },
     status: { type: Number, min: 0 /* open */, max: 1 /* paid */ },
-    paymentInformation: {}
+    paymentInformation: {},
+    shipmentFee: { type: Number, min: 0 }
 });
 exports.orderSchema.virtual("total").get(function () {
     return _.reduce(this.orderLines, function (memo, orderLine) {
@@ -38,17 +38,6 @@ exports.orderSchema.method("addOrderLine", function (orderLineToAdd) {
 });
 exports.orderSchema.method("removeLineById", function (orderLineId) {
     this.orderLines.id(orderLineId).remove();
-});
-exports.orderSchema.method("closeByPhone", function (customerDetails, cb) {
-    this.customerDetails = customerDetails;
-    if (!customerDetails.phoneNumber)
-        cb(new BusinessError("חובה לציין מס טלפון"));
-    this._close({ method: "ClosedByPhone" });
-    cb(null);
-});
-exports.orderSchema.method("_close", function (closeDetails) {
-    this.state = "Closed";
-    this.closeDetails = closeDetails;
 });
 exports.orderSchema.static("strictFindById", function (orderId, callback) {
     this.findById(orderId, function (err, order) {

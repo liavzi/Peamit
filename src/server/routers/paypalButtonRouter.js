@@ -21,7 +21,7 @@ paypalButtonRouter.get("/paypalButton", function (req, res, next) {
             L_BUTTONVAR4: "cn=הוסף הנחיות מיוחדות למוכר",
             L_BUTTONVAR5: config.get("paypal.returnUrl"),
             L_BUTTONVAR6: config.get("paypal.cancelUrl"),
-            L_BUTTONVAR7: "shipping=25.00",
+            L_BUTTONVAR7: "shipping=" + req.order.shipmentFee,
             L_BUTTONVAR8: "invoice=" + req.order._id
         }
     }, function (err, httpResponse, body) {

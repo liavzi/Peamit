@@ -2,20 +2,6 @@
 define(["require", "exports", "angular"], function (require, exports, angular) {
     exports.app = angular.module("order", []);
     //Controllers
-    exports.app.controller('MyOrderController', ['$scope', 'OrderResource', "myOrder", "$state", function ($scope, orderResource, myOrder, $state) {
-            $scope.orderModel = {};
-            $scope.orderModel.order = {};
-            myOrder.getFullOrder().then(function (order) {
-                $scope.orderModel.order = order;
-            });
-            $scope.closeOrderByPhone = function () {
-                myOrder.closeOrderByPhone($scope.orderModel.order.customerDetails).then(function () {
-                });
-            };
-            $scope.goToPayment = function () {
-                $state.go("payment.customerDetails");
-            };
-        }]);
     exports.app.controller('OrderLineController', ['$scope', 'ProductResource', "myOrder", function ($scope, productResource, myOrder) {
             $scope.product = productResource.getById({ id: $scope.orderLine.productId });
             $scope.removeOrderLine = function () {
@@ -110,15 +96,13 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
             this.$http = $http;
         }
         MyOrder.prototype.post = function (path, postdata) {
-            return this.$http.post("/api/myOrder/" + path, postdata);
+            return this.$http.post("/api/myOrder/" + path, postdata).then(function (res) {
+                return res.data;
+            });
         };
         ;
         MyOrder.prototype.addItem = function (saleInfo) {
             return this.post("items", saleInfo);
-        };
-        ;
-        MyOrder.prototype.closeOrderByPhone = function (customerDetails) {
-            return this.post("actions/closeOrderByPhone", customerDetails);
         };
         ;
         MyOrder.prototype.removeOrderLine = function (orderLineId) {
@@ -127,6 +111,9 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
         ;
         MyOrder.prototype.getFullOrder = function () {
             return this.$http.get("api/myOrder").then(function (res) { return res.data; });
+        };
+        MyOrder.prototype.addCoupon = function (coupon) {
+            return this.post("coupons", { coupon: coupon });
         };
         MyOrder.$inject = ["$http"];
         return MyOrder;

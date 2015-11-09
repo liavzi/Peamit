@@ -2,7 +2,7 @@
 
 var addItemToOrderRouter = require("./addItemToOrderRouter");
 var orderLinesRouter = require("./orderLinesRouter");
-var closeOrderByPhoneRouter = require("./closeOrderByPhoneRouter");
+import addCoupon = require("./addCoupon");
 import paypalButtonRouter = require("./paypalButtonRouter");
 import express = require("express");
 
@@ -13,8 +13,8 @@ orderRouter.get("/",function(req:any,res,next){
 });
 orderRouter.use(addItemToOrderRouter);
 orderRouter.use(orderLinesRouter);
-orderRouter.use(closeOrderByPhoneRouter);
 orderRouter.use(paypalButtonRouter);
+orderRouter.use(<any>addCoupon);
 
 export = orderRouter;
 

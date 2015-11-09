@@ -21,6 +21,7 @@ export interface IOrder extends mongoose.Document{
     markAsPaid(paymentInformation,cb?:(err:Error)=>any);
     total : number;
     paymentInformation : any;
+    shipmentFee : number;
 }
 
 
@@ -36,6 +37,7 @@ export var orderSchema   = new Schema({
     },
     status : {type:Number,min:OrderStatus.open,max:OrderStatus.paid}
     ,paymentInformation : {}
+    ,shipmentFee : {type : Number,min:0}
 });
 
 orderSchema.virtual("total").get(function(){
@@ -58,17 +60,6 @@ orderSchema.method("removeLineById",function(orderLineId){
     this.orderLines.id(orderLineId).remove();
 });
 
-orderSchema.method("closeByPhone",function(customerDetails,cb :Function){
-    this.customerDetails = customerDetails;
-    if (!customerDetails.phoneNumber) cb(new BusinessError("חובה לציין מס טלפון"));
-    this._close({method:"ClosedByPhone"});
-    cb(null);
-});
-
-orderSchema.method("_close", function(closeDetails){
-    this.state = "Closed";
-    this.closeDetails = closeDetails;
-});
 
 orderSchema.static("strictFindById",function(orderId,callback){
     this.findById(orderId,function(err,order) {

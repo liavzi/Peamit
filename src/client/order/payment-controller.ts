@@ -8,6 +8,10 @@ export class CustomerDetails {
     email : string;
 }
 
+interface IPaymentScope extends ng.IScope{
+    orderModel :{order:any};
+}
+
 export class PaymentController{
     static $inject = ["$state","myOrder","toastr","$scope","$http","$sce"];
 
@@ -15,11 +19,17 @@ export class PaymentController{
     paymentMethod : string
     paypalButton : string;
     showPaymentOptions :boolean;
+    coupon :string;
 
     constructor(private $state : angular.ui.IStateService,private myOrder : orderModule.MyOrder,private toastr
-    ,private $scope : ng.IScope
+    ,private $scope : IPaymentScope
     ,private $http : ng.IHttpService
     ,private $sce : ng.ISCEService){
+        $scope.orderModel = {order  : {}};
+        $scope.orderModel.order={};
+        myOrder.getFullOrder().then(order=>{
+            $scope.orderModel.order  =order;
+        });
         this.showPaymentOptions = false;
         this.customerDetails = new CustomerDetails();
         this.$scope.$watch(()=>this.paymentMethod,(paymentMethod : string)=>{
@@ -33,6 +43,13 @@ export class PaymentController{
         this.$http.get("/api/myOrder/paypalButton").then(result=>{
             this.paypalButton = this.$sce.trustAsHtml(result.data);
         });
+    }
+    
+    addCoupon(){
+        this.myOrder.addCoupon(this.coupon).then(order=>{
+            this.$scope.orderModel.order = order;
+            this.toastr.success("הקופון התקבל");
+        })
     }
 
 }

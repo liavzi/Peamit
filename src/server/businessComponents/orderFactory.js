@@ -8,6 +8,7 @@ var OrderFactory = (function () {
             if (err)
                 return cb(err);
             newOrder.status = 0 /* open */;
+            newOrder.shipmentFee = 25;
             cb(null, newOrder);
         });
     };

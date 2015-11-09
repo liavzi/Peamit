@@ -5,22 +5,6 @@ import angular = require("angular");
 export var app = angular.module("order",[]);
 
 //Controllers
-app.controller('MyOrderController', ['$scope', 'OrderResource',"myOrder","$state", function ($scope, orderResource,myOrder : MyOrder,$state) {
-    $scope.orderModel = {};
-    $scope.orderModel.order={};
-    myOrder.getFullOrder().then(order=>{
-        $scope.orderModel.order  =order;
-    });
-    $scope.closeOrderByPhone = function (){
-        myOrder.closeOrderByPhone($scope.orderModel.order.customerDetails).then(function(){
-            
-        });
-    };
-    $scope.goToPayment = function(){
-        $state.go("payment.customerDetails");
-    };
-} ]);
-
 app.controller('OrderLineController', ['$scope', 'ProductResource',"myOrder",function ($scope, productResource,myOrder : MyOrder) {
     $scope.product = productResource.getById({id:$scope.orderLine.productId});
     $scope.removeOrderLine = function(){
@@ -119,23 +103,25 @@ export class MyOrder{
     constructor(private $http : ng.IHttpService){
     }
     private post(path,postdata){
-        return this.$http.post("/api/myOrder/"+path,postdata);
+        return this.$http.post("/api/myOrder/"+path,postdata).then(res=>{
+            return res.data;
+        });
     };
     
     public addItem(saleInfo){
         return this.post("items",saleInfo);
     };
-    
-    public closeOrderByPhone(customerDetails){
-        return this.post("actions/closeOrderByPhone",customerDetails);
-    };
-    
+       
     public removeOrderLine(orderLineId){
         return this.$http.delete("/api/myOrder/lines/"+orderLineId).then(function(response){return response.data;});
     };      
     
     public getFullOrder(){
         return this.$http.get("api/myOrder").then(res=>res.data);
+    }
+    
+    public addCoupon(coupon :string){
+        return this.post("coupons",{coupon:coupon});
     }     
 }
 

@@ -4,4 +4,8 @@
 		"returnUrl" : "return=http://www.localhost.com:8080/#/afterPayPalSuccess"
 		,"cancelUrl" : "cancel_return=http://www.localhost.com:8080/#/afterPayPalCancel"	
 	}
+	,"coupon" : {
+		"name" : "PERFECTEVENT"
+		,"minOrder" : 150
+	}
 }

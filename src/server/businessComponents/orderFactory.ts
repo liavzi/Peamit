@@ -5,6 +5,7 @@ class OrderFactory{
 		Order.create({},(err,newOrder)=>{
 			if (err) return cb(err);
 			newOrder.status = orderSchema.OrderStatus.open;
+			newOrder.shipmentFee = 25;
 			cb(null,newOrder); 
 		});
 	}

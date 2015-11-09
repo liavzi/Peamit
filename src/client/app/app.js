@@ -58,7 +58,6 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
             state('payment.myOrder', {
                 url:"/myOrder",
                 templateUrl: 'Views/MyOrder.html',
-                controller: "MyOrderController"
             });
     }]);
 
