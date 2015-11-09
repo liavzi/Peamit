@@ -1,5 +1,6 @@
 var express = require("express");
 var users = require("../businessComponents/users");
+var contactCustomerRequestService = require("../services/ContactCustomerRequestService");
 var genericRouter = express.Router();
 var GenericService = require("../services/genericService");
 var orderService = require("../services/orderService");
@@ -8,7 +9,8 @@ var entityToService = {
     "products": new GenericService(require("../models/ProductModel")),
     "prices": new GenericService(require("../models/PriceModel")),
     "orders": orderService,
-    "tags": tagService
+    "tags": tagService,
+    "contactCustomerRequests": contactCustomerRequestService
 };
 function processRequest(req, res, next, actionName, params) {
     var entityService = entityToService[req.params.entityName];

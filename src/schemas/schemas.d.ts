@@ -3,6 +3,13 @@ declare module "schemas"{
 		_id :string;
 		imageUrl : string;
 	}
+	
+	export interface IContactCustomerRequest{
+		customerName : string;
+		customerPhone : string;
+		customerMail : string;
+		content : string;
+	}
 }
 
 

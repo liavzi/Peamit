@@ -34,7 +34,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
             state("contact",{
                 url:"/contact",
                 views:{
-                    "main-view" : {templateUrl: 'Views/Contact.html'}
+                    "main-view" : {templateUrl: 'Views/Contact.html',controller : "Contact as contact"}
                 }
             }).
             state("delivery",{

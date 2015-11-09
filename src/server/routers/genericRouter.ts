@@ -1,5 +1,6 @@
 import  express = require("express");
 import  users = require("../businessComponents/users");
+import contactCustomerRequestService = require("../services/ContactCustomerRequestService");
 var genericRouter = express.Router();
 var GenericService = require("../services/genericService");
 var orderService = require("../services/orderService");
@@ -9,7 +10,8 @@ var entityToService = {
     "products" :  new GenericService(require("../models/ProductModel")),
     "prices" : new GenericService(require("../models/PriceModel")),
     "orders" : orderService,
-    "tags" : tagService
+    "tags" : tagService,
+    "contactCustomerRequests" : contactCustomerRequestService
 };
 
 function processRequest(req,res,next,actionName,params) {

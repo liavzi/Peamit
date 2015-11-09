@@ -150,3 +150,22 @@ app.factory('OrderResource', ['$resource', function ($resource) {
             "getAll": {method:"GET",isArray:true}
         });
 } ]);
+
+
+class ContactController {
+    $inject = ["$http","$toastr"];
+    contactRequest;
+    
+    constructor(private $http : ng.IHttpService,private toastr : Toastr){
+        this.contactRequest = {};
+    }
+    
+    create(){
+        this.$http.post("/api/contactCustomerRequests",this.contactRequest).then(()=>{
+           this.toastr.success("בקשתך נשמרה.אנו ניצור קשר בהקדם");
+           this.contactRequest = {}; 
+        });
+    }
+}
+
+app.controller("Contact",ContactController)

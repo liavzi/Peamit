@@ -140,4 +140,21 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                 "getAll": { method: "GET", isArray: true }
             });
         }]);
+    var ContactController = (function () {
+        function ContactController($http, toastr) {
+            this.$http = $http;
+            this.toastr = toastr;
+            this.$inject = ["$http", "$toastr"];
+            this.contactRequest = {};
+        }
+        ContactController.prototype.create = function () {
+            var _this = this;
+            this.$http.post("/api/contactCustomerRequests", this.contactRequest).then(function () {
+                _this.toastr.success("בקשתך נשמרה.אנו ניצור קשר בהקדם");
+                _this.contactRequest = {};
+            });
+        };
+        return ContactController;
+    })();
+    exports.app.controller("Contact", ContactController);
 });
