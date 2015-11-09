@@ -71,8 +71,10 @@ app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/Views/managementLogin.html' }));
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080; // set our port
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+app.set('port', port);
+app.set('ip', server_ip_address);
 registerRoutes(express, app);
 // START THE SERVER
 // =============================================================================
-app.listen(port, server_ip_address);
+app.listen(app.get('port'), app.get('ip'));
 console.log('Magic happens on port ' + port);
