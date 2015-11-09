@@ -1,8 +1,0 @@
-.row
-   select(ng-model="payment.paymentMethod")
-      option(value="1") מסירת פרטי אשראי בטלפון
-      option(value="2") paypal
-.row
-   button(ng-click="payment.closeByPhone()" ng-if="payment.paymentMethod ==='1'") בצע הזמנה
-  span(ng-if="payment.paymentMethod ==='2'" ng-bind-html="paymentMethod.paypalButton")
-   

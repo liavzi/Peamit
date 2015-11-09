@@ -4,7 +4,6 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
     ,"../order/order-module"
     ,"../order/order-directive"
     ,"../order/payment-controller"
-    ,"../order/paymentMethodController"
     ,"jQuery","underscore","toastr"
     ,"../Infra/infra-module","ngAnimate",
     "ui.router"
@@ -50,6 +49,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                 }
             }).
             state("payment",{
+                abstract : true,
                 url:"/payment",
                 views:{
                     "main-view" : {templateUrl: 'Views/Payment.html',controller : "payment as payment"}
@@ -59,16 +59,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                 url:"/myOrder",
                 templateUrl: 'Views/MyOrder.html',
                 controller: "MyOrderController"
-            }).
-            state("payment.customerDetails",{
-                url:"/customerDetails",
-                templateUrl : "Views/CustomerDetails.html"
-            }).
-            state("payment.paymentMethod",{
-                url:"/paymentMethod",
-                templateUrl : "Views/PaymentMethod.html"
-                ,controller : "paymentMethod as paymentMethod"
-            });;
+            });
     }]);
 
     $(function(){
