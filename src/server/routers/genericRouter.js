@@ -1,6 +1,6 @@
 var express = require("express");
 var users = require("../businessComponents/users");
-var contactCustomerRequestService = require("../services/ContactCustomerRequestService");
+var contactCustomerRequestService = require("../services/contactCustomerRequestService");
 var genericRouter = express.Router();
 var GenericService = require("../services/genericService");
 var orderService = require("../services/orderService");
