@@ -11,6 +11,7 @@ var contactRequestSchema = new mongoose.Schema({
         },
         required: true
     },
-    content: { type: String, required: true }
+    content: { type: String, required: true },
+    submittedDate: { type: Date, default: Date.now }
 });
 exports.contactCustomerRequestModel = mongoose.model("ContactCustomerRequest", contactRequestSchema);

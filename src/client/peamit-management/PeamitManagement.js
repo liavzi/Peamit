@@ -42,7 +42,10 @@ require(["angular","ui.bootstrap"
             }).
             when("/ImageMaintenance",{
                 templateUrl: '/ManagementViews/ImageMaintenance.html'
-            });
+            }).
+            when("/ContactRequests",{
+                templateUrl: '/ManagementViews/ContactRequests.html'
+            });;
     }]);
 
     $(function(){

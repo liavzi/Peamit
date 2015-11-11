@@ -1,20 +1,6 @@
 <div ng-controller="orderMaintenance as om">
-    <hy-order order-model="om"></hy-order>
-    <div class="form-group">
-        <label for="nameInput" class="control-label">שם מלא:</label>
-        <input readonly ng-model="om.order.customerDetails.fullName" type="text" class="form-control" id="nameInput" placeholder="שם מלא">
-    </div>
-    <div class="form-group">
-        <label for="addressInput" class="control-label">כתובת:</label>
-        <input readonly ng-model="om.order.customerDetails.address" type="text" class="form-control" id="addressInput" placeholder="כתובת">
-    </div>
-    <div class="form-group">
-        <label for="phoneInput" class="control-label">טלפון\פלאפון:</label>
-        <input readonly ng-model="om.order.customerDetails.phoneNumber" type="text" class="form-control" id="phoneInput" placeholder="טלפון\פלאפון">
-    </div>
-    <div class="form-group">
-        <label for="emailInput" class="control-label">אימייל:</label>
-        <input readonly ng-model="om.order.customerDetails.email" type="email" class="form-control" id="emailInput" placeholder="אימייל">
-    </div>
-    {{om.order.paymentInformation | json}}
+    <hy-order order-model="om"></hy-order>  
+    <pre dir="ltr">
+        {{om.order.paymentInformation | json}}
+    </pre>
 </div>

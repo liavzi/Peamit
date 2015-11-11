@@ -9,6 +9,7 @@ declare module "schemas"{
 		customerPhone : string;
 		customerMail : string;
 		content : string;
+		submittedDate : Date;
 	}
 }
 

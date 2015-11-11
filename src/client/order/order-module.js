@@ -39,6 +39,10 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                     {
                         field: "status",
                         displayName: "סטטוס"
+                    },
+                    {
+                        field: "paidDate",
+                        displayName: "תאריך תשלום"
                     }
                 ]
             };
@@ -128,20 +132,43 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
             });
         }]);
     var ContactController = (function () {
-        function ContactController($http, toastr) {
-            this.$http = $http;
+        function ContactController(toastr, resource) {
             this.toastr = toastr;
-            this.$inject = ["$http", "$toastr"];
+            this.resource = resource;
             this.contactRequest = {};
         }
         ContactController.prototype.create = function () {
             var _this = this;
-            this.$http.post("/api/contactCustomerRequests", this.contactRequest).then(function () {
+            this.resource.create(this.contactRequest).$promise.then(function () {
                 _this.toastr.success("בקשתך נשמרה.אנו ניצור קשר בהקדם");
                 _this.contactRequest = {};
             });
         };
+        ContactController.$inject = ["toastr", "ContactCustomerRequestsResource"];
         return ContactController;
     })();
     exports.app.controller("Contact", ContactController);
+    exports.app.factory('ContactCustomerRequestsResource', ['$resource', function ($resource) {
+            return $resource('/api/contactCustomerRequests/:id', { id: '@_id' }, {
+                'create': { method: 'POST' },
+                "getAll": { method: "GET", isArray: true }
+            });
+        }]);
+    var ContactRequests = (function () {
+        function ContactRequests(toastr, resource) {
+            this.toastr = toastr;
+            this.resource = resource;
+            this.requests = this.resource.getAll();
+        }
+        ContactRequests.prototype.delete = function () {
+            var _this = this;
+            this.resource.delete({ id: this.selectedRequest._id }).$promise.then(function () {
+                _this.toastr.success("נמחק");
+                _this.requests = _this.resource.getAll();
+            });
+        };
+        ContactRequests.$inject = ["toastr", "ContactCustomerRequestsResource"];
+        return ContactRequests;
+    })();
+    exports.app.controller("ContactRequests", ContactRequests);
 });

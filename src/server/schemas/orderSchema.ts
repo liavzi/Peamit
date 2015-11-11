@@ -22,6 +22,7 @@ export interface IOrder extends mongoose.Document{
     total : number;
     paymentInformation : any;
     shipmentFee : number;
+    paidDate : Date;
 }
 
 
@@ -37,6 +38,7 @@ export var orderSchema   = new Schema({
     },
     status : {type:Number,min:OrderStatus.open,max:OrderStatus.paid}
     ,paymentInformation : {}
+    ,paidDate : Date
     ,shipmentFee : {type : Number,min:0}
 });
 
@@ -78,6 +80,7 @@ orderSchema.method("markAsPaid",function(paymentInformation,cb :Function = ()=>{
     order.paymentInformation = paymentInformation;
     order.markModified("paymentInformation");
     order.status = OrderStatus.paid;
+    order.paidDate = new Date();
     cb(null);
 });
 

@@ -20,6 +20,7 @@ exports.orderSchema = new Schema({
     },
     status: { type: Number, min: 0 /* open */, max: 1 /* paid */ },
     paymentInformation: {},
+    paidDate: Date,
     shipmentFee: { type: Number, min: 0 }
 });
 exports.orderSchema.virtual("total").get(function () {
@@ -57,6 +58,7 @@ exports.orderSchema.method("markAsPaid", function (paymentInformation, cb) {
     order.paymentInformation = paymentInformation;
     order.markModified("paymentInformation");
     order.status = 1 /* paid */;
+    order.paidDate = new Date();
     cb(null);
 });
 exports.orderSchema.set("toJSON", { getters: true });

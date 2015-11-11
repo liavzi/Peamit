@@ -13,6 +13,7 @@ let contactRequestSchema = new mongoose.Schema({
 		,required : true 
 	}
 	,content : {type:String,required : true}
+	,submittedDate : {type :Date ,default : Date.now}
 });
 
 export interface IContactCustomerRequest extends mongoose.Document,schemas.IContactCustomerRequest{	

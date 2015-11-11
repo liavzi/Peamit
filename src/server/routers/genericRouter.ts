@@ -1,6 +1,5 @@
 import  express = require("express");
 import  users = require("../businessComponents/users");
-import contactCustomerRequestService = require("../services/contactCustomerRequestService");
 var genericRouter = express.Router();
 var GenericService = require("../services/genericService");
 var orderService = require("../services/orderService");
@@ -11,7 +10,6 @@ var entityToService = {
     "prices" : new GenericService(require("../models/PriceModel")),
     "orders" : orderService,
     "tags" : tagService,
-    "contactCustomerRequests" : contactCustomerRequestService
 };
 
 function processRequest(req,res,next,actionName,params) {
@@ -34,11 +32,21 @@ genericRouter.route("/:entityName")
         processRequest(req,res,next,"create",req.body);
     })
     .get(function(req,res,next){
+        if (req.params.entityName ==="orders"){
+            return users.ensureAdmin(req,res,()=>{
+                processRequest(req,res,next,"getAll",req.query);          
+            })
+        }
         processRequest(req,res,next,"getAll",req.query);
     });
 
 genericRouter.route("/:entityName/:entityId")
     .get(function (req,res,next){
+        if (req.params.entityName ==="orders"){
+            return users.ensureAdmin(req,res,()=>{
+                processRequest(req,res,next,"getById",req.params.entityId);
+            })
+        }
         processRequest(req,res,next,"getById",req.params.entityId);
     })
     .put(users.ensureAdmin,function(req,res,next){

@@ -43,6 +43,10 @@ app.controller("closedOrdersController", ["$scope","$location","OrderResource","
             {
                 field : "status",
                 displayName : "סטטוס"
+            },
+            {
+                field : "paidDate",
+                displayName : "תאריך תשלום"
             }
         ]
     };
@@ -139,15 +143,15 @@ app.factory('OrderResource', ['$resource', function ($resource) {
 
 
 class ContactController {
-    $inject = ["$http","$toastr"];
+    static $inject = ["toastr","ContactCustomerRequestsResource"];
     contactRequest;
     
-    constructor(private $http : ng.IHttpService,private toastr : Toastr){
+    constructor(private toastr : Toastr,private resource){
         this.contactRequest = {};
     }
     
     create(){
-        this.$http.post("/api/contactCustomerRequests",this.contactRequest).then(()=>{
+        this.resource.create(this.contactRequest).$promise.then(()=>{
            this.toastr.success("בקשתך נשמרה.אנו ניצור קשר בהקדם");
            this.contactRequest = {}; 
         });
@@ -155,3 +159,33 @@ class ContactController {
 }
 
 app.controller("Contact",ContactController)
+
+app.factory('ContactCustomerRequestsResource', ['$resource', function ($resource) {
+    return $resource('/api/contactCustomerRequests/:id', {id : '@_id'},
+        {
+            'create': { method: 'POST'},
+            "getAll": {method:"GET",isArray:true}
+        });
+} ]);
+
+class ContactRequests{
+    static $inject = ["toastr","ContactCustomerRequestsResource"];
+    requests : any[];
+    selectedRequest :any;
+    constructor(private toastr : Toastr,private resource){
+        this.requests = this.resource.getAll();
+    }
+    
+    delete(){
+        this.resource.delete({id:this.selectedRequest._id}).$promise.then(()=>{
+            this.toastr.success("נמחק")
+            this.requests = this.resource.getAll();
+        });
+    }
+}
+
+
+
+
+
+app.controller("ContactRequests",ContactRequests)

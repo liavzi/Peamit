@@ -8,6 +8,7 @@ import orderSchema = require("../schemas/orderSchema");
 import validationErrorHandler = require("./validationErrorHandler");
 import imagesRouter = require("./imagesRouter");
 import txnRouter = require("./txnRouter");
+import contactCustomerRequest = require("./contactCustomerRequest");
 function registerRouters (express,app){
     var apiRouter = express.Router();
     apiRouter.use(productForSellingRouter);
@@ -15,6 +16,7 @@ function registerRouters (express,app){
     apiRouter.use(imagesRouter);
     apiRouter.use("/myOrder",loadOrder);
     apiRouter.use("/myOrder",orderRouter);
+    apiRouter.use(contactCustomerRequest);
     apiRouter.use(genericRouter);
     apiRouter.use(validationErrorHandler);
     app.use("/api",apiRouter);
