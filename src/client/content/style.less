@@ -64,16 +64,32 @@ body {
 }
 
 .product-tag {
+  height: 250px;
   cursor: pointer;
-  padding-bottom: 0px;
   img{
-    height: 150px;
+    height: 70%;
   }
   .caption{
-    padding-bottom: 0px;
+    vertical-align: top;
+    height: 30%;
   }
   border: solid lightblue;
+}
 
+.group-tag{
+  .product-tag{
+    height: 200px;
+    img{
+      height: 65%;
+    }
+    .caption{
+      vertical-align: top;
+      height: 20%;
+    }
+  }
+  .tag-name{
+    margin: 0 !important;    
+  }
 }
 
 .navbar{
@@ -184,4 +200,8 @@ body {
 
 .line-through{
   text-decoration: line-through
+}
+
+.no-padding{
+  padding: 0 !important;
 }

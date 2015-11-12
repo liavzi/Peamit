@@ -58,6 +58,12 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
             state('payment.myOrder', {
                 url:"/myOrder",
                 templateUrl: 'Views/MyOrder.html',
+            }). 
+            state('afterPayPalSuccess', {
+                url:"/afterPayPalSuccess",
+                views:{
+                    "main-view" : {templateUrl: 'Views/AfterPayPalSuccess.html'}
+                }  
             });
     }]);
 

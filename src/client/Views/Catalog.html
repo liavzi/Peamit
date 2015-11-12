@@ -1,26 +1,26 @@
 ﻿<div class="row">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-10">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <div class="h3 bold product-tags-title">בחר לפי סוג מוצר:</div>
             </div>
         </div>
         <div class="row">
-            <div ng-repeat="groupTag in groupTags" class="catalog-tag">
-                <div class="col-xs-4">
+            <div ng-repeat="groupTag in groupTags" class="catalog-tag group-tag">
+                <div class="col-md-2">
                     <div product-tag tag="groupTag"></div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <div class="h3 bold product-tags-title">בחר לפי אירוע:</div>
             </div>
         </div>
         <div class="row">
-            <div ng-repeat="occasionTag in occasionTags" class="catalog-tag">
-                <div class="col-xs-4">
+            <div ng-repeat="occasionTag in occasionTags" class="catalog-tag occasion-tag">
+                <div class="col-md-3">
                     <div product-tag tag="occasionTag"></div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
 
     </div>
 
-    <div class="col-xs-1"></div>
+    <div class="col-md-1"></div>
 </div>
 
 

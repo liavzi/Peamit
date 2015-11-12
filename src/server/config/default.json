@@ -1,8 +1,8 @@
 {
 	"test": "defualtTestValue"
 	,"paypal":{
-		"returnUrl" : "return=http://www.localhost.com:8080/#/afterPayPalSuccess"
-		,"cancelUrl" : "cancel_return=http://www.localhost.com:8080/#/afterPayPalCancel"	
+		"returnUrl" : "return=localhost:8080/#/afterPayPalSuccess"
+		,"cancelUrl" : "cancel_return=localhost:8080/#/myOrder"	
 	}
 	,"coupon" : {
 		"name" : "PERFECTEVENT"
