@@ -40,18 +40,6 @@ exports.orderSchema.method("addOrderLine", function (orderLineToAdd) {
 exports.orderSchema.method("removeLineById", function (orderLineId) {
     this.orderLines.id(orderLineId).remove();
 });
-exports.orderSchema.static("strictFindById", function (orderId, callback) {
-    this.findById(orderId, function (err, order) {
-        if (err)
-            return callback(err);
-        if (!order) {
-            var error = new Error("order with id " + orderId + "does not exists");
-            error.name = "OrderNotExists";
-            return callback(error);
-        }
-        callback(null, order);
-    });
-});
 exports.orderSchema.method("markAsPaid", function (paymentInformation, cb) {
     if (cb === void 0) { cb = function () { }; }
     var order = this;

@@ -22,10 +22,10 @@ function registerRouters(express, app) {
 function loadOrder(req, res, next) {
     if (req.path.indexOf("items") !== -1 && !req.session.orderId)
         return next();
-    Order.strictFindById(req.session.orderId, function (err, order) {
+    Order.findById(req.session.orderId, function (err, order) {
         if (err)
             return next(err);
-        if (order.status === 1 /* paid */) {
+        if (!order || order.status === 1 /* paid */) {
             req.session.orderId = null;
         }
         else

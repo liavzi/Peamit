@@ -62,19 +62,6 @@ orderSchema.method("removeLineById",function(orderLineId){
     this.orderLines.id(orderLineId).remove();
 });
 
-
-orderSchema.static("strictFindById",function(orderId,callback){
-    this.findById(orderId,function(err,order) {
-        if (err) return callback(err);
-        if (!order){
-            var error = new Error("order with id " + orderId + "does not exists");
-            error.name = "OrderNotExists";
-            return callback(error);
-        }
-        callback(null,order);
-    });
-});
-
 orderSchema.method("markAsPaid",function(paymentInformation,cb :Function = ()=>{} ){
     let order = <IOrder> this;
     order.paymentInformation = paymentInformation;

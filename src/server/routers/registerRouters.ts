@@ -34,9 +34,9 @@ export interface OrderActionRequest extends RequestWithSession{
 function loadOrder(req : OrderActionRequest,res,next){
     if (req.path.indexOf("items")!==-1 && !req.session.orderId)
         return next();
-    Order.strictFindById(req.session.orderId, function (err,order) {
+    Order.findById(req.session.orderId, function (err,order) {
         if (err) return next(err);
-        if (order.status === orderSchema.OrderStatus.paid){
+        if (!order || order.status === orderSchema.OrderStatus.paid){
             req.session.orderId = null;
         }
         else
