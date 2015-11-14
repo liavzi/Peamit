@@ -1,5 +1,5 @@
 body {
-  background-color: beige;
+  background-color: lightgray;
   color: #333;
   font-family: "Roboto", Arial, sans-serif;
   font-size: large;
@@ -126,7 +126,10 @@ body {
   background-color: #bbffbb;
   display: inline-block;
 }
-.sub-menu a {
+.sub-menu li {
+  margin: 10px;
+}
+.sub-menu li a {
   cursor: pointer;
 }
 .navbar {
@@ -192,4 +195,10 @@ body {
 .delivery-img {
   width: 20%;
   margin: auto;
+}
+.bottom-nav {
+  margin-top: 50px;
+}
+.form-horizontal .control-label {
+  text-align: right !important;
 }
