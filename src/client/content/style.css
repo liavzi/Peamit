@@ -62,7 +62,6 @@ body {
 .product-tag {
   height: 250px;
   cursor: pointer;
-  border: solid lightblue;
 }
 .product-tag img {
   height: 70%;
@@ -193,6 +192,7 @@ body {
   width: 100%;
 }
 .delivery-img {
+  float: left;
   width: 20%;
   margin: auto;
 }
