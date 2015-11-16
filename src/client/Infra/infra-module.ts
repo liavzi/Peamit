@@ -8,7 +8,9 @@ import IBusinessError = require("../../schemas/errors/IBusinessError");
 
 export var app = angular.module("infra",["ngResource"]);
 app.config(["$httpProvider",($httpProvider : ng.IHttpProvider)=>{
-    $httpProvider.interceptors.push("blockUiInterceptorFactory","validationErrorInterceptorFactory");
+    $httpProvider.interceptors.push("blockUiInterceptorFactory"
+    ,"validationErrorInterceptorFactory"
+    ,"noCacheInterceptorFactory");
 }])
 
 function validationErrorInterceptorFactory(toastr : Toastr,$q: ng.IQService) : ng.IHttpInterceptor{   
@@ -105,6 +107,22 @@ function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService,$q 
 }
 blockUiInterceptorFactory.$inject = ["$templateCache","$q"]
 app.factory("blockUiInterceptorFactory",blockUiInterceptorFactory);
+
+function noCacheInterceptorFactory() : ng.IHttpInterceptor{
+    return {
+        request: function (config) {
+            if(config.method=='GET' && !endsWith(config.url,".html")){
+                var separator = config.url.indexOf('?') === -1 ? '?' : '&';
+                config.url = config.url+separator+'noCache=' + new Date().getTime();
+            }
+            return config;
+        } 
+    };  
+    function endsWith  ( str, suffix ) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+}
+app.factory("noCacheInterceptorFactory",noCacheInterceptorFactory);
 
 app.factory("peamitResource",["$resource","toastr",function($resource,toastr :Toaster){
     function addSavedAlert(){

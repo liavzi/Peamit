@@ -1,7 +1,7 @@
 define(["require", "exports", "angular", "toastr"], function (require, exports, angular, toastr) {
     exports.app = angular.module("infra", ["ngResource"]);
     exports.app.config(["$httpProvider", function ($httpProvider) {
-            $httpProvider.interceptors.push("blockUiInterceptorFactory", "validationErrorInterceptorFactory");
+            $httpProvider.interceptors.push("blockUiInterceptorFactory", "validationErrorInterceptorFactory", "noCacheInterceptorFactory");
         }]);
     function validationErrorInterceptorFactory(toastr, $q) {
         function formatError(err) {
@@ -62,6 +62,21 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
     }
     blockUiInterceptorFactory.$inject = ["$templateCache", "$q"];
     exports.app.factory("blockUiInterceptorFactory", blockUiInterceptorFactory);
+    function noCacheInterceptorFactory() {
+        return {
+            request: function (config) {
+                if (config.method == 'GET' && !endsWith(config.url, ".html")) {
+                    var separator = config.url.indexOf('?') === -1 ? '?' : '&';
+                    config.url = config.url + separator + 'noCache=' + new Date().getTime();
+                }
+                return config;
+            }
+        };
+        function endsWith(str, suffix) {
+            return str.indexOf(suffix, str.length - suffix.length) !== -1;
+        }
+    }
+    exports.app.factory("noCacheInterceptorFactory", noCacheInterceptorFactory);
     exports.app.factory("peamitResource", ["$resource", "toastr", function ($resource, toastr) {
             function addSavedAlert() {
                 toastr.success("נשמר");
