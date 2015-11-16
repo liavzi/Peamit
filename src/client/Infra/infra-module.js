@@ -32,10 +32,20 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
     exports.app.factory("validationErrorInterceptorFactory", validationErrorInterceptorFactory);
     function blockUiInterceptorFactory($templateCache, $q) {
         var requestsCount = 0;
+        var options = {
+            message: "\n        <div class=''>\n            <svg width=\"80px\" height=\"80px\" viewBox=\"0 0 80 80\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\">\n                <defs>\n                    <style>\n                        .blue{\n                            fill: #0072cf;\n                        }\n            \n                    </style>\n                </defs>\n            \n                <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\">\n                    <g id=\"Group-3\" sketch:type=\"MSLayerGrosup\" fill=\"#4990E2\">\n                        <path class=\"blue\"\n                    id=\"spinner\" \n                    d=\"M40,72C22.4,72,8,57.6,8,40C8,22.4,\n                    22.4,8,40,8c17.6,0,32,14.4,32,32c0,1.1-0.9,2-2,2\n                    s-2-0.9-2-2c0-15.4-12.6-28-28-28S12,24.6,12,40s12.6,\n                    28,28,28c1.1,0,2,0.9,2,2S41.1,72,40,72z\"/>\n                    </g>\n                    <animateTransform\n                        attributeType=\"xml\"\n                        attributeName=\"transform\"\n                        type=\"rotate\"\n                        from=\"0 40 40\"\n                        to=\"360 40 40\"\n                        dur=\"0.8s\"\n                        repeatCount=\"indefinite\"\n                    />\n                </g>\n            </svg>\n        </div>",
+            css: {
+                border: "none",
+                backgroundColor: "none"
+            },
+            overlayCSS: {
+                backgroundColor: "transparent"
+            }
+        };
         return {
             request: function (config) {
                 if (requestsCount++ === 0)
-                    $.blockUI({ message: "אנא המתן" });
+                    $.blockUI(options);
                 return config;
             },
             response: function (response) {
