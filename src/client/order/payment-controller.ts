@@ -39,10 +39,19 @@ export class PaymentController{
         });
     }
     
+    pay(){
+        this.showPaymentOptions = true;
+        this.scrollToBottom();
+    }
+    
     createPaypalButton(){
         this.$http.get("/api/myOrder/paypalButton").then(result=>{
-            this.paypalButton = this.$sce.trustAsHtml(result.data);
+            this.paypalButton = this.$sce.trustAsHtml(result.data);          
         });
+    }
+    
+    private scrollToBottom(){
+        $('html, body').animate({scrollTop:$(document).height()}, 'slow');
     }
     
     addCoupon(){

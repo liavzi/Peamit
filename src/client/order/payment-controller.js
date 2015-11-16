@@ -27,11 +27,18 @@ define(["require", "exports", './order-module'], function (require, exports, ord
                 }
             });
         }
+        PaymentController.prototype.pay = function () {
+            this.showPaymentOptions = true;
+            this.scrollToBottom();
+        };
         PaymentController.prototype.createPaypalButton = function () {
             var _this = this;
             this.$http.get("/api/myOrder/paypalButton").then(function (result) {
                 _this.paypalButton = _this.$sce.trustAsHtml(result.data);
             });
+        };
+        PaymentController.prototype.scrollToBottom = function () {
+            $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
         };
         PaymentController.prototype.addCoupon = function () {
             var _this = this;

@@ -35,12 +35,6 @@ body {
   -ms-animation: bounceIn 0.75s ;
   animation: bounceIn 0.75s ;
 }
-.order-line.ng-leave {
-  -webkit-animation: bounceOut 0.75s ;
-  -moz-animation: bounceOut 0.75s ;
-  -ms-animation: bounceOut 0.75s ;
-  animation: bounceOut 0.75s ;
-}
 .customer-details.ng-hide-remove {
   -webkit-animation: fadeIn 0.75s ;
   -moz-animation: fadeIn 0.75s ;
@@ -201,4 +195,10 @@ body {
 }
 .form-horizontal .control-label {
   text-align: right !important;
+}
+.remove-order-line-icon {
+  cursor: pointer;
+}
+.product-price .fa-ils {
+  font-size: 0.7em;
 }
