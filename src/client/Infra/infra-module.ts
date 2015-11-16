@@ -39,12 +39,56 @@ function validationErrorInterceptorFactory(toastr : Toastr,$q: ng.IQService) : n
 validationErrorInterceptorFactory.$inject = ["toastr","$q"];
 app.factory("validationErrorInterceptorFactory",validationErrorInterceptorFactory)
 
+
 function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService,$q : ng.IQService) : ng.IHttpInterceptor{
     let requestsCount=0;
+    let options: JQBlockUIOptions = {
+        message: `
+        <div class=''>
+            <svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                <defs>
+                    <style>
+                        .blue{
+                            fill: #0072cf;
+                        }
+            
+                    </style>
+                </defs>
+            
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                    <g id="Group-3" sketch:type="MSLayerGrosup" fill="#4990E2">
+                        <path class="blue"
+                    id="spinner" 
+                    d="M40,72C22.4,72,8,57.6,8,40C8,22.4,
+                    22.4,8,40,8c17.6,0,32,14.4,32,32c0,1.1-0.9,2-2,2
+                    s-2-0.9-2-2c0-15.4-12.6-28-28-28S12,24.6,12,40s12.6,
+                    28,28,28c1.1,0,2,0.9,2,2S41.1,72,40,72z"/>
+                    </g>
+                    <animateTransform
+                        attributeType="xml"
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 40 40"
+                        to="360 40 40"
+                        dur="0.8s"
+                        repeatCount="indefinite"
+                    />
+                </g>
+            </svg>
+        </div>`
+        ,css: {
+            border: "none",
+            backgroundColor : "none"
+        },
+        overlayCSS: {
+            backgroundColor: "transparent"
+            
+        }          
+    };
     return {
         request : function(config){
             if(requestsCount++===0)
-                $.blockUI({message : "אנא המתן"})
+                $.blockUI(options)
             return config;
         },
         response: function(response){
