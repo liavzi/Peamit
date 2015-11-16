@@ -7,13 +7,23 @@ import IBusinessError = require("../../schemas/errors/IBusinessError");
 
 
 export var app = angular.module("infra",["ngResource"]);
-app.config(["$httpProvider",($httpProvider : ng.IHttpProvider)=>{
+app.config(["$httpProvider","$provide",($httpProvider : ng.IHttpProvider,$provide :ng.auto.IProvideService)=>{
     $httpProvider.interceptors.push("blockUiInterceptorFactory"
     ,"validationErrorInterceptorFactory"
     ,"noCacheInterceptorFactory");
+    
+
+ 
+    $provide.decorator("$exceptionHandler", ["$delegate","$injector",function($delegate,$injector : ng.auto.IInjectorService){
+        return function(exception, cause){
+            let toastr :Toaster = <Toaster> $injector.get("toastr");
+            toastr.error("אירעה שגיאה. אנא נסה שוב");
+            $delegate(exception, cause);
+        };
+    }]);
 }])
 
-function validationErrorInterceptorFactory(toastr : Toastr,$q: ng.IQService) : ng.IHttpInterceptor{   
+function validationErrorInterceptorFactory(toastr : Toastr,$q: ng.IQService,$exceptionHandler :ng.IExceptionHandlerService) : ng.IHttpInterceptor{   
     function formatError(err : IValidationError) : string{
         var msgs = [];
         Object.keys(err.errors).forEach(function(key) {
@@ -33,12 +43,16 @@ function validationErrorInterceptorFactory(toastr : Toastr,$q: ng.IQService) : n
                     toastr.error((<IBusinessError>error).message)
                 }
             }
+            else if(response.status===0 || response.status===500){
+                $exceptionHandler(new Error(`error when sending request to the server. status code ${response.status}`));
+            }
+            
             return $q.reject(response);
         }
 
     };
 }
-validationErrorInterceptorFactory.$inject = ["toastr","$q"];
+validationErrorInterceptorFactory.$inject = ["toastr","$q","$exceptionHandler"];
 app.factory("validationErrorInterceptorFactory",validationErrorInterceptorFactory)
 
 
@@ -206,3 +220,4 @@ app.filter('orFilter', function() {
     return out;
   };
 });
+

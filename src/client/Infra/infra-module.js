@@ -1,9 +1,16 @@
 define(["require", "exports", "angular", "toastr"], function (require, exports, angular, toastr) {
     exports.app = angular.module("infra", ["ngResource"]);
-    exports.app.config(["$httpProvider", function ($httpProvider) {
+    exports.app.config(["$httpProvider", "$provide", function ($httpProvider, $provide) {
             $httpProvider.interceptors.push("blockUiInterceptorFactory", "validationErrorInterceptorFactory", "noCacheInterceptorFactory");
+            $provide.decorator("$exceptionHandler", ["$delegate", "$injector", function ($delegate, $injector) {
+                    return function (exception, cause) {
+                        var toastr = $injector.get("toastr");
+                        toastr.error("אירעה שגיאה. אנא נסה שוב");
+                        $delegate(exception, cause);
+                    };
+                }]);
         }]);
-    function validationErrorInterceptorFactory(toastr, $q) {
+    function validationErrorInterceptorFactory(toastr, $q, $exceptionHandler) {
         function formatError(err) {
             var msgs = [];
             Object.keys(err.errors).forEach(function (key) {
@@ -24,11 +31,14 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
                         toastr.error(error.message);
                     }
                 }
+                else if (response.status === 0 || response.status === 500) {
+                    $exceptionHandler(new Error("error when sending request to the server. status code " + response.status));
+                }
                 return $q.reject(response);
             }
         };
     }
-    validationErrorInterceptorFactory.$inject = ["toastr", "$q"];
+    validationErrorInterceptorFactory.$inject = ["toastr", "$q", "$exceptionHandler"];
     exports.app.factory("validationErrorInterceptorFactory", validationErrorInterceptorFactory);
     function blockUiInterceptorFactory($templateCache, $q) {
         var requestsCount = 0;
