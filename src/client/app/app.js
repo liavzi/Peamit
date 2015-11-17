@@ -24,10 +24,17 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                     "main-view" : {templateUrl: 'Views/Catalog.html',controller: 'CatalogController'}
                 }
             }).
+            state('productsByTagBase', {
+                abstract : true,
+                views:{
+                    "main-view" : {templateUrl: 'Views/ProductByTag.html'}
+                }
+            }).
             state('productsByTag', {
+                parent : "productsByTagBase",
                 url:"/productsByTag/:tagId",
                 views:{
-                    "main-view" : {templateUrl: 'Views/ProductByTag.html',controller: 'ProductByTagController'}
+                    "products" : {templateUrl: 'Views/ProductByTagProducts.html',controller: 'ProductByTagController'}
                 }
             }).
             state("contact",{
