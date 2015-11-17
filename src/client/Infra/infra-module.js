@@ -72,10 +72,10 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
     }
     blockUiInterceptorFactory.$inject = ["$templateCache", "$q"];
     exports.app.factory("blockUiInterceptorFactory", blockUiInterceptorFactory);
-    function noCacheInterceptorFactory() {
+    function noCacheInterceptorFactory($templateCache) {
         return {
             request: function (config) {
-                if (config.method == 'GET' && !endsWith(config.url, ".html")) {
+                if (config.method == 'GET' && !endsWith(config.url, ".html") && !$templateCache.get(config.url)) {
                     var separator = config.url.indexOf('?') === -1 ? '?' : '&';
                     config.url = config.url + separator + 'noCache=' + new Date().getTime();
                 }
@@ -86,6 +86,7 @@ define(["require", "exports", "angular", "toastr"], function (require, exports, 
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         }
     }
+    noCacheInterceptorFactory.$inject = ["$templateCache"];
     exports.app.factory("noCacheInterceptorFactory", noCacheInterceptorFactory);
     exports.app.factory("peamitResource", ["$resource", "toastr", function ($resource, toastr) {
             function addSavedAlert() {

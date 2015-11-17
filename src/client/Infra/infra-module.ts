@@ -122,10 +122,10 @@ function blockUiInterceptorFactory($templateCache : ng.ITemplateCacheService,$q 
 blockUiInterceptorFactory.$inject = ["$templateCache","$q"]
 app.factory("blockUiInterceptorFactory",blockUiInterceptorFactory);
 
-function noCacheInterceptorFactory() : ng.IHttpInterceptor{
+function noCacheInterceptorFactory($templateCache : ng.ITemplateCacheService) : ng.IHttpInterceptor{
     return {
         request: function (config) {
-            if(config.method=='GET' && !endsWith(config.url,".html")){
+            if(config.method=='GET' && !endsWith(config.url,".html") && !$templateCache.get(config.url)){
                 var separator = config.url.indexOf('?') === -1 ? '?' : '&';
                 config.url = config.url+separator+'noCache=' + new Date().getTime();
             }
@@ -136,6 +136,7 @@ function noCacheInterceptorFactory() : ng.IHttpInterceptor{
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
 }
+noCacheInterceptorFactory.$inject =["$templateCache"];
 app.factory("noCacheInterceptorFactory",noCacheInterceptorFactory);
 
 app.factory("peamitResource",["$resource","toastr",function($resource,toastr :Toaster){
