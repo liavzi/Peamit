@@ -69,7 +69,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
             state('afterPayPalSuccess', {
                 url:"/afterPayPalSuccess",
                 views:{
-                    "main-view" : {templateUrl: 'Views/AfterPayPalSuccess.html'}
+                    "main-view" : {templateUrl: 'Views/afterPayPalSuccess.html'}
                 }  
             });
     }]);
