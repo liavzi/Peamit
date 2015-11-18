@@ -3,7 +3,7 @@ window.requireConfig={
         'jQuery': '//code.jquery.com/jquery-1.11.2.min',
         'underscore': 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min',
         "angular" : "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular",
-        "ngResource" :"http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource",
+        "ngResource" :"https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource",
         "selectize" : "../ScriptsLibs/selectize",
         "ui.bootstrap" : "..//ScriptsLibs/ui-bootstrap-tpls-0.11.0",
         "angular-route" : "..//ScriptsLibs/angular-route",
@@ -14,7 +14,7 @@ window.requireConfig={
         "ng-file-upload" :"https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.0.19/ng-file-upload"
         ,"blockUI" : "/ScriptsLibs/blockUI/jquery.blockUI"
         ,"ui.select" : "/ScriptsLibs/ui.select/ui.select"
-        ,"jquery.ui" : "http://cdn.jsdelivr.net/g/jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min"
+        ,"jquery.ui" : "https://cdn.jsdelivr.net/g/jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min"
         ,"ui.sortable" : "/ScriptsLibs/ui.sortable/ui.sortable"
     },
     shim: {

@@ -176,10 +176,11 @@ body {
   cursor: pointer;
   position: absolute;
   left: 0.5vw;
-  width: 11vw;
+  width: 124px;
   top: 125px;
   border: solid red;
-  height: 60vh;
+  border-width: 2px;
+  height: 200px;
 }
 .shipment-pic img {
   height: 100%;

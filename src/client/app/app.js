@@ -15,7 +15,7 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
             state('home',{
                 url : "/",
                 views:{
-                    "main-view" : {templateUrl: 'Views/MainPage.html'}
+                    "main-view" : {templateUrl: 'Views/Catalog.html',controller: 'CatalogController'}
                 }
             }).
             state('catalog', {
