@@ -1,16 +1,18 @@
+///<reference path="../../../typings/tsd.d.ts" />
 import express = require('express');
 import querystring = require('querystring');
 import request = require('request');
 import Order = require("../models/OrderModel");
 import orderShcema = require("../schemas/orderSchema");
+import config = require("config");
 let router = express.Router();
 
 
 router.route("/txn")
     .post(function(req, res){
-    console.log('Received POST /');
-    console.log(req.body);
-    console.log('\n\n');
+    // console.log('Received POST /');
+    // console.log(req.body);
+    // console.log('\n\n');
 
     // STEP 1: read POST data
     req.body = req.body || {};
@@ -27,11 +29,11 @@ router.route("/txn")
     }
 
     // Step 2: POST IPN data back to PayPal to validate
-    console.log('Posting back to paypal');
-    console.log(postreq);
-    console.log('\n\n');
+    // console.log('Posting back to paypal');
+    // console.log(postreq);
+    // console.log('\n\n');
     var options = {
-        url: 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+        url: config.get<string>("paypal.confirmUrl"),
         method: 'POST',
         headers: {
             'Connection': 'close'
@@ -49,12 +51,12 @@ router.route("/txn")
         // inspect IPN validation result and act accordingly
         if (body.substring(0, 8) === 'VERIFIED'){
             // The IPN is verified, process it
-            console.log('Verified IPN!');
-            console.log('\n\n');
+            // console.log('Verified IPN!');
+            // console.log('\n\n');
          
             //Lets check a variable
-            console.log("Checking variable");
-            console.log('\n\n');
+            // console.log("Checking variable");
+            // console.log('\n\n');
             let invoice = req.body["invoice"];
             Order.findById(invoice,(err,order)=>{
                 if (err || !order || order.status===orderShcema.OrderStatus.paid) return;

@@ -6,11 +6,11 @@ var config = require("config");
 var paypalButtonRouter = express.Router();
 paypalButtonRouter.get("/paypalButton", function (req, res, next) {
     request.post({
-        url: "https://api-3t.sandbox.paypal.com/nvp",
+        url: config.get("paypal.nvpApiUrl"),
         form: {
-            USER: "hermeny.one.time-facilitator_api1.gmail.com",
-            PWD: "UCR8LUJ9PM9TVJCQ",
-            SIGNATURE: "AFcWxV21C7fd0v3bYYYRCpSSRl31A4EARGvq3nRJnENEMMv1Xa0yzasr",
+            USER: config.get("paypal.user"),
+            PWD: config.get("paypal.password"),
+            SIGNATURE: config.get("paypal.signature"),
             VERSION: 124,
             METHOD: "BMCreateButton",
             BUTTONCODE: "ENCRYPTED",

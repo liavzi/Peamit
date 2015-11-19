@@ -7,11 +7,11 @@ import config = require("config");
 let paypalButtonRouter  = express.Router();
 paypalButtonRouter.get("/paypalButton",(req : R.OrderActionRequest,res :express.Response,next)=>{
 	request.post({
-		url: "https://api-3t.sandbox.paypal.com/nvp",
+		url: config.get<string>("paypal.nvpApiUrl"),
 		form : {
-			USER : "hermeny.one.time-facilitator_api1.gmail.com",
-			PWD : "UCR8LUJ9PM9TVJCQ",
-			SIGNATURE : "AFcWxV21C7fd0v3bYYYRCpSSRl31A4EARGvq3nRJnENEMMv1Xa0yzasr",
+			USER : config.get<string>("paypal.user"),
+			PWD : config.get<string>("paypal.password"),
+			SIGNATURE : config.get<string>("paypal.signature"),
 			VERSION : 124,
 			METHOD : "BMCreateButton",
 			BUTTONCODE : "ENCRYPTED",
