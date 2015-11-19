@@ -2,7 +2,7 @@
 	"test": "defualtTestValue"
 	,"paypal":{
 		"returnUrl" : "return=http://www.hermeny.co.il/#/afterPayPalSuccess"
-		,"cancelUrl" : "cancel_return=http://www.hermeny.co.il/#/myOrder"	
+		,"cancelUrl" : "cancel_return=http://www.hermeny.co.il/#/payment/myOrder"	
 	}
 	,"passport":{
 		"google":{
