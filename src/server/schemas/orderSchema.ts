@@ -11,8 +11,8 @@ var Schema       = mongoose.Schema;
 
 var orderLineSchema = new Schema({
     productId : Number,
-    quantity : Number,
-    totalPrice : Number
+    quantity : {type:Number,min:1},
+    totalPrice : {type:Number,min:0}
 });
 
 export const enum OrderStatus{
