@@ -8,4 +8,14 @@
 		"name" : "PERFECTEVENT"
 		,"minOrder" : 150
 	}
+	,"passport":{
+		"google":{
+			"clientID" : "182243328912-qgkbqvdkv3g81lr5sbuithf04jrcns24.apps.googleusercontent.com"
+			,"clientSecret" : "tmol5ZgFbBvSd81Zi682DZaK"
+			,"callbackURL" : "http://localhost:8080/auth/google/callback"
+		}				
+	}
+	,"session":{
+		"secret" : "keyboard cat"				
+	}
 }

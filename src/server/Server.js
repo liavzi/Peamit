@@ -15,19 +15,17 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var config = require("config");
 console.log(config.get("test"));
-var callbackURL = "http://localhost:8080/auth/google/callback";
 if (process.env.OPENSHIFT_MONGODB_DB_URL) {
     var mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + "node";
     mongoose.connect(mongodb_connection_string);
-    callbackURL = "http://node-hermeny.rhcloud.com/auth/google/callback";
 }
 else {
     mongoose.connect(databaseConfig.url);
 }
 passport.use(new GoogleStrategy({
-    clientID: "182243328912-qgkbqvdkv3g81lr5sbuithf04jrcns24.apps.googleusercontent.com",
-    clientSecret: "tmol5ZgFbBvSd81Zi682DZaK",
-    callbackURL: callbackURL
+    clientID: config.get("passport.google.clientID"),
+    clientSecret: config.get("passport.google.clientSecret"),
+    callbackURL: config.get("passport.google.callbackURL")
 }, function (accessToken, refreshToken, profile, done) {
     users.userRepository.getByGoogleProfileId(profile.id, function (err, user) {
         if (err)
@@ -38,7 +36,7 @@ passport.use(new GoogleStrategy({
     });
 }));
 app.use(session({
-    secret: 'keyboard cat',
+    secret: config.get("session.secret"),
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: mongoose.connection })

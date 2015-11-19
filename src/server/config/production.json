@@ -4,4 +4,9 @@
 		"returnUrl" : "return=http://www.hermeny.co.il/#/afterPayPalSuccess"
 		,"cancelUrl" : "cancel_return=http://www.hermeny.co.il/#/myOrder"	
 	}
+	,"passport":{
+		"google":{
+			"callbackURL" : "http://node-hermeny.rhcloud.com/auth/google/callback"
+		}				
+	}
 }
