@@ -5,6 +5,7 @@ define(["./order-module"],function(){
             restrict : "EA",
             scope : {
                 orderModel : "="
+                ,onOrderLineRemoved : "&"
             },
             templateUrl : "/Views/Order.html",
             link : function(scope,elem){

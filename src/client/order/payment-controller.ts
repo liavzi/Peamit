@@ -36,6 +36,9 @@ export class PaymentController{
            if (paymentMethod === "2" || paymentMethod === "1"){
                this.createPaypalButton();
            } 
+           else{
+               this.paypalButton = null;
+           }
         });
     }
     
@@ -59,6 +62,11 @@ export class PaymentController{
             this.$scope.orderModel.order = order;
             this.toastr.success("הקופון התקבל");
         })
+    }
+    
+    cancelPaymentSection(){
+        this.showPaymentOptions = false;
+        this.paymentMethod = "";
     }
 
 }

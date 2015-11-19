@@ -10,6 +10,7 @@ app.controller('OrderLineController', ['$scope', 'ProductResource',"myOrder",fun
     $scope.removeOrderLine = function(){
         myOrder.removeOrderLine($scope.orderLine._id).then(function(order){
             $scope.orderModel.order = order;
+            if ($scope.onOrderLineRemoved) $scope.onOrderLineRemoved();
         });
     };
 } ]);

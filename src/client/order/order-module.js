@@ -7,6 +7,8 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
             $scope.removeOrderLine = function () {
                 myOrder.removeOrderLine($scope.orderLine._id).then(function (order) {
                     $scope.orderModel.order = order;
+                    if ($scope.onOrderLineRemoved)
+                        $scope.onOrderLineRemoved();
                 });
             };
         }]);

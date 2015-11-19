@@ -25,6 +25,9 @@ define(["require", "exports", './order-module'], function (require, exports, ord
                 if (paymentMethod === "2" || paymentMethod === "1") {
                     _this.createPaypalButton();
                 }
+                else {
+                    _this.paypalButton = null;
+                }
             });
         }
         PaymentController.prototype.pay = function () {
@@ -46,6 +49,10 @@ define(["require", "exports", './order-module'], function (require, exports, ord
                 _this.$scope.orderModel.order = order;
                 _this.toastr.success("הקופון התקבל");
             });
+        };
+        PaymentController.prototype.cancelPaymentSection = function () {
+            this.showPaymentOptions = false;
+            this.paymentMethod = "";
         };
         PaymentController.$inject = ["$state", "myOrder", "toastr", "$scope", "$http", "$sce"];
         return PaymentController;
