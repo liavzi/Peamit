@@ -2,6 +2,10 @@
 import _ = require("underscore");
 import mongoose     = require('mongoose');
 import BusinessError  = require("../errors/BusinessError");
+import config = require("config");
+let couponName= config.get<string>("coupon.name");
+let minOrder = config.get("coupon.minOrder");
+let shipmentFee = <number>config.get("order.shipmentFee");
 var validator = require("validator");
 var Schema       = mongoose.Schema;
 
@@ -23,6 +27,9 @@ export interface IOrder extends mongoose.Document{
     paymentInformation : any;
     shipmentFee : number;
     paidDate : Date;
+    coupon : string;
+    addCoupon(coupon :string,cb : (err:Error,order?:IOrder)=>any);
+    calcRewards();
 }
 
 
@@ -40,6 +47,7 @@ export var orderSchema   = new Schema({
     ,paymentInformation : {}
     ,paidDate : Date
     ,shipmentFee : {type : Number,min:0}
+    ,coupon : String
 });
 
 orderSchema.virtual("total").get(function(){
@@ -48,18 +56,22 @@ orderSchema.virtual("total").get(function(){
 });
 
 orderSchema.method("addOrderLine",function(orderLineToAdd){
+    let order = <IOrder> this;
     var existingOrderLineWithSameProduct = _.find(this.orderLines,function(x :any){return x.productId===orderLineToAdd.productId;});
-    if (existingOrderLineWithSameProduct)
-    {
+    if (existingOrderLineWithSameProduct){
         existingOrderLineWithSameProduct.quantity+=orderLineToAdd.quantity;
         existingOrderLineWithSameProduct.totalPrice+=orderLineToAdd.totalPrice;
     }
-    else
-        this.orderLines.push(orderLineToAdd);
+    else{
+        this.orderLines.push(orderLineToAdd);        
+    }      
+    order.calcRewards();
 });
 
 orderSchema.method("removeLineById",function(orderLineId){
+    let order = <IOrder> this;
     this.orderLines.id(orderLineId).remove();
+    order.calcRewards();
 });
 
 orderSchema.method("markAsPaid",function(paymentInformation,cb :Function = ()=>{} ){
@@ -70,6 +82,25 @@ orderSchema.method("markAsPaid",function(paymentInformation,cb :Function = ()=>{
     order.paidDate = new Date();
     cb(null);
 });
+
+orderSchema.method("addCoupon",function(coupon:string,cb :(err:Error,order?:IOrder)=>any){    
+    let order = <IOrder> this;
+    if (coupon.trim().toLowerCase() !== couponName.trim().toLowerCase()) return cb(new BusinessError("קוד קופון אינו תקין"));
+    if (order.total<minOrder) return cb(new BusinessError(`מינימום הזמנה : ${minOrder}`));
+    order.coupon = coupon;
+    order.calcRewards();
+    cb(null,order);
+});
+
+orderSchema.method("calcRewards",function(){
+    let order = <IOrder> this;
+    if (!order.coupon) return;
+    if (order.total<minOrder)
+        order.shipmentFee = shipmentFee;
+    else
+        order.shipmentFee = 0;
+});
+
 
 orderSchema.set("toJSON",{getters:true});
 orderSchema.set("toObject",{getters:true});

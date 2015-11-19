@@ -18,4 +18,7 @@
 	,"session":{
 		"secret" : "keyboard cat"				
 	}
+	,"order":{
+		"shipmentFee" : 25
+	}
 }
