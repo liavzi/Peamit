@@ -223,3 +223,13 @@ body {
 .main-page-carousel .go-to-catalog .btn {
   font-size: 2em;
 }
+.main-page-carousel .carousel-control .glyphicon.glyphicon-chevron-right {
+  z-index: 101;
+  position: fixed;
+  right: 40px;
+}
+.main-page-carousel .carousel-control .glyphicon.glyphicon-chevron-left {
+  z-index: 101;
+  position: fixed;
+  left: 40px;
+}
