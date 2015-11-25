@@ -5,7 +5,7 @@ window.requireConfig={
         "angular" : "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular",
         "ngResource" :"https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource",
         "selectize" : "../ScriptsLibs/selectize",
-        "ui.bootstrap" : "..//ScriptsLibs/ui-bootstrap-tpls-0.11.0",
+        "ui.bootstrap" : "..//ScriptsLibs/ui-bootstrap-tpls-0.13.0",
         "angular-route" : "..//ScriptsLibs/angular-route",
         "ngAnimate" : "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate",
         "uiGrid" : "https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min",

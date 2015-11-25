@@ -250,3 +250,20 @@ body {
     display: flex;
     align-items: center;
 }
+
+.main-page-carousel{
+  position: absolute;
+  left: 0;
+  top:50px;
+  width:100%;
+  z-index: 100;
+  .go-to-catalog{
+    position: fixed;
+    z-index: 101;
+    bottom: 15vh;
+    left: calc(~"50vw - 106px");
+    .btn{
+      font-size: 2em;
+    }   
+  }
+}
