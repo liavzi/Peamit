@@ -97,19 +97,23 @@ app.controller('TagSideMenuController', ['TagResource',function (tagResource) {
 
 //Directives
 app.directive("productTag",["$state","ProductByTagDataModel",function($state,productByTagDataModel){
-  return {
+  let def : ng.IDirective = {
     restrict : "EA",
     scope : {
       tag : "="
     },
-    replace:true,
+    replace : true,
     templateUrl : "Views/ProductTag.html",
-    link : function ($scope){
-      $scope.chooseTag = function(){
-        $state.go("productsByTag",{tagId:$scope.tag._id});
-      };
-    }
+    compile : (elem,attr)=>{
+      if (attr["customClass"]) elem.addClass(attr["customClass"]);
+      return function ($scope){
+        $scope.chooseTag = function(){
+          $state.go("productsByTag",{tagId:$scope.tag._id});
+        };
+      };    
+    }  
   };
+  return def;
 }]);
 
 

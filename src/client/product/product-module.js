@@ -85,19 +85,24 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
         }]);
     //Directives
     app.directive("productTag", ["$state", "ProductByTagDataModel", function ($state, productByTagDataModel) {
-            return {
+            var def = {
                 restrict: "EA",
                 scope: {
                     tag: "="
                 },
                 replace: true,
                 templateUrl: "Views/ProductTag.html",
-                link: function ($scope) {
-                    $scope.chooseTag = function () {
-                        $state.go("productsByTag", { tagId: $scope.tag._id });
+                compile: function (elem, attr) {
+                    if (attr["customClass"])
+                        elem.addClass(attr["customClass"]);
+                    return function ($scope) {
+                        $scope.chooseTag = function () {
+                            $state.go("productsByTag", { tagId: $scope.tag._id });
+                        };
                     };
                 }
             };
+            return def;
         }]);
     //Services
     app.service("ProductByTagDataModel", function ProductByTagDataModel() { });
