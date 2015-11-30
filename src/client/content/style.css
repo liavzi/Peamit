@@ -246,3 +246,7 @@ body {
   position: fixed;
   left: 40px;
 }
+.catalog-carousel .carousel {
+  height: 400px !important;
+  overflow-y: hidden;
+}
