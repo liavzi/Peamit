@@ -8,7 +8,7 @@ require(["angular","ui.bootstrap"
     ,"jQuery","underscore"
     ,"../Infra/infra-module"
     ,"../Infra/imageMaintenanceController"
-    ,"ngAnimate","uiGrid","toastr","ng-file-upload",
+    ,"angular-animate","uiGrid","toastr","ng-file-upload",
     ,"ui.select"
     ,"blockUI"
     ,"jquery.ui"

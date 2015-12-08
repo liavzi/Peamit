@@ -5,10 +5,12 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
     ,"../order/order-directive"
     ,"../order/payment-controller"
     ,"jQuery","underscore","toastr"
-    ,"../Infra/infra-module","ngAnimate",
+    ,"../Infra/infra-module","angular-animate",
     "ui.router"
-    ,"blockUI"],function () {
-    var app = angular.module('Peamit', ['ui.bootstrap','ngResource',"order","product","infra","ngAnimate","ui.router"]);
+    ,"blockUI"
+    ,"angular-aria"
+    ,"angular-material"],function () {
+    var app = angular.module('Peamit', ['ui.bootstrap','ngResource',"order","product","infra","ngAnimate","ui.router","ngAria"]);
     app.config(['$stateProvider',"$urlRouterProvider",function ($stateProvider,$urlRouterProvider) {
         $urlRouterProvider.otherwise("/");
         $stateProvider.
