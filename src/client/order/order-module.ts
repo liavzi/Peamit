@@ -98,10 +98,32 @@ app.directive("productForSelling",["$modal","myOrder",function($modal,myOrder : 
                 scope.product.quantity = 0;
 
             };
+            scope.openDetails = function(){
+                var modalInstance = $modal.open({
+                    templateUrl:"Views/ProductDetailsModal.html",
+                    size:"lg",
+                    controller : ProductDetailsModalController,
+                    controllerAs:"details",
+                    resolve : {
+                        product : function(){return scope.product;}
+                    }
+                });
+                
+            };
         },
         windowClass  : "center-modal"
     };
 }]);
+
+class ProductDetailsModalController{
+    static $inject =["product"];
+    
+    constructor(public product){      
+    }
+    
+}
+
+
 
 export class MyOrder{
     static $inject = ["$http"];

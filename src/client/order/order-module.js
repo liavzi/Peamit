@@ -93,10 +93,28 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                         });
                         scope.product.quantity = 0;
                     };
+                    scope.openDetails = function () {
+                        var modalInstance = $modal.open({
+                            templateUrl: "Views/ProductDetailsModal.html",
+                            size: "lg",
+                            controller: ProductDetailsModalController,
+                            controllerAs: "details",
+                            resolve: {
+                                product: function () { return scope.product; }
+                            }
+                        });
+                    };
                 },
                 windowClass: "center-modal"
             };
         }]);
+    var ProductDetailsModalController = (function () {
+        function ProductDetailsModalController(product) {
+            this.product = product;
+        }
+        ProductDetailsModalController.$inject = ["product"];
+        return ProductDetailsModalController;
+    })();
     var MyOrder = (function () {
         function MyOrder($http) {
             this.$http = $http;

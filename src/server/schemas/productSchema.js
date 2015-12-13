@@ -10,7 +10,8 @@ var productSchema   = new Schema({
 		endDate : Date
 	}],
 	quantityInPkg : Number,
-	imageUrl : String
+	imageUrl : String,
+	description : String
 });
 
 module.exports = productSchema;
