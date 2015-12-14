@@ -107,6 +107,7 @@ app.directive("productForSelling",["$modal","myOrder",function($modal,myOrder : 
                     resolve : {
                         product : function(){return scope.product;}
                     }
+                    ,windowClass : "product-details-modal"
                 });
                 
             };
@@ -116,11 +117,26 @@ app.directive("productForSelling",["$modal","myOrder",function($modal,myOrder : 
 }]);
 
 class ProductDetailsModalController{
-    static $inject =["product"];
+    static $inject =["product","myOrder","$modalInstance"];
+    alerts : {msg:string}[] =[];
     
-    constructor(public product){      
+    constructor(public product,private myOrder : MyOrder,private $modalInstance:ng.ui.bootstrap.IModalServiceInstance){      
     }
     
+    addToCart(){
+        let saleInfo = {productId: this.product._id, quantity: this.product.quantity};
+        this.myOrder.addItem(saleInfo).then(()=>{
+            this.alerts.push({msg:"המוצר נוסף לסל"});
+        });
+    }
+    
+    closeAlert(index) {
+        this.alerts.splice(index, 1);
+    };    
+    
+    close(){
+       this.$modalInstance.dismiss(); 
+    }
 }
 
 
@@ -135,7 +151,7 @@ export class MyOrder{
         });
     };
     
-    public addItem(saleInfo){
+    public addItem(saleInfo : {productId:number,quantity:number}){
         return this.post("items",saleInfo);
     };
        

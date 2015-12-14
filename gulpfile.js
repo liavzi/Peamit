@@ -32,6 +32,10 @@ gulp.task('less', function () {
   gulp.watch(lessFile, function(){
     gulp.src(lessFile)
     .pipe(plugin.less())
+    .pipe(plugin.autoprefixer({
+			browsers: ['last 2 versions'],
+			cascade: false
+		}))
     .pipe(gulp.dest("src/client/"));
   });
 })

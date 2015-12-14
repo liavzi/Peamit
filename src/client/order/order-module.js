@@ -101,7 +101,8 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
                             controllerAs: "details",
                             resolve: {
                                 product: function () { return scope.product; }
-                            }
+                            },
+                            windowClass: "product-details-modal"
                         });
                     };
                 },
@@ -109,10 +110,27 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
             };
         }]);
     var ProductDetailsModalController = (function () {
-        function ProductDetailsModalController(product) {
+        function ProductDetailsModalController(product, myOrder, $modalInstance) {
             this.product = product;
+            this.myOrder = myOrder;
+            this.$modalInstance = $modalInstance;
+            this.alerts = [];
         }
-        ProductDetailsModalController.$inject = ["product"];
+        ProductDetailsModalController.prototype.addToCart = function () {
+            var _this = this;
+            var saleInfo = { productId: this.product._id, quantity: this.product.quantity };
+            this.myOrder.addItem(saleInfo).then(function () {
+                _this.alerts.push({ msg: "המוצר נוסף לסל" });
+            });
+        };
+        ProductDetailsModalController.prototype.closeAlert = function (index) {
+            this.alerts.splice(index, 1);
+        };
+        ;
+        ProductDetailsModalController.prototype.close = function () {
+            this.$modalInstance.dismiss();
+        };
+        ProductDetailsModalController.$inject = ["product", "myOrder", "$modalInstance"];
         return ProductDetailsModalController;
     })();
     var MyOrder = (function () {
