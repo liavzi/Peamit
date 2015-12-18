@@ -25,6 +25,10 @@
             <label class="control-label" for="productDescription">תיאור</label>
             <textarea  class="form-control" id="productDescription" type="text" name="productDescription" ng-model="product.description"/>
         </div>
+        <div class="form-group">
+            <label class="control-label" for="productMaxQuantityInOrder">מס' יחידות מקסימום בהזמנה</label>
+            <textarea  class="form-control" id="productMaxQuantityInOrder" type="numebr" name="productMaxQuantityInOrder" ng-model="product.maxQuantityInOrder"/>
+        </div>
 
         <input type="submit" ng-disabled="ProductMaintenanceForm.$invalid" class="btn btn-default" value="Submit" ng-click = "AddProduct()">
     </form>

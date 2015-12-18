@@ -11,7 +11,8 @@ var productSchema   = new Schema({
 	}],
 	quantityInPkg : Number,
 	imageUrl : String,
-	description : String
+	description : String,
+	maxQuantityInOrder : {type:Number,default:Number.MAX_VALUE}
 });
 
 module.exports = productSchema;

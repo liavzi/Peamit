@@ -8,6 +8,7 @@ var minOrder = config.get("coupon.minOrder");
 var shipmentFee = config.get("order.shipmentFee");
 var validator = require("validator");
 var Schema = mongoose.Schema;
+var Product = require("../models/ProductModel");
 var orderLineSchema = new Schema({
     productId: Number,
     quantity: { type: Number, min: 1 },
@@ -34,7 +35,7 @@ exports.orderSchema.virtual("total").get(function () {
         return memo + orderLine.totalPrice;
     }, 0);
 });
-exports.orderSchema.method("addOrderLine", function (orderLineToAdd) {
+exports.orderSchema.method("addOrderLine", function (orderLineToAdd, cb) {
     var order = this;
     var existingOrderLineWithSameProduct = _.find(this.orderLines, function (x) { return x.productId === orderLineToAdd.productId; });
     if (existingOrderLineWithSameProduct) {
@@ -44,7 +45,16 @@ exports.orderSchema.method("addOrderLine", function (orderLineToAdd) {
     else {
         this.orderLines.push(orderLineToAdd);
     }
-    order.calcRewards();
+    var orderLineToValidate = existingOrderLineWithSameProduct || orderLineToAdd;
+    Product.findById(orderLineToValidate.productId, function (err, product) {
+        if (err)
+            return cb(err);
+        if (orderLineToValidate.quantity > product.maxQuantityInOrder) {
+            return cb(new BusinessError("\u05DE\u05E7\u05E1\u05D9\u05DE\u05D5\u05DD \u05D9\u05D7\u05D9\u05D3\u05D5\u05EA \u05D1\u05D4\u05D6\u05DE\u05E0\u05D4 : " + product.maxQuantityInOrder));
+        }
+        order.calcRewards();
+        cb(null, order);
+    });
 });
 exports.orderSchema.method("removeLineById", function (orderLineId) {
     var order = this;

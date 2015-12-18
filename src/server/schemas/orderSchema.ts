@@ -8,6 +8,7 @@ let minOrder = config.get("coupon.minOrder");
 let shipmentFee = <number>config.get("order.shipmentFee");
 var validator = require("validator");
 var Schema       = mongoose.Schema;
+import Product = require("../models/ProductModel");
 
 var orderLineSchema = new Schema({
     productId : Number,
@@ -55,7 +56,7 @@ orderSchema.virtual("total").get(function(){
         return memo + orderLine.totalPrice;},0);
 });
 
-orderSchema.method("addOrderLine",function(orderLineToAdd){
+orderSchema.method("addOrderLine",function(orderLineToAdd,cb:Function){
     let order = <IOrder> this;
     var existingOrderLineWithSameProduct = _.find(this.orderLines,function(x :any){return x.productId===orderLineToAdd.productId;});
     if (existingOrderLineWithSameProduct){
@@ -64,8 +65,16 @@ orderSchema.method("addOrderLine",function(orderLineToAdd){
     }
     else{
         this.orderLines.push(orderLineToAdd);        
-    }      
-    order.calcRewards();
+    }  
+    let orderLineToValidate = existingOrderLineWithSameProduct || orderLineToAdd;
+    Product.findById(orderLineToValidate.productId,(err,product : any)=>{
+        if (err) return cb(err);
+        if (orderLineToValidate.quantity > product.maxQuantityInOrder){
+            return cb(new BusinessError(`מקסימום יחידות בהזמנה : ${product.maxQuantityInOrder}`));
+        }
+        order.calcRewards();
+        cb(null,order);
+    }); 
 });
 
 orderSchema.method("removeLineById",function(orderLineId){

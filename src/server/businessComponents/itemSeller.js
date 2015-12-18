@@ -10,8 +10,10 @@ itemSeller.sell = function(order,saleInfo,callback){
             orderLine.totalPrice = price.value * saleInfo.quantity;
             orderLine.quantity = saleInfo.quantity;
             orderLine.productId = saleInfo.productId;
-            order.addOrderLine(orderLine);
-            callback(null,order);
+            order.addOrderLine(orderLine,function(err){
+                if (err) return callback(err);
+                callback(null,order);
+            });        
         }
     });
 };
