@@ -7,11 +7,12 @@ var OrderFactory = (function () {
     function OrderFactory() {
     }
     OrderFactory.prototype.createNewOrder = function (cb) {
-        Order.create({}, function (err, newOrder) {
+        var newOrder = new Order();
+        newOrder.status = 0 /* open */;
+        newOrder.shipmentFee = shipmentFee;
+        newOrder.save(function (err, newOrder) {
             if (err)
                 return cb(err);
-            newOrder.status = 0 /* open */;
-            newOrder.shipmentFee = shipmentFee;
             cb(null, newOrder);
         });
     };
