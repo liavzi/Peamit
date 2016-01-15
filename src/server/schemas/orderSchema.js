@@ -82,8 +82,6 @@ exports.orderSchema.method("addCoupon", function (coupon, cb) {
 });
 exports.orderSchema.method("calcRewards", function () {
     var order = this;
-    if (!order.coupon)
-        return;
     if (order.total < minOrder)
         order.shipmentFee = shipmentFee;
     else

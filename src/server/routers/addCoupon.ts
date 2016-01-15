@@ -9,7 +9,6 @@ let couponName= config.get<string>("coupon.name");
 let minOrder = config.get("coupon.minOrder");
 addCoupon.route("/coupons")
     .post(function(req  : R.OrderActionRequest,res : express.Response,next){
-        //TODO : need to be in the order itself!
         let coupon :string = req.body.coupon;
         req.order.addCoupon(coupon,(err,order)=>{
             if (err) return next(err);

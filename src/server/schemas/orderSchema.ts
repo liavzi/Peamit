@@ -103,7 +103,6 @@ orderSchema.method("addCoupon",function(coupon:string,cb :(err:Error,order?:IOrd
 
 orderSchema.method("calcRewards",function(){
     let order = <IOrder> this;
-    if (!order.coupon) return;
     if (order.total<minOrder)
         order.shipmentFee = shipmentFee;
     else
