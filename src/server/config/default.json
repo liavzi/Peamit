@@ -11,7 +11,7 @@
 	}
 	,"coupon" : {
 		"name" : "PERFECTEVENT"
-		,"minOrder" : 150
+		,"minOrder" : 125
 	}
 	,"passport":{
 		"google":{
