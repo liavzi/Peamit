@@ -1,5 +1,5 @@
 body {
-  background-color: #cfe9f1;
+  background-color: white;
   color: #333;
   font-family: "Roboto", Arial, sans-serif;
   font-size: large;
@@ -156,7 +156,7 @@ body {
   cursor: pointer;
 }
 .navbar {
-  background-color: black;
+  background-color: cadetblue;
 }
 .navbar a {
   color: #ffffff;
