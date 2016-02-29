@@ -9,6 +9,7 @@ import validationErrorHandler = require("./validationErrorHandler");
 import imagesRouter = require("./imagesRouter");
 import txnRouter = require("./txnRouter");
 import contactCustomerRequest = require("./contactCustomerRequest");
+import clubRegistrationRouter = require("./clubRegistrationRouter");
 function registerRouters (express,app){
     var apiRouter = express.Router();
     apiRouter.use(productForSellingRouter);
@@ -17,6 +18,7 @@ function registerRouters (express,app){
     apiRouter.use("/myOrder",loadOrder);
     apiRouter.use("/myOrder",orderRouter);
     apiRouter.use(contactCustomerRequest);
+    apiRouter.use(clubRegistrationRouter);
     apiRouter.use(genericRouter);
     apiRouter.use(validationErrorHandler);
     app.use("/api",apiRouter);

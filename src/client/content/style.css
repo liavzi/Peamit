@@ -156,7 +156,7 @@ body {
   cursor: pointer;
 }
 .navbar {
-  background-color: cadetblue;
+  background-color: #589cc9;
 }
 .navbar a {
   color: #ffffff;
@@ -268,6 +268,10 @@ body {
   left: 40px;
 }
 .catalog-carousel .carousel {
-  height: 400px !important;
+  height: 365px !important;
   overflow-y: hidden;
+}
+.club-img {
+  height: 365px;
+  cursor: pointer;
 }

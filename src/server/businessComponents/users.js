@@ -12,6 +12,10 @@ var UserRepository = (function () {
             _id: 1,
             googleProfileId: "102414180728342095926",
             isAdmin: true
+        }, {
+            _id: 2,
+            googleProfileId: "100434891834213572734",
+            isAdmin: true
         }];
     return UserRepository;
 })();

@@ -45,7 +45,10 @@ require(["angular","ui.bootstrap"
             }).
             when("/ContactRequests",{
                 templateUrl: '/ManagementViews/ContactRequests.html'
-            });;
+            }).
+            when("/ClubRegistrations",{
+                templateUrl: '/ManagementViews/ClubRegistrations.html'
+            });
     }]);
 
     $(function(){

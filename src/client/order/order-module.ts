@@ -228,3 +228,47 @@ class ContactRequests{
 
 
 app.controller("ContactRequests",ContactRequests)
+
+app.factory('ClubRegistrationResource', ['$resource', function ($resource) {
+    return $resource('/api/club-registration/:id', {id : '@_id'},
+        {
+            'create': { method: 'POST'},
+            "getAll": {method:"GET",isArray:true}
+        });
+}]);
+
+class ClubRegistration{
+    static $inject = ["toastr","ClubRegistrationResource"];
+    request;
+    
+    constructor(private toastr : Toastr,private resource){
+        this.request = {};
+    }
+    
+    create(){
+        this.resource.create(this.request).$promise.then(()=>{
+           this.toastr.success("תודה שהצטרפת למועדון הלקוחות");
+           this.request = {}; 
+        });
+    }
+}
+
+app.controller("ClubRegistration",ClubRegistration)
+
+class ClubMaintenance{
+    static $inject = ["toastr","ClubRegistrationResource"];
+    requests : any[];
+    selectedRequest :any;
+    constructor(private toastr : Toastr,private resource){
+        this.requests = this.resource.getAll();
+    }
+    
+    delete(){
+        this.resource.delete({id:this.selectedRequest._id}).$promise.then(()=>{
+            this.toastr.success("נמחק")
+            this.requests = this.resource.getAll();
+        });
+    }
+}
+
+app.controller("ClubMaintenance",ClubMaintenance)

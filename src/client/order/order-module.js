@@ -209,4 +209,44 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
         return ContactRequests;
     })();
     exports.app.controller("ContactRequests", ContactRequests);
+    exports.app.factory('ClubRegistrationResource', ['$resource', function ($resource) {
+            return $resource('/api/club-registration/:id', { id: '@_id' }, {
+                'create': { method: 'POST' },
+                "getAll": { method: "GET", isArray: true }
+            });
+        }]);
+    var ClubRegistration = (function () {
+        function ClubRegistration(toastr, resource) {
+            this.toastr = toastr;
+            this.resource = resource;
+            this.request = {};
+        }
+        ClubRegistration.prototype.create = function () {
+            var _this = this;
+            this.resource.create(this.request).$promise.then(function () {
+                _this.toastr.success("תודה שהצטרפת למועדון הלקוחות");
+                _this.request = {};
+            });
+        };
+        ClubRegistration.$inject = ["toastr", "ClubRegistrationResource"];
+        return ClubRegistration;
+    })();
+    exports.app.controller("ClubRegistration", ClubRegistration);
+    var ClubMaintenance = (function () {
+        function ClubMaintenance(toastr, resource) {
+            this.toastr = toastr;
+            this.resource = resource;
+            this.requests = this.resource.getAll();
+        }
+        ClubMaintenance.prototype.delete = function () {
+            var _this = this;
+            this.resource.delete({ id: this.selectedRequest._id }).$promise.then(function () {
+                _this.toastr.success("נמחק");
+                _this.requests = _this.resource.getAll();
+            });
+        };
+        ClubMaintenance.$inject = ["toastr", "ClubRegistrationResource"];
+        return ClubMaintenance;
+    })();
+    exports.app.controller("ClubMaintenance", ClubMaintenance);
 });

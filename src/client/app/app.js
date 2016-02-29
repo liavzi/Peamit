@@ -71,6 +71,12 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                 views:{
                     "main-view" : {templateUrl: 'Views/afterPayPalSuccess.html'}
                 }  
+            }). 
+            state('club-registration', {
+                url:"/club-registration",
+                views:{
+                    "main-view" : {templateUrl: 'Views/ClubRegistration.html',controller : "ClubRegistration as club"}
+                }  
             });
     }]);
 
