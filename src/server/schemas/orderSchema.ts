@@ -23,7 +23,8 @@ export const enum OrderStatus{
 
 export interface IOrder extends mongoose.Document{
     status : OrderStatus;
-    markAsPaid(paymentInformation,cb?:(err:Error)=>any);
+    markAsPaid(paymentInformation,cb?:Function);
+    closeAsSelfPickup(selfPicupDetails,cb? :Function);
     total : number;
     paymentInformation : any;
     shipmentFee : number;
@@ -90,6 +91,12 @@ orderSchema.method("markAsPaid",function(paymentInformation,cb :Function = ()=>{
     order.status = OrderStatus.paid;
     order.paidDate = new Date();
     cb(null);
+});
+
+orderSchema.method("closeAsSelfPickup",function(selfPickupDetails,cb :Function){
+    let order = <IOrder> this;
+    order.shipmentFee = 0;
+    order.markAsPaid(selfPickupDetails,cb);
 });
 
 orderSchema.method("addCoupon",function(coupon:string,cb :(err:Error,order?:IOrder)=>any){    

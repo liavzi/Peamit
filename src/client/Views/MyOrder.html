@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-md-8">
-       <hy-order order-model="orderModel" on-order-line-removed="payment.cancelPaymentSection()"></hy-order>
+        <hy-order order-model="orderModel" on-order-line-removed="payment.cancelPaymentSection()"></hy-order>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">     
+    <div class="col-md-6">
         <div class="h2 bold underline">סיכום הזמנה:</div>
         <table class="table table-responsive">
             <tr>
@@ -19,47 +19,50 @@
                 <td>סה"כ לתשלום:</td>
                 <td>{{orderModel.order.total + orderModel.order.shipmentFee}}</td>
             </tr>
-        </table>   
+        </table>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12" >
+    <div class="col-md-12">
         <button ng-disabled="payment.showPaymentOptions===true" ng-click="payment.pay()" class="btn btn-primary">לתשלום</button>
         <div class="paypal-cards-logo-holder">
-            <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" alt="PayPal - הדרך הקלה והבטוחה לשלם באינטרנט!">               
+            <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" alt="PayPal - הדרך הקלה והבטוחה לשלם באינטרנט!">
         </div>
         <div class="paypal-logo-holder">
             <img src="https://www.paypalobjects.com/webstatic/en_US/logo/pp_cc_mark_111x69.png" alt="PayPal - הדרך הקלה והבטוחה לשלם באינטרנט!">
         </div>
     </div>
 </div>
-<div class="row" ng-if="payment.showPaymentOptions===true">
-    <div class="col-md-12">      
+<div class="row top-20" ng-if="payment.showPaymentOptions===true">
+    <div class="col-md-12">
         <div class="row">
-            <div class="col-md-12">    
+            <form class="form-inline">
                 <div class="form-group">
-                    <label for="emailInput" class="control-label">בחר אמצעי תשלום:</label>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <select class="form-control input-lg col-md-3" ng-model="payment.paymentMethod">
-                                <option value="" disabled selected>בחר אמצעי תשלום</option>
-                                <option value="1">כרטיס אשראי</option>
-                                <option value="2">PayPal</option>
-                            </select>   
-                        </div>
-                    </div>    
-                </div>                  
-            </div>
+                    <select class="form-control input-lg" ng-model="payment.paymentMethod">
+                        <option value="" disabled selected>בחר אמצעי תשלום</option>
+                        <option value="1">כרטיס אשראי</option>
+                        <option value="2">PayPal</option>
+                        <option value="3">איסוף עצמי מגבעת שמואל-תשלום במקום</option>
+                    </select>
+                </div>
+                <div class="form-group" ng-if="payment.paymentMethod ==='3'">
+                    <label class="control-label">שם:</label>
+                    <input class="form-control" ng-model="payment.selfPickupDetails.customerName">
+                </div>
+                <div class="form-group" ng-if="payment.paymentMethod ==='3'">
+                    <label class="control-label">מס טלפון:</label>
+                    <input class="form-control" type="tel" ng-model="payment.selfPickupDetails.customerPhone">
+                </div>
+            </form>
         </div>
-        <div class="row">
-            <div class="col-md-12">    
-                <p ng-if="payment.paymentMethod ==='1'">התשלום באמצעות כרטיס אשראי מתבצע ע"י אתר PayPal.<br>לאחר המעבר לאתר בחר באפשרות "שלם באמצעות כרטיס אשראי".</p>
-                <div style="margin-top:15px" ng-if="payment.paymentMethod ==='2' || payment.paymentMethod==='1'" ng-bind-html="payment.paypalButton"></div>
+        <div class="row top-20">
+            <div class="col-md-12">
+                <p class="top-20" ng-if="payment.paymentMethod ==='1'">התשלום באמצעות כרטיס אשראי מתבצע ע"י אתר PayPal.
+                    <br>לאחר המעבר לאתר בחר באפשרות "שלם באמצעות כרטיס אשראי".</p>
+                <p  ng-if="payment.paymentMethod ==='3'">כתובת לאיסוף עצמי: הנשיא 55 גבעת שמואל<br>נא לתאם מראש במספר 052-6680081</p>
+                <div class="top-20" ng-if="payment.paymentMethod ==='2' || payment.paymentMethod==='1'" ng-bind-html="payment.paypalButton"></div>
+                <button ng-click="payment.closeOrderAsSelfPickup()" ng-if="payment.paymentMethod ==='3'" class="btn btn-primary">לסיום ואישור הזמנה</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-

@@ -70,6 +70,11 @@ exports.orderSchema.method("markAsPaid", function (paymentInformation, cb) {
     order.paidDate = new Date();
     cb(null);
 });
+exports.orderSchema.method("closeAsSelfPickup", function (selfPickupDetails, cb) {
+    var order = this;
+    order.shipmentFee = 0;
+    order.markAsPaid(selfPickupDetails, cb);
+});
 exports.orderSchema.method("addCoupon", function (coupon, cb) {
     var order = this;
     if (coupon.trim().toLowerCase() !== couponName.trim().toLowerCase())

@@ -14,6 +14,7 @@ define(["require", "exports", './order-module'], function (require, exports, ord
             this.$scope = $scope;
             this.$http = $http;
             this.$sce = $sce;
+            this.selfPickupDetails = {};
             $scope.orderModel = { order: {} };
             $scope.orderModel.order = {};
             myOrder.getFullOrder().then(function (order) {
@@ -53,6 +54,12 @@ define(["require", "exports", './order-module'], function (require, exports, ord
         PaymentController.prototype.cancelPaymentSection = function () {
             this.showPaymentOptions = false;
             this.paymentMethod = "";
+        };
+        PaymentController.prototype.closeOrderAsSelfPickup = function () {
+            var _this = this;
+            this.$http.post("/api/myOrder/closeAsSelfPickup", this.selfPickupDetails).then(function (result) {
+                _this.$state.go("afterPayPalSuccess");
+            });
         };
         PaymentController.$inject = ["$state", "myOrder", "toastr", "$scope", "$http", "$sce"];
         return PaymentController;

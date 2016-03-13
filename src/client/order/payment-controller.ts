@@ -20,6 +20,7 @@ export class PaymentController{
     paypalButton : string;
     showPaymentOptions :boolean;
     coupon :string;
+    selfPickupDetails : any={};
 
     constructor(private $state : angular.ui.IStateService,private myOrder : orderModule.MyOrder,private toastr
     ,private $scope : IPaymentScope
@@ -67,6 +68,12 @@ export class PaymentController{
     cancelPaymentSection(){
         this.showPaymentOptions = false;
         this.paymentMethod = "";
+    }
+    
+    closeOrderAsSelfPickup(){
+        this.$http.post("/api/myOrder/closeAsSelfPickup",this.selfPickupDetails).then(result=>{
+            this.$state.go("afterPayPalSuccess");        
+        });
     }
 
 }

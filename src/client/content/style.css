@@ -275,3 +275,6 @@ body {
   height: 365px;
   cursor: pointer;
 }
+.top-20 {
+  margin-top: 20px;
+}

@@ -3,6 +3,7 @@ var addItemToOrderRouter = require("./addItemToOrderRouter");
 var orderLinesRouter = require("./orderLinesRouter");
 var addCoupon = require("./addCoupon");
 var paypalButtonRouter = require("./paypalButtonRouter");
+var closeOrderAsSelfPickup = require("./closeOrderAsSelfPickup");
 var express = require("express");
 var orderRouter = express.Router();
 orderRouter.get("/", function (req, res, next) {
@@ -13,4 +14,5 @@ orderRouter.use(addItemToOrderRouter);
 orderRouter.use(orderLinesRouter);
 orderRouter.use(paypalButtonRouter);
 orderRouter.use(addCoupon);
+orderRouter.use(closeOrderAsSelfPickup);
 module.exports = orderRouter;
