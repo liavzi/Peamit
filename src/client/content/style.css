@@ -278,3 +278,11 @@ body {
 .top-20 {
   margin-top: 20px;
 }
+.top-15 {
+  margin-top: 15px;
+}
+.catalog-top-box {
+  background: #f2c716;
+  color: white;
+  text-align: center;
+}
