@@ -5,6 +5,7 @@ import BusinessError  = require("../errors/BusinessError");
 import config = require("config");
 let couponName= config.get<string>("coupon.name");
 let minOrder = config.get("coupon.minOrder");
+let discountInPercent = config.get<number>("coupon.discountInPercent");
 let shipmentFee = <number>config.get("order.shipmentFee");
 var validator = require("validator");
 var Schema       = mongoose.Schema;
@@ -26,12 +27,14 @@ export interface IOrder extends mongoose.Document{
     markAsPaid(paymentInformation,cb?:Function);
     closeAsSelfPickup(selfPicupDetails,cb? :Function);
     total : number;
+    grossTotal : number;
     paymentInformation : any;
     shipmentFee : number;
     paidDate : Date;
     coupon : string;
     addCoupon(coupon :string,cb : (err:Error,order?:IOrder)=>any);
     calcRewards();
+    discount : number;
 }
 
 
@@ -50,9 +53,17 @@ export var orderSchema   = new Schema({
     ,paidDate : Date
     ,shipmentFee : {type : Number,min:0}
     ,coupon : String
+    ,discount : Number
 });
 
 orderSchema.virtual("total").get(function(){
+    let order  :IOrder = this;
+    let grossTotal = order.grossTotal;
+    let total =  grossTotal - (order.discount || 0);
+    return total;
+});
+
+orderSchema.virtual("grossTotal").get(function(){
     return _.reduce(this.orderLines, function(memo, orderLine :any){
         return memo + orderLine.totalPrice;},0);
 });
@@ -102,7 +113,6 @@ orderSchema.method("closeAsSelfPickup",function(selfPickupDetails,cb :Function){
 orderSchema.method("addCoupon",function(coupon:string,cb :(err:Error,order?:IOrder)=>any){    
     let order = <IOrder> this;
     if (coupon.trim().toLowerCase() !== couponName.trim().toLowerCase()) return cb(new BusinessError("קוד קופון אינו תקין"));
-    if (order.total<minOrder) return cb(new BusinessError(`מינימום הזמנה : ${minOrder}`));
     order.coupon = coupon;
     order.calcRewards();
     cb(null,order);
@@ -110,11 +120,27 @@ orderSchema.method("addCoupon",function(coupon:string,cb :(err:Error,order?:IOrd
 
 orderSchema.method("calcRewards",function(){
     let order = <IOrder> this;
-    if (order.total<minOrder)
-        order.shipmentFee = shipmentFee;
+    let grossTotal = order.grossTotal;
+    
+    if (order.coupon)
+        order.discount = calcDiscount(grossTotal);   
     else
+        order.discount = 0;
+    
+    if (grossTotal>minOrder)
         order.shipmentFee = 0;
+    else
+        order.shipmentFee = shipmentFee;
 });
+
+function calcDiscount(grossTotal : number){
+    let discount =  grossTotal*discountInPercent/100;
+    return roundToTwo(discount);
+}
+
+function roundToTwo(num : number) {    
+    return Number(Math.round(<any>(num+'e2'))+'e-2');
+}
 
 
 orderSchema.set("toJSON",{getters:true});

@@ -5,6 +5,7 @@ var BusinessError = require("../errors/BusinessError");
 var config = require("config");
 var couponName = config.get("coupon.name");
 var minOrder = config.get("coupon.minOrder");
+var discountInPercent = config.get("coupon.discountInPercent");
 var shipmentFee = config.get("order.shipmentFee");
 var validator = require("validator");
 var Schema = mongoose.Schema;
@@ -28,9 +29,16 @@ exports.orderSchema = new Schema({
     paymentInformation: {},
     paidDate: Date,
     shipmentFee: { type: Number, min: 0 },
-    coupon: String
+    coupon: String,
+    discount: Number
 });
 exports.orderSchema.virtual("total").get(function () {
+    var order = this;
+    var grossTotal = order.grossTotal;
+    var total = grossTotal - (order.discount || 0);
+    return total;
+});
+exports.orderSchema.virtual("grossTotal").get(function () {
     return _.reduce(this.orderLines, function (memo, orderLine) {
         return memo + orderLine.totalPrice;
     }, 0);
@@ -79,18 +87,28 @@ exports.orderSchema.method("addCoupon", function (coupon, cb) {
     var order = this;
     if (coupon.trim().toLowerCase() !== couponName.trim().toLowerCase())
         return cb(new BusinessError("קוד קופון אינו תקין"));
-    if (order.total < minOrder)
-        return cb(new BusinessError("\u05DE\u05D9\u05E0\u05D9\u05DE\u05D5\u05DD \u05D4\u05D6\u05DE\u05E0\u05D4 : " + minOrder));
     order.coupon = coupon;
     order.calcRewards();
     cb(null, order);
 });
 exports.orderSchema.method("calcRewards", function () {
     var order = this;
-    if (order.total < minOrder)
-        order.shipmentFee = shipmentFee;
+    var grossTotal = order.grossTotal;
+    if (order.coupon)
+        order.discount = calcDiscount(grossTotal);
     else
+        order.discount = 0;
+    if (grossTotal > minOrder)
         order.shipmentFee = 0;
+    else
+        order.shipmentFee = shipmentFee;
 });
+function calcDiscount(grossTotal) {
+    var discount = grossTotal * discountInPercent / 100;
+    return roundToTwo(discount);
+}
+function roundToTwo(num) {
+    return Number(Math.round((num + 'e2')) + 'e-2');
+}
 exports.orderSchema.set("toJSON", { getters: true });
 exports.orderSchema.set("toObject", { getters: true });

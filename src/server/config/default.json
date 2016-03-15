@@ -10,8 +10,9 @@
 		,"confirmUrl" : "https://www.sandbox.paypal.com/cgi-bin/webscr"
 	}
 	,"coupon" : {
-		"name" : "PERFECTEVENT"
+		"name" : "1010"
 		,"minOrder" : 125
+        ,"discountInPercent" : 10
 	}
 	,"passport":{
 		"google":{
