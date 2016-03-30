@@ -25,6 +25,6 @@
 		"secret" : "keyboard cat"				
 	}
 	,"order":{
-		"shipmentFee" : 25
+		"shipmentFee" : 0
 	}
 }

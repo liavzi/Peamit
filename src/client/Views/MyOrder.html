@@ -74,6 +74,7 @@
             <div class="col-md-12">
                 <p class="top-20" ng-if="payment.paymentMethod ==='1'">התשלום באמצעות כרטיס אשראי מתבצע ע"י אתר PayPal.
                     <br>לאחר המעבר לאתר בחר באפשרות "שלם באמצעות כרטיס אשראי".</p>
+                <p ng-if="payment.paymentMethod ==='2' || payment.paymentMethod==='1'">אנא השאירו מספר טלפון תחת הנחיות מיוחדות למוכר</p>
                 <p  ng-if="payment.paymentMethod ==='3'">כתובת לאיסוף עצמי: הנשיא 55 גבעת שמואל<br>נא לתאם מראש במספר 052-6680081</p>
                 <div class="top-20" ng-if="payment.paymentMethod ==='2' || payment.paymentMethod==='1'" ng-bind-html="payment.paypalButton"></div>
                 <button ng-click="payment.closeOrderAsSelfPickup()" ng-if="payment.paymentMethod ==='3'" class="btn btn-primary">לסיום ואישור הזמנה</button>
