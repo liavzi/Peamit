@@ -77,6 +77,12 @@ require(["angular","ui.bootstrap","ngResource","../product/product-module"
                 views:{
                     "main-view" : {templateUrl: 'Views/ClubRegistration.html',controller : "ClubRegistration as club"}
                 }  
+            }). 
+            state('mizrachi', {
+                url:"/mizrachi",
+                views:{
+                    "main-view" : {templateUrl: 'Views/Mizrachi.html'}
+                }  
             });
     }]);
 
