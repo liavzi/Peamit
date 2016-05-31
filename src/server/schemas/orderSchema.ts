@@ -3,7 +3,7 @@ import _ = require("underscore");
 import mongoose     = require('mongoose');
 import BusinessError  = require("../errors/BusinessError");
 import config = require("config");
-let couponName= config.get<string>("coupon.name");
+let couponNames = config.get<string[]>("coupon.names");
 let minOrder = config.get("coupon.minOrder");
 let discountInPercent = config.get<number>("coupon.discountInPercent");
 let shipmentFee = <number>config.get("order.shipmentFee");
@@ -112,7 +112,7 @@ orderSchema.method("closeAsSelfPickup",function(selfPickupDetails,cb :Function){
 
 orderSchema.method("addCoupon",function(coupon:string,cb :(err:Error,order?:IOrder)=>any){    
     let order = <IOrder> this;
-    if (coupon.trim().toLowerCase() !== couponName.trim().toLowerCase()) return cb(new BusinessError("קוד קופון אינו תקין"));
+    if (!coupon || couponNames.indexOf(coupon.trim().toLowerCase())===-1) return cb(new BusinessError("קוד קופון אינו תקין"));
     order.coupon = coupon;
     order.calcRewards();
     cb(null,order);

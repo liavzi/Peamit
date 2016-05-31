@@ -3,7 +3,7 @@ var _ = require("underscore");
 var mongoose = require('mongoose');
 var BusinessError = require("../errors/BusinessError");
 var config = require("config");
-var couponName = config.get("coupon.name");
+var couponNames = config.get("coupon.names");
 var minOrder = config.get("coupon.minOrder");
 var discountInPercent = config.get("coupon.discountInPercent");
 var shipmentFee = config.get("order.shipmentFee");
@@ -85,7 +85,7 @@ exports.orderSchema.method("closeAsSelfPickup", function (selfPickupDetails, cb)
 });
 exports.orderSchema.method("addCoupon", function (coupon, cb) {
     var order = this;
-    if (coupon.trim().toLowerCase() !== couponName.trim().toLowerCase())
+    if (!coupon || couponNames.indexOf(coupon.trim().toLowerCase()) === -1)
         return cb(new BusinessError("קוד קופון אינו תקין"));
     order.coupon = coupon;
     order.calcRewards();

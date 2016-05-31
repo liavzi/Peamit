@@ -10,7 +10,7 @@
 		,"confirmUrl" : "https://www.sandbox.paypal.com/cgi-bin/webscr"
 	}
 	,"coupon" : {
-		"name" : "1010"
+		"names" : ["1010","vaad014"]
 		,"minOrder" : 125
         ,"discountInPercent" : 10
 	}

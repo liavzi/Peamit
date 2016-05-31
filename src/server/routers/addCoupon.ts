@@ -5,7 +5,6 @@ import orderFactory = require("../businessComponents/orderFactory");
 import R = require("./registerRouters");
 import config = require("config");
 import BusinessError  = require("../errors/BusinessError");
-let couponName= config.get<string>("coupon.name");
 let minOrder = config.get("coupon.minOrder");
 addCoupon.route("/coupons")
     .post(function(req  : R.OrderActionRequest,res : express.Response,next){
