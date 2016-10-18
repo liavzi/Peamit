@@ -9,7 +9,7 @@ window.requireConfig={
         "angular-route" : "..//ScriptsLibs/angular-route",
         "ngAnimate" : "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate",
         "uiGrid" : "https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min",
-        "toastr" : "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr",
+        "toastr" : "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min",
         "ui.router" : "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router",
         "ng-file-upload" :"https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.0.19/ng-file-upload"
         ,"blockUI" : "/ScriptsLibs/blockUI/jquery.blockUI"
